@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmnesEvent — Administration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="Index.html" class="navbar-brand">🎉 OmnesEvent</a>
+      <ul class="navbar-nav">
+        <li><a href="Index.html">Accueil</a></li>
+        <li><a href="admin.html" class="active">Administration</a></li>
+        <li><a href="profil.html">Mon Profil</a></li>
+        <li><a href="connexion.html" class="btn btn-outline btn-sm">Déconnexion</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="Index.html">🏠 Accueil</a>
+    <a href="admin.html">🔧 Administration</a>
+    <a href="profil.html">👤 Mon Profil</a>
+    <a href="connexion.html">🚪 Déconnexion</a>
+  </div>
+
+  <!-- Admin badge -->
+  <div style="background:linear-gradient(135deg,#1F2937,#374151); color:white; padding:0.5rem 0; text-align:center;">
+    <p class="fs-sm">🔧 <strong>Mode Administrateur</strong> — Omnes Education</p>
+  </div>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>🔧 Panneau d'administration</h1>
+      <p>Gestion des utilisateurs, des événements et de la plateforme.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- STATS -->
+      <div class="grid grid-4 mb-4">
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-primary">👥</div>
+          <div>
+            <div class="stat-value">1 247</div>
+            <div class="stat-label">Utilisateurs inscrits</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-success">🎪</div>
+          <div>
+            <div class="stat-value">48</div>
+            <div class="stat-label">Événements actifs</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-warning">⏳</div>
+          <div>
+            <div class="stat-value">5</div>
+            <div class="stat-label">Comptes en attente</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-danger">⚠️</div>
+          <div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Signalements</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs mb-3">
+        <button class="tab-btn active" data-tab="comptes">Comptes en attente <span class="badge badge-warning" style="margin-left:0.375rem;">5</span></button>
+        <button class="tab-btn" data-tab="utilisateurs">Utilisateurs</button>
+        <button class="tab-btn" data-tab="evenements">Événements</button>
+        <button class="tab-btn" data-tab="signalements">Signalements <span class="badge badge-danger" style="margin-left:0.375rem;">2</span></button>
+      </div>
+
+      <!-- TAB: Comptes organisateur en attente -->
+      <div class="tab-panel active" id="tab-comptes">
+        <div class="alert alert-info mb-3">
+          ℹ️ Ces comptes organisateurs attendent votre validation avant de pouvoir créer des événements.
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Utilisateur</th>
+                <th>Association</th>
+                <th>Date de demande</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="d-flex align-center gap-2">
+                    <div class="avatar avatar-sm">PT</div>
+                    <div>
+                      <p class="fw-semibold fs-sm">Pierre Thibault</p>
+                      <p class="fs-xs text-muted">pierre.thibault@omnes.fr</p>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-primary">BDS Omnes</span></td>
+                <td class="fs-sm text-muted">10 Mai 2025</td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-success btn-sm" onclick="approveAccount(1)">✓ Approuver</button>
+                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(1)">✕ Refuser</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-center gap-2">
+                    <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#EC4899,#F97316);">NB</div>
+                    <div>
+                      <p class="fw-semibold fs-sm">Naomi Beaulieu</p>
+                      <p class="fs-xs text-muted">naomi.beaulieu@omnes.fr</p>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-primary">Club Cinéma</span></td>
+                <td class="fs-sm text-muted">11 Mai 2025</td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-success btn-sm" onclick="approveAccount(2)">✓ Approuver</button>
+                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(2)">✕ Refuser</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-center gap-2">
+                    <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#D97706,#F59E0B);">LM</div>
+                    <div>
+                      <p class="fw-semibold fs-sm">Lucas Moreau</p>
+                      <p class="fs-xs text-muted">lucas.moreau@omnes.fr</p>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-primary">Junior Entreprise</span></td>
+                <td class="fs-sm text-muted">11 Mai 2025</td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-success btn-sm" onclick="approveAccount(3)">✓ Approuver</button>
+                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(3)">✕ Refuser</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Utilisateurs -->
+      <div class="tab-panel" id="tab-utilisateurs">
+        <div class="card mb-3">
+          <div class="card-header">
+            <div class="d-flex align-center gap-2 flex-1 flex-wrap">
+              <h3 style="flex:1;">Tous les utilisateurs</h3>
+              <div class="d-flex gap-1 flex-wrap">
+                <input type="text" class="form-control" id="userSearch" placeholder="Rechercher..." style="width:200px;">
+                <select class="form-control" style="width:auto;">
+                  <option>Tous les rôles</option>
+                  <option>Participant</option>
+                  <option>Organisateur</option>
+                  <option>Administrateur</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-container" style="border-radius:0; box-shadow:none;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Utilisateur</th>
+                    <th>Rôle</th>
+                    <th>Inscription</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-center gap-2">
+                        <div class="avatar avatar-sm">JD</div>
+                        <div>
+                          <p class="fw-semibold fs-sm">Jean Dupont</p>
+                          <p class="fs-xs text-muted">jean.dupont@omnes.fr</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="badge badge-gray">Participant</span></td>
+                    <td class="fs-sm text-muted">Sept. 2024</td>
+                    <td><span class="badge badge-success">Actif</span></td>
+                    <td>
+                      <div class="d-flex gap-1">
+                        <button class="btn btn-outline btn-sm" onclick="viewUser(1)">Voir</button>
+                        <button class="btn btn-ghost btn-sm" onclick="suspendUser(1)" style="color:var(--warning);">⏸</button>
+                        <button class="btn btn-ghost btn-sm" onclick="deleteUser(1)" style="color:var(--danger);">🗑</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-center gap-2">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#EC4899,#F97316);">SM</div>
+                        <div>
+                          <p class="fw-semibold fs-sm">Sophie Martin</p>
+                          <p class="fs-xs text-muted">sophie.martin@omnes.fr</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="badge badge-primary">Organisateur</span></td>
+                    <td class="fs-sm text-muted">Jan. 2024</td>
+                    <td><span class="badge badge-success">Actif</span></td>
+                    <td>
+                      <div class="d-flex gap-1">
+                        <button class="btn btn-outline btn-sm" onclick="viewUser(2)">Voir</button>
+                        <button class="btn btn-ghost btn-sm" onclick="suspendUser(2)" style="color:var(--warning);">⏸</button>
+                        <button class="btn btn-ghost btn-sm" onclick="deleteUser(2)" style="color:var(--danger);">🗑</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-center gap-2">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#DC2626,#EF4444);">AD</div>
+                        <div>
+                          <p class="fw-semibold fs-sm">Admin Système</p>
+                          <p class="fs-xs text-muted">admin@omneseducation.com</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="badge badge-danger">Administrateur</span></td>
+                    <td class="fs-sm text-muted">Jan. 2023</td>
+                    <td><span class="badge badge-success">Actif</span></td>
+                    <td>
+                      <span class="text-muted fs-sm">—</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Événements -->
+      <div class="tab-panel" id="tab-evenements">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Organisateur</th>
+                <th>Date</th>
+                <th>Inscrits</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p class="fw-semibold fs-sm">Soirée d'Intégration BDE 2025</p>
+                  <span class="badge badge-gray fs-xs">Soirée</span>
+                </td>
+                <td class="fs-sm">Sophie Martin</td>
+                <td class="fs-sm text-muted">20 Juin 2025</td>
+                <td class="fs-sm"><span class="fw-semibold">75</span>/100</td>
+                <td><span class="badge badge-success">Publié</span></td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-outline btn-sm" onclick="viewEvent(1)">Voir</button>
+                    <button class="btn btn-danger btn-sm" onclick="removeEvent(1)">🚫 Retirer</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="fw-semibold fs-sm">Ciné-Club : Festival du Film Étudiant</p>
+                  <span class="badge badge-gray fs-xs">Culture</span>
+                </td>
+                <td class="fs-sm">Sophie Martin</td>
+                <td class="fs-sm text-muted">4 Juil. 2025</td>
+                <td class="fs-sm"><span class="fw-semibold" style="color:var(--danger);">50</span>/50</td>
+                <td><span class="badge badge-danger">Complet</span></td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-outline btn-sm" onclick="viewEvent(2)">Voir</button>
+                    <button class="btn btn-danger btn-sm" onclick="removeEvent(2)">🚫 Retirer</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Signalements -->
+      <div class="tab-panel" id="tab-signalements">
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+
+          <div class="card" style="border-left:4px solid var(--danger);">
+            <div class="card-body">
+              <div class="d-flex justify-between align-center mb-2" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="badge badge-danger">⚠️ Contenu inapproprié</span>
+                <span class="fs-xs text-muted">Signalé le 11 Mai 2025</span>
+              </div>
+              <p class="fw-semibold fs-sm mb-1">Événement : "Soirée privée (non officielle)"</p>
+              <p class="text-muted fs-sm mb-2">Signalé par : Marie Laurent — "Cet événement n'est pas approuvé par le BDE et collecte des données personnelles."</p>
+              <div class="d-flex gap-1 flex-wrap">
+                <button class="btn btn-danger btn-sm" onclick="removeEvent('sig1')">🚫 Supprimer l'événement</button>
+                <button class="btn btn-outline btn-sm" onclick="warnUser('sig1')">⚠️ Avertir l'organisateur</button>
+                <button class="btn btn-ghost btn-sm" onclick="dismissSignal('sig1')">Ignorer</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:4px solid var(--warning);">
+            <div class="card-body">
+              <div class="d-flex justify-between align-center mb-2" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="badge badge-warning">⚠️ Informations incorrectes</span>
+                <span class="fs-xs text-muted">Signalé le 10 Mai 2025</span>
+              </div>
+              <p class="fw-semibold fs-sm mb-1">Événement : "Tournoi de Football Inter-Écoles"</p>
+              <p class="text-muted fs-sm mb-2">Signalé par : Alex Bernard — "L'adresse du lieu est incorrecte, ce n'est pas le terrain Nord mais le terrain Sud."</p>
+              <div class="d-flex gap-1 flex-wrap">
+                <button class="btn btn-outline btn-sm" onclick="contactOrganizer('sig2')">📧 Contacter l'organisateur</button>
+                <button class="btn btn-ghost btn-sm" onclick="dismissSignal('sig2')">Ignorer</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL: Confirmation action -->
+  <div class="modal-overlay" id="actionModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="actionModalTitle">Confirmer l'action</h3>
+        <button class="btn-close" onclick="document.getElementById('actionModal').classList.remove('open')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="actionModalMessage">Êtes-vous sûr de vouloir effectuer cette action ?</p>
+        <div class="form-group mt-2" id="actionReasonGroup" style="display:none;">
+          <label class="form-label">Raison (optionnel)</label>
+          <textarea class="form-control" id="actionReason" placeholder="Expliquez votre décision..." rows="2"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="document.getElementById('actionModal').classList.remove('open')">Annuler</button>
+        <button class="btn btn-primary" id="actionModalConfirm" onclick="executeAction()">Confirmer</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">🎉 OmnesEvent</div>
+      <div class="footer-bottom"><p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p></div>
+    </div>
+  </footer>
+
+  <script src="admin.js"></script>
+</body>
+</html>

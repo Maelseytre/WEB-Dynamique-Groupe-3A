@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmnesEvent — Détail de l'événement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="Index.html" class="navbar-brand">🎉 OmnesEvent</a>
+      <ul class="navbar-nav">
+        <li><a href="Index.html">Accueil</a></li>
+        <li><a href="mes-billets.html">Mes Billets</a></li>
+        <li><a href="creer-evenement.html">Créer un événement</a></li>
+        <li><a href="profil.html">Mon Profil</a></li>
+        <li><a href="connexion.html" class="btn btn-primary btn-sm">Connexion</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="Index.html">🏠 Accueil</a>
+    <a href="mes-billets.html">🎟 Mes Billets</a>
+    <a href="creer-evenement.html">➕ Créer un événement</a>
+    <a href="profil.html">👤 Mon Profil</a>
+    <a href="connexion.html">🔐 Connexion</a>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div style="background:white; border-bottom:1px solid var(--border); padding:0.75rem 0;">
+    <div class="container">
+      <nav style="font-size:0.875rem; color:var(--text-muted);">
+        <a href="Index.html" style="color:var(--text-muted); text-decoration:none;">Accueil</a>
+        <span style="margin:0 0.5rem;">›</span>
+        <span style="color:var(--text);">Soirée d'Intégration BDE 2025</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- EVENT BANNER -->
+  <div class="event-banner" style="background:linear-gradient(135deg,#7C3AED,#EC4899);">
+    🎵
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="event-detail-grid">
+
+        <!-- LEFT: Main content -->
+        <div>
+          <div style="display:flex; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:1.25rem;">
+            <div style="flex:1; min-width:0;">
+              <span class="event-card-category category-soiree mb-2" style="display:inline-block;">Soirée</span>
+              <h1 style="font-size:clamp(1.375rem, 3vw, 2rem); font-weight:800; line-height:1.3;">Soirée d'Intégration BDE 2025</h1>
+              <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9375rem;">Organisé par <strong style="color:var(--text);">BDE Omnes</strong></p>
+            </div>
+            <span class="badge badge-success" style="font-size:0.875rem; padding:0.5rem 1rem; flex-shrink:0;">Places disponibles</span>
+          </div>
+
+          <!-- Alert si connecté et déjà inscrit -->
+          <div class="alert alert-success" id="alreadyRegistered" style="display:none;">
+            ✅ Tu es déjà inscrit(e) à cet événement. <a href="mes-billets.html">Voir mon billet →</a>
+          </div>
+
+          <!-- Description -->
+          <div class="card mb-3">
+            <div class="card-header"><h3>Description</h3></div>
+            <div class="card-body">
+              <p style="line-height:1.8; color:var(--text);">
+                La grande soirée d'intégration organisée par le BDE Omnes est de retour ! 🎉<br><br>
+                Que tu sois en première année ou que tu rejoignes Omnes cette année, viens fêter ça avec toute la promo dans une ambiance inoubliable.
+                Au programme : DJ sets, animations, bar, photobooth et surprises !
+              </p>
+              <p style="line-height:1.8; color:var(--text); margin-top:1rem;">
+                🎫 <strong>Entrée gratuite</strong> sur présentation de votre billet électronique.<br>
+                🎁 Les 50 premiers inscrits reçoivent un goodie bag BDE.<br>
+                🚫 Réservé aux étudiants et personnels Omnes Education.
+              </p>
+            </div>
+          </div>
+
+          <!-- Infos pratiques -->
+          <div class="card mb-3">
+            <div class="card-header"><h3>Infos pratiques</h3></div>
+            <div class="card-body">
+              <ul class="info-list">
+                <li>
+                  <span class="info-icon">📅</span>
+                  <div>
+                    <div class="info-label">Date & Heure</div>
+                    <div class="info-value">Vendredi 20 Juin 2025, 20h00 – 02h00</div>
+                  </div>
+                </li>
+                <li>
+                  <span class="info-icon">📍</span>
+                  <div>
+                    <div class="info-label">Lieu</div>
+                    <div class="info-value">Salle des fêtes, Campus Paris Étoile<br>
+                      <span style="color:var(--text-muted); font-size:0.875rem;">12 Rue de Presbourg, 75008 Paris</span>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <span class="info-icon">🏛</span>
+                  <div>
+                    <div class="info-label">Organisateur</div>
+                    <div class="info-value">Bureau Des Étudiants — BDE Omnes</div>
+                  </div>
+                </li>
+                <li>
+                  <span class="info-icon">🎫</span>
+                  <div>
+                    <div class="info-label">Prix</div>
+                    <div class="info-value">Gratuit</div>
+                  </div>
+                </li>
+                <li>
+                  <span class="info-icon">👔</span>
+                  <div>
+                    <div class="info-label">Tenue</div>
+                    <div class="info-value">Tenue de soirée recommandée</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Organisateur -->
+          <div class="card">
+            <div class="card-header"><h3>L'organisateur</h3></div>
+            <div class="card-body d-flex align-center gap-2">
+              <div class="avatar avatar-lg">B</div>
+              <div>
+                <p class="fw-bold">BDE Omnes Education</p>
+                <p class="text-muted fs-sm">Bureau Des Étudiants — Campus Paris</p>
+                <p class="fs-sm mt-1">Contact : <a href="mailto:bde@omneseducation.com" style="color:var(--primary);">bde@omneseducation.com</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Reservation widget -->
+        <div>
+          <div class="card" style="position:sticky; top:80px;">
+            <div class="card-body">
+              <h3 style="font-weight:800; font-size:1.125rem; margin-bottom:1rem;">Réserver ma place</h3>
+
+              <!-- Capacity -->
+              <div style="margin-bottom:1.25rem;">
+                <div class="d-flex justify-between mb-1">
+                  <span class="fs-sm text-muted">Places disponibles</span>
+                  <span class="fs-sm fw-bold">25 / 100</span>
+                </div>
+                <div class="capacity-bar" style="height:8px;">
+                  <div class="capacity-fill" style="width:75%;"></div>
+                </div>
+                <p class="fs-xs text-muted mt-1">75 places déjà réservées</p>
+              </div>
+
+              <!-- Date reminder -->
+              <div style="background:var(--primary-light); border-radius:8px; padding:0.875rem; margin-bottom:1.25rem;">
+                <p class="fw-semibold fs-sm" style="color:var(--primary);">📅 Vendredi 20 Juin 2025</p>
+                <p class="fs-sm" style="color:var(--primary-dark);">20h00 – 02h00</p>
+              </div>
+
+              <!-- CTA -->
+              <button class="btn btn-primary btn-full btn-lg" id="reserveBtn" onclick="showReservationModal()">
+                🎟 Je réserve ma place
+              </button>
+
+              <p class="fs-xs text-muted text-center mt-2">Inscription gratuite · Annulation possible jusqu'au 18 Juin</p>
+
+              <div class="separator"></div>
+
+              <div class="d-flex gap-2" style="flex-direction:column;">
+                <button class="btn btn-outline btn-full btn-sm" onclick="shareEvent()">
+                  📤 Partager l'événement
+                </button>
+                <button class="btn btn-ghost btn-full btn-sm" id="saveBtn" onclick="saveEvent()">
+                  🔖 Sauvegarder
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL RÉSERVATION -->
+  <div class="modal-overlay" id="reservationModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Confirmer la réservation</h3>
+        <button class="btn-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:var(--bg); border-radius:8px; padding:1rem; margin-bottom:1.25rem;">
+          <p class="fw-bold">Soirée d'Intégration BDE 2025</p>
+          <p class="text-muted fs-sm">📅 Vendredi 20 Juin 2025 · 20h00</p>
+          <p class="text-muted fs-sm">📍 Salle des fêtes, Campus Paris</p>
+        </div>
+        <div class="alert alert-info" id="loginAlert" style="display:none;">
+          ℹ️ Tu dois être <a href="connexion.html">connecté(e)</a> pour réserver ta place.
+        </div>
+        <div id="reservationForm">
+          <div class="form-group">
+            <label class="form-label">Nombre de places</label>
+            <select class="form-control" id="nbPlaces">
+              <option value="1">1 place</option>
+              <option value="2">2 places</option>
+              <option value="3">3 places</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Commentaire (optionnel)</label>
+            <textarea class="form-control" placeholder="Régime alimentaire particulier, accessibilité..." rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="confirmReservation()">Confirmer ma réservation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SUCCÈS -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal">
+      <div class="modal-body text-center" style="padding:2.5rem 2rem;">
+        <div style="font-size:4rem; margin-bottom:1rem;">🎉</div>
+        <h3 style="font-size:1.375rem; font-weight:800; margin-bottom:0.5rem;">Réservation confirmée !</h3>
+        <p class="text-muted mb-3">Ton billet a été envoyé par email. Tu peux aussi le retrouver dans "Mes Billets".</p>
+        <div style="background:var(--bg); border-radius:8px; padding:1rem; margin-bottom:1.5rem;">
+          <p class="fw-bold">Soirée d'Intégration BDE 2025</p>
+          <p class="text-muted fs-sm">Code : <strong style="color:var(--primary); font-family:monospace;">OE-2025-4821</strong></p>
+        </div>
+        <div class="d-flex gap-2" style="justify-content:center; flex-wrap:wrap;">
+          <a href="mes-billets.html" class="btn btn-primary">Voir mes billets</a>
+          <button class="btn btn-outline" onclick="closeSuccessModal()">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">🎉 OmnesEvent</div>
+      <div class="footer-bottom"><p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p></div>
+    </div>
+  </footer>
+
+  <script src="evenement-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmnesEvent — Tableau de bord Organisateur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="Index.html" class="navbar-brand">🎉 OmnesEvent</a>
+      <ul class="navbar-nav">
+        <li><a href="Index.html">Accueil</a></li>
+        <li><a href="creer-evenement.html">Créer un événement</a></li>
+        <li><a href="tableau-de-bord.html" class="active">Dashboard</a></li>
+        <li><a href="profil.html">Mon Profil</a></li>
+        <li><a href="connexion.html" class="btn btn-outline btn-sm">Déconnexion</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="Index.html">🏠 Accueil</a>
+    <a href="creer-evenement.html">➕ Créer un événement</a>
+    <a href="tableau-de-bord.html">📊 Dashboard</a>
+    <a href="profil.html">👤 Mon Profil</a>
+    <a href="connexion.html">🚪 Déconnexion</a>
+  </div>
+
+  <div class="page-header">
+    <div class="container">
+      <div class="d-flex justify-between align-center flex-wrap gap-2">
+        <div>
+          <h1>📊 Tableau de bord</h1>
+          <p>Bienvenue, <strong>Sophie Martin</strong> (BDE Omnes)</p>
+        </div>
+        <a href="creer-evenement.html" class="btn btn-primary">➕ Nouvel événement</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- STATS -->
+      <div class="grid grid-4 mb-4">
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-primary">🎪</div>
+          <div>
+            <div class="stat-value">4</div>
+            <div class="stat-label">Événements actifs</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-success">👥</div>
+          <div>
+            <div class="stat-value">234</div>
+            <div class="stat-label">Inscrits total</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-warning">⏳</div>
+          <div>
+            <div class="stat-value">18</div>
+            <div class="stat-label">Liste d'attente</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-danger">✅</div>
+          <div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Événements passés</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs mb-3">
+        <button class="tab-btn active" data-tab="mesEvenements">Mes événements</button>
+        <button class="tab-btn" data-tab="inscrits">Inscrits</button>
+        <button class="tab-btn" data-tab="statistiques">Statistiques</button>
+      </div>
+
+      <!-- TAB: Mes événements -->
+      <div class="tab-panel active" id="tab-mesEvenements">
+
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Date</th>
+                <th>Inscrits</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="d-flex align-center gap-2">
+                    <div style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#7C3AED,#EC4899); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">🎵</div>
+                    <div>
+                      <p class="fw-semibold fs-sm">Soirée d'Intégration BDE 2025</p>
+                      <p class="fs-xs text-muted">Soirée · BDE Omnes</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="fs-sm">Ven. 20 Juin 2025</td>
+                <td>
+                  <div>
+                    <span class="fw-semibold">75</span><span class="text-muted fs-sm">/100</span>
+                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
+                      <div class="capacity-fill" style="width:75%;"></div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-success">Publié</span></td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt1')">Inscrits</button>
+                    <button class="btn btn-ghost btn-sm" onclick="editEvent('evt1')">✏️</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt1')" style="color:var(--danger);">🗑</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-center gap-2">
+                    <div style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#DC2626,#F97316); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">🍕</div>
+                    <div>
+                      <p class="fw-semibold fs-sm">Soirée Internationale & Gastronomie</p>
+                      <p class="fs-xs text-muted">Soirée · BDE Omnes</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="fs-sm">Sam. 12 Juil. 2025</td>
+                <td>
+                  <div>
+                    <span class="fw-semibold">60</span><span class="text-muted fs-sm">/100</span>
+                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
+                      <div class="capacity-fill" style="width:60%;"></div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-success">Publié</span></td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt2')">Inscrits</button>
+                    <button class="btn btn-ghost btn-sm" onclick="editEvent('evt2')">✏️</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt2')" style="color:var(--danger);">🗑</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-center gap-2">
+                    <div style="width:36px; height:36px; border-radius:8px; background:#F3F4F6; display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">🎬</div>
+                    <div>
+                      <p class="fw-semibold fs-sm">Ciné-Club : Festival du Film Étudiant</p>
+                      <p class="fs-xs text-muted">Culture · Club Cinéma</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="fs-sm">Ven. 4 Juil. 2025</td>
+                <td>
+                  <div>
+                    <span class="fw-semibold" style="color:var(--danger);">50</span><span class="text-muted fs-sm">/50</span>
+                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
+                      <div class="capacity-fill" style="width:100%; background:var(--danger);"></div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-danger">Complet</span></td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt3')">Inscrits</button>
+                    <button class="btn btn-ghost btn-sm" onclick="editEvent('evt3')">✏️</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt3')" style="color:var(--danger);">🗑</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-center gap-2">
+                    <div style="width:36px; height:36px; border-radius:8px; background:#F3F4F6; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">📝</div>
+                    <div>
+                      <p class="fw-semibold fs-sm">Atelier CV & LinkedIn</p>
+                      <p class="fs-xs text-muted">Conférence · Junior Entreprise</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="fs-sm">Mar. 22 Juil. 2025</td>
+                <td>
+                  <div>
+                    <span class="fw-semibold">0</span><span class="text-muted fs-sm">/40</span>
+                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
+                      <div class="capacity-fill" style="width:0%;"></div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-warning">Brouillon</span></td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button class="btn btn-primary btn-sm" onclick="publishEvent('evt4')">Publier</button>
+                    <button class="btn btn-ghost btn-sm" onclick="editEvent('evt4')">✏️</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt4')" style="color:var(--danger);">🗑</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Inscrits -->
+      <div class="tab-panel" id="tab-inscrits">
+        <div class="card mb-3">
+          <div class="card-header">
+            <div class="d-flex align-center gap-2 flex-1" style="flex-wrap:wrap; gap:0.75rem;">
+              <h3 style="flex:1;">Liste des inscrits</h3>
+              <div class="d-flex gap-1 flex-wrap">
+                <select class="form-control" id="eventFilter" style="width:auto;">
+                  <option value="">Tous les événements</option>
+                  <option value="evt1">Soirée d'Intégration BDE 2025</option>
+                  <option value="evt2">Soirée Internationale</option>
+                  <option value="evt3">Ciné-Club</option>
+                </select>
+                <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-container" style="border-radius:0; box-shadow:none;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Participant</th>
+                    <th>Événement</th>
+                    <th>Date d'inscription</th>
+                    <th>Statut</th>
+                    <th>Présence</th>
+                  </tr>
+                </thead>
+                <tbody id="participantsTable">
+                  <tr>
+                    <td>
+                      <div class="d-flex align-center gap-2">
+                        <div class="avatar avatar-sm">JD</div>
+                        <div>
+                          <p class="fw-semibold fs-sm">Jean Dupont</p>
+                          <p class="fs-xs text-muted">jean.dupont@omnes.fr</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="fs-sm">Soirée d'Intégration BDE 2025</td>
+                    <td class="fs-sm text-muted">12 Mai 2025</td>
+                    <td><span class="badge badge-success">Confirmé</span></td>
+                    <td>
+                      <button class="btn btn-success btn-sm" onclick="validatePresence(1)">✓ Valider</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-center gap-2">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#EC4899,#F97316);">ML</div>
+                        <div>
+                          <p class="fw-semibold fs-sm">Marie Laurent</p>
+                          <p class="fs-xs text-muted">marie.laurent@omnes.fr</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="fs-sm">Soirée d'Intégration BDE 2025</td>
+                    <td class="fs-sm text-muted">13 Mai 2025</td>
+                    <td><span class="badge badge-success">Confirmé</span></td>
+                    <td>
+                      <button class="btn btn-success btn-sm" onclick="validatePresence(2)">✓ Valider</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-center gap-2">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#059669,#10B981);">AB</div>
+                        <div>
+                          <p class="fw-semibold fs-sm">Alex Bernard</p>
+                          <p class="fs-xs text-muted">alex.bernard@omnes.fr</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="fs-sm">Tournoi de Football</td>
+                    <td class="fs-sm text-muted">10 Mai 2025</td>
+                    <td><span class="badge badge-warning">En attente</span></td>
+                    <td>
+                      <button class="btn btn-success btn-sm" onclick="validatePresence(3)">✓ Valider</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-center gap-2">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#D97706,#F59E0B);">CR</div>
+                        <div>
+                          <p class="fw-semibold fs-sm">Clara Rousseau</p>
+                          <p class="fs-xs text-muted">clara.rousseau@omnes.fr</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="fs-sm">Ciné-Club</td>
+                    <td class="fs-sm text-muted">8 Mai 2025</td>
+                    <td><span class="badge badge-success">Confirmé</span></td>
+                    <td>
+                      <span class="badge badge-success">✅ Présent(e)</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Statistiques -->
+      <div class="tab-panel" id="tab-statistiques">
+        <div class="grid grid-2 mb-3">
+          <div class="card">
+            <div class="card-header"><h3>Taux de remplissage</h3></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:1rem;">
+                <div>
+                  <div class="d-flex justify-between mb-1">
+                    <span class="fs-sm">Soirée Intégration BDE</span>
+                    <span class="fs-sm fw-bold">75%</span>
+                  </div>
+                  <div class="capacity-bar" style="height:10px;"><div class="capacity-fill" style="width:75%;"></div></div>
+                </div>
+                <div>
+                  <div class="d-flex justify-between mb-1">
+                    <span class="fs-sm">Soirée Internationale</span>
+                    <span class="fs-sm fw-bold">60%</span>
+                  </div>
+                  <div class="capacity-bar" style="height:10px;"><div class="capacity-fill" style="width:60%;"></div></div>
+                </div>
+                <div>
+                  <div class="d-flex justify-between mb-1">
+                    <span class="fs-sm">Ciné-Club</span>
+                    <span class="fs-sm fw-bold" style="color:var(--danger);">100%</span>
+                  </div>
+                  <div class="capacity-bar" style="height:10px;"><div class="capacity-fill" style="width:100%; background:var(--danger);"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3>Inscriptions par catégorie</h3></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:0.875rem;">
+                <div class="d-flex align-center justify-between">
+                  <div class="d-flex align-center gap-2">
+                    <span style="width:12px; height:12px; border-radius:50%; background:linear-gradient(135deg,#7C3AED,#EC4899); display:inline-block;"></span>
+                    <span class="fs-sm">Soirée</span>
+                  </div>
+                  <div class="d-flex align-center gap-2">
+                    <span class="fw-bold fs-sm">135</span>
+                    <span class="text-muted fs-xs">(58%)</span>
+                  </div>
+                </div>
+                <div class="d-flex align-center justify-between">
+                  <div class="d-flex align-center gap-2">
+                    <span style="width:12px; height:12px; border-radius:50%; background:#059669; display:inline-block;"></span>
+                    <span class="fs-sm">Sport</span>
+                  </div>
+                  <div class="d-flex align-center gap-2">
+                    <span class="fw-bold fs-sm">24</span>
+                    <span class="text-muted fs-xs">(10%)</span>
+                  </div>
+                </div>
+                <div class="d-flex align-center justify-between">
+                  <div class="d-flex align-center gap-2">
+                    <span style="width:12px; height:12px; border-radius:50%; background:#4338CA; display:inline-block;"></span>
+                    <span class="fs-sm">Culture</span>
+                  </div>
+                  <div class="d-flex align-center gap-2">
+                    <span class="fw-bold fs-sm">50</span>
+                    <span class="text-muted fs-xs">(21%)</span>
+                  </div>
+                </div>
+                <div class="d-flex align-center justify-between">
+                  <div class="d-flex align-center gap-2">
+                    <span style="width:12px; height:12px; border-radius:50%; background:#D97706; display:inline-block;"></span>
+                    <span class="fs-sm">Conférence</span>
+                  </div>
+                  <div class="d-flex align-center gap-2">
+                    <span class="fw-bold fs-sm">25</span>
+                    <span class="text-muted fs-xs">(11%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL: Confirmation suppression -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 style="color:var(--danger);">Supprimer l'événement</h3>
+        <button class="btn-close" onclick="document.getElementById('deleteModal').classList.remove('open')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Es-tu sûr(e) de vouloir supprimer cet événement ? Tous les inscrits seront notifiés par email.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="document.getElementById('deleteModal').classList.remove('open')">Annuler</button>
+        <button class="btn btn-danger" onclick="confirmDelete()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">🎉 OmnesEvent</div>
+      <div class="footer-bottom"><p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p></div>
+    </div>
+  </footer>
+
+  <script src="tableau-de-bord.js"></script>
+</body>
+</html>

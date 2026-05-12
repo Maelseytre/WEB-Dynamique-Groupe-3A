@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmnesEvent — Mes Billets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="Index.html" class="navbar-brand">🎉 OmnesEvent</a>
+      <ul class="navbar-nav">
+        <li><a href="Index.html">Accueil</a></li>
+        <li><a href="mes-billets.html" class="active">Mes Billets</a></li>
+        <li><a href="profil.html">Mon Profil</a></li>
+        <li><a href="connexion.html" class="btn btn-outline btn-sm">Déconnexion</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="Index.html">🏠 Accueil</a>
+    <a href="mes-billets.html">🎟 Mes Billets</a>
+    <a href="profil.html">👤 Mon Profil</a>
+    <a href="connexion.html">🚪 Déconnexion</a>
+  </div>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>🎟 Mes Billets</h1>
+      <p>Retrouve tous tes événements à venir et passés.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Stats rapides -->
+      <div class="grid grid-3 mb-4" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-primary">🎟</div>
+          <div>
+            <div class="stat-value">5</div>
+            <div class="stat-label">Billets actifs</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-success">✅</div>
+          <div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Événements passés</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-warning">⏳</div>
+          <div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Liste d'attente</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="upcoming">À venir <span class="badge badge-primary" style="margin-left:0.375rem;">5</span></button>
+        <button class="tab-btn" data-tab="past">Passés</button>
+        <button class="tab-btn" data-tab="waitlist">Liste d'attente <span class="badge badge-warning" style="margin-left:0.375rem;">2</span></button>
+      </div>
+
+      <!-- TAB: Billets à venir -->
+      <div class="tab-panel active" id="tab-upcoming">
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+
+          <!-- Ticket 1 -->
+          <div class="ticket-card">
+            <div class="ticket-body">
+              <div class="d-flex justify-between align-center mb-1" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="event-card-category category-soiree">Soirée</span>
+                <span class="badge badge-success">Confirmé</span>
+              </div>
+              <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;">Soirée d'Intégration BDE 2025</h3>
+              <div style="display:flex; flex-direction:column; gap:0.25rem; margin-bottom:0.75rem;">
+                <span class="fs-sm text-muted">📅 Vendredi 20 Juin 2025 · 20h00</span>
+                <span class="fs-sm text-muted">📍 Salle des fêtes, Campus Paris</span>
+              </div>
+              <div class="d-flex gap-1 flex-wrap">
+                <button class="btn btn-primary btn-sm" onclick="showTicketModal('OE-2025-4821')">Voir le billet</button>
+                <button class="btn btn-outline btn-sm" onclick="downloadTicket()">⬇ Télécharger</button>
+                <button class="btn btn-ghost btn-sm" onclick="confirmCancel('OE-2025-4821')" style="color:var(--danger);">✕ Annuler</button>
+              </div>
+            </div>
+            <div class="ticket-side">
+              <div class="ticket-code">OE-4821</div>
+            </div>
+          </div>
+
+          <!-- Ticket 2 -->
+          <div class="ticket-card">
+            <div class="ticket-body">
+              <div class="d-flex justify-between align-center mb-1" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="event-card-category category-conference">Conférence</span>
+                <span class="badge badge-success">Confirmé</span>
+              </div>
+              <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;">Conférence : L'IA dans le Monde du Travail</h3>
+              <div style="display:flex; flex-direction:column; gap:0.25rem; margin-bottom:0.75rem;">
+                <span class="fs-sm text-muted">📅 Lundi 30 Juin 2025 · 14h00</span>
+                <span class="fs-sm text-muted">📍 Amphithéâtre A, Campus Lyon</span>
+              </div>
+              <div class="d-flex gap-1 flex-wrap">
+                <button class="btn btn-primary btn-sm" onclick="showTicketModal('OE-2025-5193')">Voir le billet</button>
+                <button class="btn btn-outline btn-sm" onclick="downloadTicket()">⬇ Télécharger</button>
+                <button class="btn btn-ghost btn-sm" onclick="confirmCancel('OE-2025-5193')" style="color:var(--danger);">✕ Annuler</button>
+              </div>
+            </div>
+            <div class="ticket-side">
+              <div class="ticket-code">OE-5193</div>
+            </div>
+          </div>
+
+          <!-- Ticket 3 -->
+          <div class="ticket-card">
+            <div class="ticket-body">
+              <div class="d-flex justify-between align-center mb-1" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="event-card-category category-sport">Sport</span>
+                <span class="badge badge-success">Confirmé</span>
+              </div>
+              <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;">Tournoi de Football Inter-Écoles</h3>
+              <div style="display:flex; flex-direction:column; gap:0.25rem; margin-bottom:0.75rem;">
+                <span class="fs-sm text-muted">📅 Samedi 21 Juin 2025 · 10h00</span>
+                <span class="fs-sm text-muted">📍 Terrain de sport Nord</span>
+              </div>
+              <div class="d-flex gap-1 flex-wrap">
+                <button class="btn btn-primary btn-sm" onclick="showTicketModal('OE-2025-6044')">Voir le billet</button>
+                <button class="btn btn-outline btn-sm" onclick="downloadTicket()">⬇ Télécharger</button>
+                <button class="btn btn-ghost btn-sm" onclick="confirmCancel('OE-2025-6044')" style="color:var(--danger);">✕ Annuler</button>
+              </div>
+            </div>
+            <div class="ticket-side">
+              <div class="ticket-code">OE-6044</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB: Passés -->
+      <div class="tab-panel" id="tab-past">
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+
+          <div class="ticket-card" style="border-left-color:var(--text-muted); opacity:0.75;">
+            <div class="ticket-body">
+              <div class="d-flex justify-between align-center mb-1" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="event-card-category category-culture">Culture</span>
+                <span class="badge badge-gray">Terminé</span>
+              </div>
+              <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;">Visite du Louvre — Club Culturel</h3>
+              <div style="display:flex; flex-direction:column; gap:0.25rem; margin-bottom:0.75rem;">
+                <span class="fs-sm text-muted">📅 Samedi 15 Mars 2025</span>
+                <span class="fs-sm text-muted">📍 Musée du Louvre, Paris</span>
+              </div>
+              <div class="d-flex gap-1 flex-wrap">
+                <span class="badge badge-success">✅ Présence validée</span>
+              </div>
+            </div>
+            <div class="ticket-side" style="background:#F3F4F6;">
+              <div class="ticket-code" style="color:var(--text-muted);">OE-3102</div>
+            </div>
+          </div>
+
+          <div class="ticket-card" style="border-left-color:var(--text-muted); opacity:0.75;">
+            <div class="ticket-body">
+              <div class="d-flex justify-between align-center mb-1" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="event-card-category category-soiree">Soirée</span>
+                <span class="badge badge-gray">Terminé</span>
+              </div>
+              <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;">Gala de Noël BDE 2024</h3>
+              <div style="display:flex; flex-direction:column; gap:0.25rem; margin-bottom:0.75rem;">
+                <span class="fs-sm text-muted">📅 Vendredi 20 Décembre 2024</span>
+                <span class="fs-sm text-muted">📍 Salle Pleyel, Paris</span>
+              </div>
+              <div class="d-flex gap-1 flex-wrap">
+                <span class="badge badge-success">✅ Présence validée</span>
+              </div>
+            </div>
+            <div class="ticket-side" style="background:#F3F4F6;">
+              <div class="ticket-code" style="color:var(--text-muted);">OE-2041</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB: Liste d'attente -->
+      <div class="tab-panel" id="tab-waitlist">
+        <div class="alert alert-info mb-3">
+          ℹ️ Tu seras automatiquement inscrit(e) si une place se libère. Tu recevras un email de confirmation.
+        </div>
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+
+          <div class="ticket-card" style="border-left-color:var(--warning);">
+            <div class="ticket-body">
+              <div class="d-flex justify-between align-center mb-1" style="flex-wrap:wrap; gap:0.5rem;">
+                <span class="event-card-category category-culture">Culture</span>
+                <span class="badge badge-warning">⏳ File d'attente #3</span>
+              </div>
+              <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;">Ciné-Club : Festival du Film Étudiant</h3>
+              <div style="display:flex; flex-direction:column; gap:0.25rem; margin-bottom:0.75rem;">
+                <span class="fs-sm text-muted">📅 Vendredi 4 Juillet 2025</span>
+                <span class="fs-sm text-muted">📍 Cinéma MK2, Paris · 0 place disponible</span>
+              </div>
+              <button class="btn btn-danger btn-sm" onclick="leaveWaitlist('OE-WL-001')">Quitter la liste</button>
+            </div>
+            <div class="ticket-side" style="background:#FEF3C7;">
+              <div class="ticket-code" style="color:var(--warning);">WL-001</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL: Voir le billet -->
+  <div class="modal-overlay" id="ticketModal">
+    <div class="modal" style="max-width:380px;">
+      <div class="modal-header">
+        <h3>🎟 Billet électronique</h3>
+        <button class="btn-close" onclick="closeTicketModal()">✕</button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fw-bold fs-sm" id="ticketEventName">Soirée d'Intégration BDE 2025</p>
+        <p class="text-muted fs-sm mb-2">📅 Vendredi 20 Juin 2025 · 20h00</p>
+
+        <!-- QR Code placeholder -->
+        <div style="width:180px; height:180px; margin:1.25rem auto; background:white; border:2px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          <div style="font-size:3rem;">📱</div>
+          <p class="fs-xs text-muted mt-1">QR Code</p>
+        </div>
+
+        <p class="fw-bold" style="font-family:monospace; font-size:1.125rem; color:var(--primary); letter-spacing:0.1em;" id="ticketCodeDisplay">OE-2025-4821</p>
+        <p class="fs-xs text-muted mt-1">Présentez ce code à l'entrée</p>
+
+        <div class="separator"></div>
+        <div style="display:flex; gap:0.5rem; justify-content:center;">
+          <button class="btn btn-primary btn-sm" onclick="downloadTicket()">⬇ Télécharger</button>
+          <button class="btn btn-outline btn-sm">📤 Partager</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Annulation -->
+  <div class="modal-overlay" id="cancelModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Annuler la réservation</h3>
+        <button class="btn-close" onclick="document.getElementById('cancelModal').classList.remove('open')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Es-tu sûr(e) de vouloir annuler ta réservation ? Cette action est irréversible.</p>
+        <p class="text-muted fs-sm mt-1">Ta place sera libérée et attribuée au premier de la liste d'attente.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="document.getElementById('cancelModal').classList.remove('open')">Garder ma place</button>
+        <button class="btn btn-danger" onclick="cancelReservation()">Confirmer l'annulation</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">🎉 OmnesEvent</div>
+      <div class="footer-bottom"><p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p></div>
+    </div>
+  </footer>
+
+  <script src="mes-billets.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmnesEvent — Créer un événement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="Index.html" class="navbar-brand">🎉 OmnesEvent</a>
+      <ul class="navbar-nav">
+        <li><a href="Index.html">Accueil</a></li>
+        <li><a href="mes-billets.html">Mes Billets</a></li>
+        <li><a href="creer-evenement.html" class="active">Créer un événement</a></li>
+        <li><a href="tableau-de-bord.html">Dashboard</a></li>
+        <li><a href="profil.html">Mon Profil</a></li>
+        <li><a href="connexion.html" class="btn btn-outline btn-sm">Déconnexion</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="Index.html">🏠 Accueil</a>
+    <a href="mes-billets.html">🎟 Mes Billets</a>
+    <a href="creer-evenement.html">➕ Créer un événement</a>
+    <a href="tableau-de-bord.html">📊 Dashboard</a>
+    <a href="profil.html">👤 Mon Profil</a>
+    <a href="connexion.html">🔐 Déconnexion</a>
+  </div>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>➕ Créer un événement</h1>
+      <p>Publie un nouvel événement pour la communauté Omnes.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width:800px;">
+
+      <div id="alertBox" class="alert alert-danger d-none"></div>
+      <div id="successBox" class="alert alert-success d-none">
+        ✅ Événement publié avec succès ! <a href="tableau-de-bord.html">Voir le tableau de bord →</a>
+      </div>
+
+      <form id="createEventForm" novalidate>
+
+        <!-- Section 1: Infos générales -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3>📝 Informations générales</h3>
+          </div>
+          <div class="card-body">
+
+            <div class="form-group">
+              <label class="form-label" for="titre">Titre de l'événement *</label>
+              <input type="text" id="titre" class="form-control" placeholder="Ex : Soirée d'intégration BDE 2025" maxlength="100">
+              <span class="form-error" id="titreError">Le titre est requis.</span>
+              <p class="form-hint"><span id="titreCount">0</span>/100 caractères</p>
+            </div>
+
+            <div class="form-row form-row-2">
+              <div class="form-group mb-0">
+                <label class="form-label" for="categorie">Catégorie *</label>
+                <select id="categorie" class="form-control">
+                  <option value="">Sélectionner...</option>
+                  <option value="soiree">🎵 Soirée</option>
+                  <option value="sport">⚽ Sport</option>
+                  <option value="culture">🎭 Culture</option>
+                  <option value="conference">🎤 Conférence</option>
+                </select>
+                <span class="form-error" id="categorieError">Veuillez choisir une catégorie.</span>
+              </div>
+              <div class="form-group mb-0">
+                <label class="form-label" for="association">Association organisatrice *</label>
+                <select id="association" class="form-control">
+                  <option value="">Sélectionner...</option>
+                  <option value="bde">BDE Omnes</option>
+                  <option value="bds">BDS Omnes</option>
+                  <option value="je">Junior Entreprise</option>
+                  <option value="culture">Club Culturel</option>
+                  <option value="cinema">Club Cinéma</option>
+                  <option value="bienetre">Asso Bien-être</option>
+                </select>
+                <span class="form-error" id="associationError">Veuillez sélectionner l'association.</span>
+              </div>
+            </div>
+
+            <div class="form-group mt-2">
+              <label class="form-label" for="description">Description *</label>
+              <textarea id="description" class="form-control" rows="5" placeholder="Décrivez votre événement : ambiance, programme, infos pratiques..." maxlength="1000"></textarea>
+              <span class="form-error" id="descriptionError">La description est requise (minimum 50 caractères).</span>
+              <p class="form-hint"><span id="descriptionCount">0</span>/1000 caractères</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 2: Date & Lieu -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3>📅 Date, heure & lieu</h3>
+          </div>
+          <div class="card-body">
+
+            <div class="form-row form-row-2">
+              <div class="form-group mb-0">
+                <label class="form-label" for="dateDebut">Date de début *</label>
+                <input type="date" id="dateDebut" class="form-control">
+                <span class="form-error" id="dateDebutError">La date de début est requise.</span>
+              </div>
+              <div class="form-group mb-0">
+                <label class="form-label" for="dateFin">Date de fin</label>
+                <input type="date" id="dateFin" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-row form-row-2 mt-2">
+              <div class="form-group mb-0">
+                <label class="form-label" for="heureDebut">Heure de début *</label>
+                <input type="time" id="heureDebut" class="form-control" value="18:00">
+                <span class="form-error" id="heureDebutError">L'heure de début est requise.</span>
+              </div>
+              <div class="form-group mb-0">
+                <label class="form-label" for="heureFin">Heure de fin</label>
+                <input type="time" id="heureFin" class="form-control" value="23:00">
+              </div>
+            </div>
+
+            <div class="form-group mt-2">
+              <label class="form-label" for="lieu">Lieu / Adresse *</label>
+              <input type="text" id="lieu" class="form-control" placeholder="Ex : Salle des fêtes, Campus Paris Étoile">
+              <span class="form-error" id="lieuError">Le lieu est requis.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="adresse">Adresse complète</label>
+              <input type="text" id="adresse" class="form-control" placeholder="Ex : 12 Rue de Presbourg, 75008 Paris">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 3: Capacité & Prix -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3>🎫 Capacité & Tarif</h3>
+          </div>
+          <div class="card-body">
+
+            <div class="form-row form-row-2">
+              <div class="form-group mb-0">
+                <label class="form-label" for="capacite">Capacité maximale *</label>
+                <input type="number" id="capacite" class="form-control" placeholder="Ex : 100" min="1" max="10000">
+                <span class="form-error" id="capaciteError">La capacité doit être supérieure à 0.</span>
+                <p class="form-hint">Les inscriptions seront bloquées une fois ce nombre atteint.</p>
+              </div>
+              <div class="form-group mb-0">
+                <label class="form-label" for="prix">Prix (€)</label>
+                <input type="number" id="prix" class="form-control" placeholder="0 = Gratuit" min="0" step="0.01" value="0">
+                <p class="form-hint">Laisser 0 pour un événement gratuit.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 4: Affiche -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3>🖼 Affiche de l'événement</h3>
+          </div>
+          <div class="card-body">
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('afficheInput').click()">
+              <input type="file" id="afficheInput" accept="image/*" style="display:none;">
+              <div class="upload-icon">📸</div>
+              <p class="upload-text">Cliquer pour ajouter une affiche</p>
+              <p class="upload-hint">PNG, JPG ou WEBP · Max 5 Mo · Recommandé : 1200×628px</p>
+              <img id="uploadPreview" class="upload-preview" alt="Aperçu de l'affiche">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Options avancées -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3>⚙️ Options</h3>
+          </div>
+          <div class="card-body">
+
+            <div class="form-group">
+              <div class="d-flex align-center gap-2">
+                <input type="checkbox" id="listeAttente" style="width:auto; accent-color:var(--primary);" checked>
+                <label for="listeAttente" style="cursor:pointer;">
+                  <span class="fw-semibold">Activer la liste d'attente</span>
+                  <span class="text-muted" style="display:block; font-size:0.8125rem;">Les participants pourront s'inscrire en liste d'attente si l'événement est complet.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group mb-0">
+              <div class="d-flex align-center gap-2">
+                <input type="checkbox" id="validation" style="width:auto; accent-color:var(--primary);">
+                <label for="validation" style="cursor:pointer;">
+                  <span class="fw-semibold">Validation manuelle des inscriptions</span>
+                  <span class="text-muted" style="display:block; font-size:0.8125rem;">Chaque inscription devra être approuvée par l'organisateur.</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2" style="flex-wrap:wrap; justify-content:flex-end;">
+          <button type="button" class="btn btn-ghost btn-lg" onclick="saveDraft()">
+            💾 Sauvegarder le brouillon
+          </button>
+          <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+            🚀 Publier l'événement
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">🎉 OmnesEvent</div>
+      <div class="footer-bottom"><p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p></div>
+    </div>
+  </footer>
+
+  <script src="creer-evenement.js"></script>
+</body>
+</html>

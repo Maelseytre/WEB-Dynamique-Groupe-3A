@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmnesEvent — Connexion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-logo">
+      <a href="Index.html" class="brand">🎉 OmnesEvent</a>
+      <p>La plateforme événementielle Omnes</p>
+    </div>
+
+    <h2 class="auth-title">Connexion</h2>
+    <p class="auth-subtitle">Content de te revoir ! Entre tes identifiants.</p>
+
+    <div id="alertBox" class="alert alert-danger d-none">
+      ❌ Email ou mot de passe incorrect.
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="email">Adresse email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          placeholder="prenom.nom@omneseducation.com"
+          autocomplete="email"
+        >
+        <span class="form-error" id="emailError">Veuillez entrer un email valide.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">
+          Mot de passe
+          <a href="#" style="font-weight:400; color:var(--primary); font-size:0.8125rem; float:right;">Mot de passe oublié ?</a>
+        </label>
+        <div style="position:relative;">
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            style="padding-right:3rem;"
+          >
+          <button type="button" id="togglePassword" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:1.1rem;">👁</button>
+        </div>
+        <span class="form-error" id="passwordError">Veuillez entrer votre mot de passe.</span>
+      </div>
+
+      <div class="form-group d-flex align-center gap-1">
+        <input type="checkbox" id="remember" style="width:auto; accent-color:var(--primary);">
+        <label for="remember" style="font-size:0.875rem; font-weight:400; cursor:pointer;">Se souvenir de moi</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full btn-lg" id="submitBtn">
+        Se connecter
+      </button>
+    </form>
+
+    <div class="divider">ou</div>
+
+    <div class="text-center" style="font-size:0.9375rem;">
+      Pas encore de compte ?
+      <a href="inscription.html" style="color:var(--primary); font-weight:600; text-decoration:none;">S'inscrire</a>
+    </div>
+
+    <div class="separator"></div>
+
+    <div style="background:var(--bg); border-radius:8px; padding:0.875rem; font-size:0.8125rem;">
+      <p class="fw-semibold mb-1">Comptes de démonstration :</p>
+      <p class="text-muted">👤 Participant : participant@demo.fr / demo123</p>
+      <p class="text-muted">🎪 Organisateur : organisateur@demo.fr / demo123</p>
+      <p class="text-muted">🔧 Admin : admin@demo.fr / demo123</p>
+    </div>
+  </div>
+
+  <script src="connexion.js"></script>
+</body>
+</html>
