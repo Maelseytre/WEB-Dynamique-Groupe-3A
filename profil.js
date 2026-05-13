@@ -8,6 +8,30 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// ===== CHARGEMENT DES DONNÉES UTILISATEUR =====
+requireAuth();
+
+(function loadUserData() {
+  const user = getUser();
+  if (!user) return;
+
+  const prenom = user.prenom || '';
+  const nom = user.nom || '';
+  const email = user.email || '';
+  const initiales = ((prenom[0] || '') + (nom[0] || '')).toUpperCase() || '?';
+
+  document.getElementById('displayName').textContent = `${prenom} ${nom}`.trim() || email;
+  document.getElementById('displayEmail').textContent = email;
+  document.getElementById('avatarDisplay').textContent = initiales;
+
+  const prenomInput = document.getElementById('prenom');
+  const nomInput = document.getElementById('nom');
+  const emailInput = document.getElementById('email');
+  if (prenomInput) prenomInput.value = prenom;
+  if (nomInput) nomInput.value = nom;
+  if (emailInput) emailInput.value = email;
+})();
+
 // ===== TABS =====
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabPanels = document.querySelectorAll('.tab-panel');
@@ -53,8 +77,15 @@ profileForm.addEventListener('submit', (e) => {
 
   document.getElementById('displayName').textContent = `${prenom} ${nom}`;
   document.getElementById('displayEmail').textContent = email;
-  document.getElementById('avatarDisplay').textContent = `${prenom[0]}${nom[0]}`.toUpperCase();
-  document.getElementById('avatarPreview').textContent = `${prenom[0]}${nom[0]}`.toUpperCase();
+  const initiales = (prenom[0] + nom[0]).toUpperCase();
+  document.getElementById('avatarDisplay').textContent = initiales;
+  document.getElementById('avatarPreview').textContent = initiales;
+
+  const user = getUser();
+  if (user) {
+    setUser({ ...user, prenom, nom, email });
+    updateNavbarAuth();
+  }
 
   saveAlert.classList.remove('d-none');
   setTimeout(() => saveAlert.classList.add('d-none'), 3000);

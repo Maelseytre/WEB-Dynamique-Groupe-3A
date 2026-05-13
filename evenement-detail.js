@@ -10,7 +10,7 @@ document.addEventListener('click', (e) => {
 
 // ===== MODAL RÉSERVATION =====
 function showReservationModal() {
-  const user = sessionStorage.getItem('user');
+  const user = localStorage.getItem('user');
   if (!user) {
     document.getElementById('loginAlert').style.display = 'flex';
     document.getElementById('reservationForm').style.display = 'none';
@@ -26,11 +26,36 @@ function closeModal() {
 }
 
 function confirmReservation() {
-  const user = sessionStorage.getItem('user');
+  const user = localStorage.getItem('user');
   if (!user) {
     window.location.href = 'connexion.html';
     return;
   }
+
+  const num = Math.floor(1000 + Math.random() * 9000);
+  const year = new Date().getFullYear();
+  const code = `OE-${year}-${num}`;
+  const shortCode = `OE-${num}`;
+
+  const billet = {
+    code,
+    shortCode,
+    eventName: "Soirée d'Intégration BDE 2025",
+    date: "Vendredi 20 Juin 2025 · 20h00",
+    lieu: "Salle des fêtes, Campus Paris",
+    category: "soiree",
+    categoryLabel: "Soirée",
+    nbPlaces: parseInt(document.getElementById('nbPlaces').value) || 1,
+    status: "upcoming"
+  };
+
+  const billets = JSON.parse(localStorage.getItem('billets') || '[]');
+  billets.push(billet);
+  localStorage.setItem('billets', JSON.stringify(billets));
+
+  const codeEl = document.querySelector('#successModal strong');
+  if (codeEl) codeEl.textContent = code;
+
   closeModal();
   setTimeout(() => {
     document.getElementById('successModal').classList.add('open');

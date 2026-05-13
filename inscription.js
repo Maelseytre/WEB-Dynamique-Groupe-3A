@@ -52,6 +52,32 @@ passwordInput.addEventListener('input', () => {
   strengthText.textContent = `Force du mot de passe : ${level.label}`;
 });
 
+// ===== CONFIRM PASSWORD REAL-TIME CHECK =====
+const confirmPasswordInput = document.getElementById('confirmPassword');
+const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+confirmPasswordInput.addEventListener('input', () => {
+  const pwd = passwordInput.value;
+  const confirm = confirmPasswordInput.value;
+
+  if (confirm.length === 0) {
+    confirmPasswordError.classList.remove('show');
+    confirmPasswordError.style.color = '';
+    confirmPasswordError.textContent = 'Les mots de passe ne correspondent pas.';
+    return;
+  }
+
+  if (pwd === confirm) {
+    confirmPasswordError.classList.add('show');
+    confirmPasswordError.style.color = '#10B981';
+    confirmPasswordError.textContent = '✅ Les mots de passe correspondent.';
+  } else {
+    confirmPasswordError.classList.add('show');
+    confirmPasswordError.style.color = '';
+    confirmPasswordError.textContent = 'Les mots de passe ne correspondent pas.';
+  }
+});
+
 // ===== FORM VALIDATION =====
 const registerForm = document.getElementById('registerForm');
 const alertBox = document.getElementById('alertBox');
@@ -77,7 +103,16 @@ registerForm.addEventListener('submit', (e) => {
   if (!nom) { showError('nomError'); valid = false; } else hideError('nomError');
   if (!email || !isValidEmail(email)) { showError('emailError'); valid = false; } else hideError('emailError');
   if (password.length < 8) { showError('passwordError'); valid = false; } else hideError('passwordError');
-  if (password !== confirmPassword) { showError('confirmPasswordError'); valid = false; } else hideError('confirmPasswordError');
+  if (password !== confirmPassword) {
+    confirmPasswordError.style.color = '';
+    confirmPasswordError.textContent = 'Les mots de passe ne correspondent pas.';
+    showError('confirmPasswordError');
+    valid = false;
+  } else {
+    confirmPasswordError.style.color = '';
+    confirmPasswordError.textContent = 'Les mots de passe ne correspondent pas.';
+    hideError('confirmPasswordError');
+  }
   if (role === 'organisateur' && !association) { showError('associationError'); valid = false; } else hideError('associationError');
   if (!cgu) { showError('cguError'); valid = false; } else hideError('cguError');
 
@@ -87,6 +122,20 @@ registerForm.addEventListener('submit', (e) => {
   submitBtn.textContent = 'Création en cours...';
 
   setTimeout(() => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const emailExists = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+    if (emailExists) {
+      alertBox.textContent = 'Un compte avec cet email existe déjà.';
+      alertBox.classList.remove('d-none');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Créer mon compte';
+      return;
+    }
+
+    users.push({ email, password, prenom, nom, role, association });
+    localStorage.setItem('users', JSON.stringify(users));
+
     successBox.classList.remove('d-none');
     registerForm.style.display = 'none';
     submitBtn.disabled = false;

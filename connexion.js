@@ -15,9 +15,9 @@ const alertBox = document.getElementById('alertBox');
 const submitBtn = document.getElementById('submitBtn');
 
 const DEMO_ACCOUNTS = {
-  'participant@demo.fr': { password: 'demo123', role: 'participant', redirect: 'Index.html' },
-  'organisateur@demo.fr': { password: 'demo123', role: 'organisateur', redirect: 'tableau-de-bord.html' },
-  'admin@demo.fr': { password: 'demo123', role: 'admin', redirect: 'admin.html' },
+  'participant@demo.fr': { password: 'demo123', role: 'participant', prenom: 'Demo', nom: 'Participant', redirect: 'Index.html' },
+  'organisateur@demo.fr': { password: 'demo123', role: 'organisateur', prenom: 'Demo', nom: 'Organisateur', redirect: 'tableau-de-bord.html' },
+  'admin@demo.fr': { password: 'demo123', role: 'admin', prenom: 'Demo', nom: 'Admin', redirect: 'admin.html' },
 };
 
 loginForm.addEventListener('submit', (e) => {
@@ -56,13 +56,29 @@ loginForm.addEventListener('submit', (e) => {
     const account = DEMO_ACCOUNTS[email.toLowerCase()];
 
     if (account && account.password === password) {
-      sessionStorage.setItem('user', JSON.stringify({ email, role: account.role }));
+      localStorage.setItem('user', JSON.stringify({ email, role: account.role, prenom: account.prenom, nom: account.nom }));
       window.location.href = account.redirect;
-    } else {
-      alertBox.classList.remove('d-none');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Se connecter';
+      return;
     }
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const registeredUser = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+
+    if (registeredUser) {
+      const redirect = registeredUser.role === 'organisateur' ? 'tableau-de-bord.html' : 'Index.html';
+      localStorage.setItem('user', JSON.stringify({
+        email: registeredUser.email,
+        role: registeredUser.role,
+        prenom: registeredUser.prenom,
+        nom: registeredUser.nom
+      }));
+      window.location.href = redirect;
+      return;
+    }
+
+    alertBox.classList.remove('d-none');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Se connecter';
   }, 800);
 });
 
