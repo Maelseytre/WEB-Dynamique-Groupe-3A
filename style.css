@@ -51,11 +51,23 @@ body {
 .navbar-brand {
   font-size: 1.25rem;
   font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.navbar-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.navbar-brand span {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-decoration: none;
 }
 .navbar-nav {
   display: flex;
