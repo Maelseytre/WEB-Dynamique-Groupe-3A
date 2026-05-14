@@ -47,33 +47,32 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 .navbar-brand {
   font-size: 1.25rem;
   font-weight: 800;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-  text-decoration: none;
-}
-.navbar-logo {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  border-radius: 4px;
-}
-.navbar-brand span {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.navbar-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 5px;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
 }
 .navbar-nav {
   display: flex;
   align-items: center;
   gap: 0.25rem;
   list-style: none;
+  margin-left: auto;
 }
 .navbar-nav a {
   color: var(--text-muted);
@@ -580,6 +579,16 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 @media (max-width: 768px) {
   .navbar-nav { display: none; }
   .hamburger { display: flex; }
+  .navbar-logo {
+    width: 34px;
+    height: 34px;
+    margin-left: 0.5rem;
+    order: 3;
+  }
+  .hamburger {
+    order: 2;
+    margin-left: auto;
+  }
   .hide-mobile { display: none !important; }
 }
 @media (min-width: 769px) { .show-mobile { display: none !important; } }
