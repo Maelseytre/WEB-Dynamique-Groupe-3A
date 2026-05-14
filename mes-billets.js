@@ -40,13 +40,13 @@ function renderTicketCard(billet) {
         </div>
         <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;">${billet.eventName}</h3>
         <div style="display:flex; flex-direction:column; gap:0.25rem; margin-bottom:0.75rem;">
-          <span class="fs-sm text-muted">📅 ${billet.date}</span>
-          <span class="fs-sm text-muted">📍 ${billet.lieu}</span>
+          <span class="fs-sm text-muted">${billet.date}</span>
+          <span class="fs-sm text-muted">${billet.lieu}</span>
         </div>
         <div class="d-flex gap-1 flex-wrap">
           <button class="btn btn-primary btn-sm" onclick="showTicketModal('${billet.code}', '${safeEventName}', '${safeDate}')">Voir le billet</button>
-          <button class="btn btn-outline btn-sm" onclick="downloadTicket()">⬇ Télécharger</button>
-          <button class="btn btn-ghost btn-sm" onclick="confirmCancel('${billet.code}')" style="color:var(--danger);">✕ Annuler</button>
+          <button class="btn btn-outline btn-sm" onclick="downloadTicket()">Télécharger</button>
+          <button class="btn btn-ghost btn-sm" onclick="confirmCancel('${billet.code}')" style="color:var(--danger);">× Annuler</button>
         </div>
       </div>
       <div class="ticket-side">
@@ -84,7 +84,7 @@ let currentCancelCode = null;
 function showTicketModal(code, eventName, date) {
   document.getElementById('ticketCodeDisplay').textContent = code;
   document.getElementById('ticketEventName').textContent = eventName || '';
-  document.getElementById('ticketEventDate').textContent = date ? '📅 ' + date : '';
+  document.getElementById('ticketEventDate').textContent = date || '';
   document.getElementById('ticketModal').classList.add('open');
 }
 
@@ -113,7 +113,7 @@ function cancelReservation() {
 
   const alertEl = document.createElement('div');
   alertEl.className = 'alert alert-success';
-  alertEl.textContent = `✅ Réservation ${currentCancelCode} annulée. Ta place a été libérée.`;
+  alertEl.textContent = `Réservation ${currentCancelCode} annulée. Ta place a été libérée.`;
   document.querySelector('.container').prepend(alertEl);
   setTimeout(() => alertEl.remove(), 4000);
 

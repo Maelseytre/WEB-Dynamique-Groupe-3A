@@ -21,7 +21,7 @@ const passwordInput = document.getElementById('password');
 togglePassword.addEventListener('click', () => {
   const type = passwordInput.type === 'password' ? 'text' : 'password';
   passwordInput.type = type;
-  togglePassword.textContent = type === 'password' ? '👁' : '🙈';
+  togglePassword.textContent = type === 'password' ? 'Voir' : 'Cacher';
 });
 
 // ===== PASSWORD STRENGTH =====
@@ -70,7 +70,7 @@ confirmPasswordInput.addEventListener('input', () => {
   if (pwd === confirm) {
     confirmPasswordError.classList.add('show');
     confirmPasswordError.style.color = '#10B981';
-    confirmPasswordError.textContent = '✅ Les mots de passe correspondent.';
+    confirmPasswordError.textContent = 'Les mots de passe correspondent.';
   } else {
     confirmPasswordError.classList.add('show');
     confirmPasswordError.style.color = '';

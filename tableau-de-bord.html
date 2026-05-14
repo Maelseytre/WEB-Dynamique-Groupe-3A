@@ -12,7 +12,7 @@
 
   <nav class="navbar">
     <div class="navbar-inner">
-      <a href="Index.html" class="navbar-brand">🎉 OmnesEvent</a>
+      <a href="Index.html" class="navbar-brand">OmnesEvent</a>
       <ul class="navbar-nav">
         <li><a href="Index.html">Accueil</a></li>
         <li><a href="creer-evenement.html">Créer un événement</a></li>
@@ -25,21 +25,21 @@
     </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="Index.html">🏠 Accueil</a>
-    <a href="creer-evenement.html">➕ Créer un événement</a>
-    <a href="tableau-de-bord.html">📊 Dashboard</a>
-    <a href="profil.html">👤 Mon Profil</a>
-    <a href="connexion.html">🚪 Déconnexion</a>
+    <a href="Index.html">Accueil</a>
+    <a href="creer-evenement.html">Créer un événement</a>
+    <a href="tableau-de-bord.html">Dashboard</a>
+    <a href="profil.html">Mon Profil</a>
+    <a href="connexion.html">Déconnexion</a>
   </div>
 
   <div class="page-header">
     <div class="container">
       <div class="d-flex justify-between align-center flex-wrap gap-2">
         <div>
-          <h1>📊 Tableau de bord</h1>
-          <p>Bienvenue, <strong>Sophie Martin</strong> (BDE Omnes)</p>
+          <h1> Tableau de bord</h1>
+          <p id="dashWelcome">Bienvenue</p>
         </div>
-        <a href="creer-evenement.html" class="btn btn-primary">➕ Nouvel événement</a>
+        <a href="creer-evenement.html" class="btn btn-primary"> Nouvel événement</a>
       </div>
     </div>
   </div>
@@ -50,30 +50,30 @@
       <!-- STATS -->
       <div class="grid grid-4 mb-4">
         <div class="stat-card">
-          <div class="stat-icon stat-icon-primary">🎪</div>
+          <div class="stat-icon stat-icon-primary"></div>
           <div>
-            <div class="stat-value">4</div>
+            <div class="stat-value" id="statActifsDB">0</div>
             <div class="stat-label">Événements actifs</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon stat-icon-success">👥</div>
+          <div class="stat-icon stat-icon-success"></div>
           <div>
-            <div class="stat-value">234</div>
+            <div class="stat-value" id="statInscritsDB">0</div>
             <div class="stat-label">Inscrits total</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon stat-icon-warning">⏳</div>
+          <div class="stat-icon stat-icon-warning"></div>
           <div>
-            <div class="stat-value">18</div>
+            <div class="stat-value" id="statAttenteDB">0</div>
             <div class="stat-label">Liste d'attente</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon stat-icon-danger">✅</div>
+          <div class="stat-icon stat-icon-danger"></div>
           <div>
-            <div class="stat-value">12</div>
+            <div class="stat-value" id="statPassesDB">0</div>
             <div class="stat-label">Événements passés</div>
           </div>
         </div>
@@ -100,11 +100,11 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="eventsTableBody">
               <tr>
                 <td>
                   <div class="d-flex align-center gap-2">
-                    <div style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#7C3AED,#EC4899); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">🎵</div>
+                    <div style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#7C3AED,#EC4899); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;"></div>
                     <div>
                       <p class="fw-semibold fs-sm">Soirée d'Intégration BDE 2025</p>
                       <p class="fs-xs text-muted">Soirée · BDE Omnes</p>
@@ -125,7 +125,7 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt1')">Inscrits</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt1')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt1')" style="color:var(--danger);">🗑</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt1')" style="color:var(--danger);"></button>
                   </div>
                 </td>
               </tr>
@@ -153,7 +153,7 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt2')">Inscrits</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt2')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt2')" style="color:var(--danger);">🗑</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt2')" style="color:var(--danger);"></button>
                   </div>
                 </td>
               </tr>
@@ -181,7 +181,7 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt3')">Inscrits</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt3')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt3')" style="color:var(--danger);">🗑</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt3')" style="color:var(--danger);"></button>
                   </div>
                 </td>
               </tr>
@@ -209,7 +209,7 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-primary btn-sm" onclick="publishEvent('evt4')">Publier</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt4')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt4')" style="color:var(--danger);">🗑</button>
+                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt4')" style="color:var(--danger);"></button>
                   </div>
                 </td>
               </tr>
@@ -231,7 +231,7 @@
                   <option value="evt2">Soirée Internationale</option>
                   <option value="evt3">Ciné-Club</option>
                 </select>
-                <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
+                <button class="btn btn-outline btn-sm" onclick="exportCSV()"> Export CSV</button>
               </div>
             </div>
           </div>
@@ -313,7 +313,7 @@
                     <td class="fs-sm text-muted">8 Mai 2025</td>
                     <td><span class="badge badge-success">Confirmé</span></td>
                     <td>
-                      <span class="badge badge-success">✅ Présent(e)</span>
+                      <span class="badge badge-success">Présent(e)</span>
                     </td>
                   </tr>
                 </tbody>
@@ -413,7 +413,7 @@
     <div class="modal">
       <div class="modal-header">
         <h3 style="color:var(--danger);">Supprimer l'événement</h3>
-        <button class="btn-close" onclick="document.getElementById('deleteModal').classList.remove('open')">✕</button>
+        <button class="btn-close" onclick="document.getElementById('deleteModal').classList.remove('open')">×</button>
       </div>
       <div class="modal-body">
         <p>Es-tu sûr(e) de vouloir supprimer cet événement ? Tous les inscrits seront notifiés par email.</p>
@@ -427,7 +427,7 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand">🎉 OmnesEvent</div>
+      <div class="footer-brand">OmnesEvent</div>
       <div class="footer-bottom"><p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p></div>
     </div>
   </footer>

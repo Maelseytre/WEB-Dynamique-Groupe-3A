@@ -95,6 +95,6 @@ let saved = false;
 function saveEvent() {
   const btn = document.getElementById('saveBtn');
   saved = !saved;
-  btn.textContent = saved ? '🔖 Sauvegardé !' : '🔖 Sauvegarder';
+  btn.textContent = saved ? ' Sauvegardé !' : 'Sauvegarder';
   btn.style.color = saved ? 'var(--primary)' : '';
 }

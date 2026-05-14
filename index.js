@@ -89,6 +89,50 @@ function filterEvents() {
   }
 }
 
+// ===== EVENEMENTS CREES PAR LES UTILISATEURS =====
+function renderUserEvents() {
+  const events = JSON.parse(localStorage.getItem('events') || '[]');
+  if (events.length === 0) return;
+
+  events.forEach(evt => {
+    const card = document.createElement('a');
+    card.href = 'evenement-detail.html';
+    card.className = 'event-card';
+    card.dataset.category = evt.categorie;
+
+    const pct = evt.capacite > 0 ? Math.min(100, Math.round((evt.inscrits / evt.capacite) * 100)) : 0;
+    const dateLabel = evt.dateDebut
+      ? new Date(evt.dateDebut + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+      : '';
+
+    card.innerHTML = `
+      <div class="event-card-image" style="${evt.image ? '' : 'background:var(--bg-elevated);'}">
+        ${evt.image ? `<img src="${evt.image}" alt="${evt.titre}">` : ''}
+      </div>
+      <div class="event-card-body">
+        <span class="event-card-category category-${evt.categorie}">${evt.categorieLabel}</span>
+        <h3 class="event-card-title">${evt.titre}</h3>
+        <div class="event-card-meta">
+          <span>${dateLabel}</span>
+          <span>${evt.lieu}</span>
+          <span>${evt.associationLabel}</span>
+        </div>
+        <div class="event-card-footer">
+          <div class="capacity-bar"><div class="capacity-fill" style="width:${pct}%;"></div></div>
+          <span class="capacity-text">${evt.inscrits}/${evt.capacite} places</span>
+        </div>
+      </div>
+    `;
+
+    eventsGrid.appendChild(card);
+  });
+
+  const total = eventsGrid.querySelectorAll('.event-card').length;
+  resultCount.textContent = `${total} événement${total > 1 ? 's' : ''} trouvé${total > 1 ? 's' : ''}`;
+}
+
+renderUserEvents();
+
 // ===== SORT =====
 const sortSelect = document.getElementById('sortSelect');
 sortSelect.addEventListener('change', () => {

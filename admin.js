@@ -28,7 +28,7 @@ function approveAccount(id) {
   row.style.opacity = '0.5';
   row.style.transition = 'opacity 0.3s';
   setTimeout(() => row.remove(), 300);
-  showToast(`✅ Compte de ${name} approuvé. Un email de confirmation a été envoyé.`, 'success');
+  showToast(`Compte de ${name} approuvé. Un email de confirmation a été envoyé.`, 'success');
   updatePendingCount(-1);
 }
 
@@ -79,7 +79,7 @@ function deleteUser(id) {
   document.getElementById('actionModal').classList.add('open');
   document.getElementById('actionModalConfirm').onclick = () => {
     document.getElementById('actionModal').classList.remove('open');
-    showToast('🗑 Utilisateur supprimé.', 'danger');
+    showToast(' Utilisateur supprimé.', 'danger');
   };
 }
 
@@ -96,17 +96,17 @@ function removeEvent(id) {
   document.getElementById('actionModal').classList.add('open');
   document.getElementById('actionModalConfirm').onclick = () => {
     document.getElementById('actionModal').classList.remove('open');
-    showToast('🚫 Événement retiré de la plateforme.', 'danger');
+    showToast(' Événement retiré de la plateforme.', 'danger');
   };
 }
 
 // ===== SIGNALEMENTS =====
 function warnUser(id) {
-  showToast('⚠️ Avertissement envoyé à l\'organisateur.', 'warning');
+  showToast('Avertissement envoyé à l\'organisateur.', 'warning');
 }
 
 function contactOrganizer(id) {
-  showToast('📧 Email envoyé à l\'organisateur.', 'success');
+  showToast(' Email envoyé à l\'organisateur.', 'success');
 }
 
 function dismissSignal(id) {

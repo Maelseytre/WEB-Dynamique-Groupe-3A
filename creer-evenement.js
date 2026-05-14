@@ -39,7 +39,7 @@ afficheInput.addEventListener('change', () => {
   reader.onload = (e) => {
     uploadPreview.src = e.target.result;
     uploadPreview.style.display = 'block';
-    uploadArea.querySelector('.upload-icon').textContent = '✅';
+    uploadArea.querySelector('.upload-icon').textContent = '';
     uploadArea.querySelector('.upload-text').textContent = file.name;
   };
   reader.readAsDataURL(file);
@@ -122,15 +122,54 @@ createEventForm.addEventListener('submit', (e) => {
   submitBtn.textContent = 'Publication en cours...';
 
   setTimeout(() => {
+    const user = getUser();
+    const categorieVal = document.getElementById('categorie').value;
+    const associationVal = document.getElementById('association').value;
+
+    const categorieLabels = { soiree: 'Soirée', sport: 'Sport', culture: 'Culture', conference: 'Conférence' };
+    const associationLabels = { bde: 'BDE Omnes', bds: 'BDS Omnes', je: 'Junior Entreprise', culture: 'Club Culturel', cinema: 'Club Cinéma', bienetre: 'Asso Bien-être' };
+
+    const imageData = uploadPreview.style.display !== 'none' && uploadPreview.src ? uploadPreview.src : null;
+
+    const newEvent = {
+      id: 'evt-' + Date.now(),
+      titre: document.getElementById('titre').value.trim(),
+      categorie: categorieVal,
+      categorieLabel: categorieLabels[categorieVal] || categorieVal,
+      association: associationVal,
+      associationLabel: associationLabels[associationVal] || associationVal,
+      description: document.getElementById('description').value.trim(),
+      dateDebut: document.getElementById('dateDebut').value,
+      heureDebut: document.getElementById('heureDebut').value,
+      dateFin: document.getElementById('dateFin').value || document.getElementById('dateDebut').value,
+      heureFin: document.getElementById('heureFin').value,
+      lieu: document.getElementById('lieu').value.trim(),
+      adresse: document.getElementById('adresse').value.trim(),
+      capacite: parseInt(document.getElementById('capacite').value),
+      prix: parseFloat(document.getElementById('prix').value) || 0,
+      image: imageData,
+      listeAttente: document.getElementById('listeAttente').checked,
+      validation: document.getElementById('validation').checked,
+      status: 'published',
+      inscrits: 0,
+      createdAt: Date.now(),
+      createdBy: user ? user.email : 'anonymous'
+    };
+
+    const events = JSON.parse(localStorage.getItem('events') || '[]');
+    events.push(newEvent);
+    localStorage.setItem('events', JSON.stringify(events));
+    localStorage.removeItem('eventDraft');
+
     successBox.classList.remove('d-none');
     createEventForm.reset();
     uploadPreview.style.display = 'none';
-    uploadArea.querySelector('.upload-icon').textContent = '📸';
+    uploadArea.querySelector('.upload-icon').textContent = '';
     uploadArea.querySelector('.upload-text').textContent = 'Cliquer pour ajouter une affiche';
     titreCount.textContent = '0';
     descriptionCount.textContent = '0';
     submitBtn.disabled = false;
-    submitBtn.textContent = '🚀 Publier l\'événement';
+    submitBtn.textContent = "Publier l'événement";
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 1000);
 });

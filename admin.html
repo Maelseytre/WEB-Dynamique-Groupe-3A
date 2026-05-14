@@ -12,7 +12,7 @@
 
   <nav class="navbar">
     <div class="navbar-inner">
-      <a href="Index.html" class="navbar-brand">🎉 OmnesEvent</a>
+      <a href="Index.html" class="navbar-brand">OmnesEvent</a>
       <ul class="navbar-nav">
         <li><a href="Index.html">Accueil</a></li>
         <li><a href="admin.html" class="active">Administration</a></li>
@@ -24,10 +24,10 @@
     </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="Index.html">🏠 Accueil</a>
+    <a href="Index.html">Accueil</a>
     <a href="admin.html">🔧 Administration</a>
-    <a href="profil.html">👤 Mon Profil</a>
-    <a href="connexion.html">🚪 Déconnexion</a>
+    <a href="profil.html">Mon Profil</a>
+    <a href="connexion.html">Déconnexion</a>
   </div>
 
   <!-- Admin badge -->
@@ -55,21 +55,21 @@
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon stat-icon-success">🎪</div>
+          <div class="stat-icon stat-icon-success"></div>
           <div>
             <div class="stat-value">48</div>
             <div class="stat-label">Événements actifs</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon stat-icon-warning">⏳</div>
+          <div class="stat-icon stat-icon-warning"></div>
           <div>
             <div class="stat-value">5</div>
             <div class="stat-label">Comptes en attente</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon stat-icon-danger">⚠️</div>
+          <div class="stat-icon stat-icon-danger"></div>
           <div>
             <div class="stat-value">2</div>
             <div class="stat-label">Signalements</div>
@@ -88,7 +88,7 @@
       <!-- TAB: Comptes organisateur en attente -->
       <div class="tab-panel active" id="tab-comptes">
         <div class="alert alert-info mb-3">
-          ℹ️ Ces comptes organisateurs attendent votre validation avant de pouvoir créer des événements.
+          Ces comptes organisateurs attendent votre validation avant de pouvoir créer des événements.
         </div>
         <div class="table-container">
           <table class="table">
@@ -116,7 +116,7 @@
                 <td>
                   <div class="d-flex gap-1">
                     <button class="btn btn-success btn-sm" onclick="approveAccount(1)">✓ Approuver</button>
-                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(1)">✕ Refuser</button>
+                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(1)">× Refuser</button>
                   </div>
                 </td>
               </tr>
@@ -135,7 +135,7 @@
                 <td>
                   <div class="d-flex gap-1">
                     <button class="btn btn-success btn-sm" onclick="approveAccount(2)">✓ Approuver</button>
-                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(2)">✕ Refuser</button>
+                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(2)">× Refuser</button>
                   </div>
                 </td>
               </tr>
@@ -154,7 +154,7 @@
                 <td>
                   <div class="d-flex gap-1">
                     <button class="btn btn-success btn-sm" onclick="approveAccount(3)">✓ Approuver</button>
-                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(3)">✕ Refuser</button>
+                    <button class="btn btn-danger btn-sm" onclick="rejectAccount(3)">× Refuser</button>
                   </div>
                 </td>
               </tr>
@@ -210,7 +210,7 @@
                       <div class="d-flex gap-1">
                         <button class="btn btn-outline btn-sm" onclick="viewUser(1)">Voir</button>
                         <button class="btn btn-ghost btn-sm" onclick="suspendUser(1)" style="color:var(--warning);">⏸</button>
-                        <button class="btn btn-ghost btn-sm" onclick="deleteUser(1)" style="color:var(--danger);">🗑</button>
+                        <button class="btn btn-ghost btn-sm" onclick="deleteUser(1)" style="color:var(--danger);"></button>
                       </div>
                     </td>
                   </tr>
@@ -231,7 +231,7 @@
                       <div class="d-flex gap-1">
                         <button class="btn btn-outline btn-sm" onclick="viewUser(2)">Voir</button>
                         <button class="btn btn-ghost btn-sm" onclick="suspendUser(2)" style="color:var(--warning);">⏸</button>
-                        <button class="btn btn-ghost btn-sm" onclick="deleteUser(2)" style="color:var(--danger);">🗑</button>
+                        <button class="btn btn-ghost btn-sm" onclick="deleteUser(2)" style="color:var(--danger);"></button>
                       </div>
                     </td>
                   </tr>
@@ -286,7 +286,7 @@
                 <td>
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewEvent(1)">Voir</button>
-                    <button class="btn btn-danger btn-sm" onclick="removeEvent(1)">🚫 Retirer</button>
+                    <button class="btn btn-danger btn-sm" onclick="removeEvent(1)"> Retirer</button>
                   </div>
                 </td>
               </tr>
@@ -302,7 +302,7 @@
                 <td>
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewEvent(2)">Voir</button>
-                    <button class="btn btn-danger btn-sm" onclick="removeEvent(2)">🚫 Retirer</button>
+                    <button class="btn btn-danger btn-sm" onclick="removeEvent(2)"> Retirer</button>
                   </div>
                 </td>
               </tr>
@@ -318,14 +318,14 @@
           <div class="card" style="border-left:4px solid var(--danger);">
             <div class="card-body">
               <div class="d-flex justify-between align-center mb-2" style="flex-wrap:wrap; gap:0.5rem;">
-                <span class="badge badge-danger">⚠️ Contenu inapproprié</span>
+                <span class="badge badge-danger">Contenu inapproprié</span>
                 <span class="fs-xs text-muted">Signalé le 11 Mai 2025</span>
               </div>
               <p class="fw-semibold fs-sm mb-1">Événement : "Soirée privée (non officielle)"</p>
               <p class="text-muted fs-sm mb-2">Signalé par : Marie Laurent — "Cet événement n'est pas approuvé par le BDE et collecte des données personnelles."</p>
               <div class="d-flex gap-1 flex-wrap">
-                <button class="btn btn-danger btn-sm" onclick="removeEvent('sig1')">🚫 Supprimer l'événement</button>
-                <button class="btn btn-outline btn-sm" onclick="warnUser('sig1')">⚠️ Avertir l'organisateur</button>
+                <button class="btn btn-danger btn-sm" onclick="removeEvent('sig1')"> Supprimer l'événement</button>
+                <button class="btn btn-outline btn-sm" onclick="warnUser('sig1')">Avertir l'organisateur</button>
                 <button class="btn btn-ghost btn-sm" onclick="dismissSignal('sig1')">Ignorer</button>
               </div>
             </div>
@@ -334,13 +334,13 @@
           <div class="card" style="border-left:4px solid var(--warning);">
             <div class="card-body">
               <div class="d-flex justify-between align-center mb-2" style="flex-wrap:wrap; gap:0.5rem;">
-                <span class="badge badge-warning">⚠️ Informations incorrectes</span>
+                <span class="badge badge-warning">Informations incorrectes</span>
                 <span class="fs-xs text-muted">Signalé le 10 Mai 2025</span>
               </div>
               <p class="fw-semibold fs-sm mb-1">Événement : "Tournoi de Football Inter-Écoles"</p>
               <p class="text-muted fs-sm mb-2">Signalé par : Alex Bernard — "L'adresse du lieu est incorrecte, ce n'est pas le terrain Nord mais le terrain Sud."</p>
               <div class="d-flex gap-1 flex-wrap">
-                <button class="btn btn-outline btn-sm" onclick="contactOrganizer('sig2')">📧 Contacter l'organisateur</button>
+                <button class="btn btn-outline btn-sm" onclick="contactOrganizer('sig2')"> Contacter l'organisateur</button>
                 <button class="btn btn-ghost btn-sm" onclick="dismissSignal('sig2')">Ignorer</button>
               </div>
             </div>
@@ -357,7 +357,7 @@
     <div class="modal">
       <div class="modal-header">
         <h3 id="actionModalTitle">Confirmer l'action</h3>
-        <button class="btn-close" onclick="document.getElementById('actionModal').classList.remove('open')">✕</button>
+        <button class="btn-close" onclick="document.getElementById('actionModal').classList.remove('open')">×</button>
       </div>
       <div class="modal-body">
         <p id="actionModalMessage">Êtes-vous sûr de vouloir effectuer cette action ?</p>
@@ -375,7 +375,7 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand">🎉 OmnesEvent</div>
+      <div class="footer-brand">OmnesEvent</div>
       <div class="footer-bottom"><p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p></div>
     </div>
   </footer>
