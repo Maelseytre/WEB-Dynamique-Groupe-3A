@@ -11,8 +11,8 @@
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="navbar-inner">
+  <nav class="menu">
+    <div class="nav-menu">
       <a href="Index.html" class="navbar-brand">OmnesEvent</a>
       <ul class="navbar-nav">
         <li><a href="Index.html" class="active">Accueil</a></li>
@@ -68,12 +68,12 @@
   <!-- EVENTS SECTION -->
   <section class="section">
     <div class="container">
-      <div class="d-flex align-center justify-between mb-3" style="flex-wrap:wrap; gap:0.75rem;">
+      <div class="d-flex align-center justify-between mb-3 section-header">
         <div>
-          <h2 style="font-size:1.25rem; font-weight:800;">Événements à venir</h2>
+          <h2 class="section-title">Événements à venir</h2>
           <p class="text-muted fs-sm" id="resultCount">9 événements trouvés</p>
         </div>
-        <select class="form-control" id="sortSelect" style="width:auto; padding:0.5rem 2rem 0.5rem 0.75rem;">
+        <select class="form-control select-compact" id="sortSelect">
           <option value="date">Trier par date</option>
           <option value="name">Trier par nom</option>
         </select>
@@ -94,7 +94,7 @@
               <span>BDE Omnes</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:75%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 75%;"></div></div>
               <span class="capacity-text">75/100 places</span>
             </div>
           </div>
@@ -113,7 +113,7 @@
               <span>BDS Omnes</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:40%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 40%;"></div></div>
               <span class="capacity-text">24/60 places</span>
             </div>
           </div>
@@ -132,7 +132,7 @@
               <span>Club Culturel</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:90%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 90%;"></div></div>
               <span class="capacity-text">27/30 places</span>
             </div>
           </div>
@@ -151,7 +151,7 @@
               <span>Junior Entreprise</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:55%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 55%;"></div></div>
               <span class="capacity-text">110/200 places</span>
             </div>
           </div>
@@ -170,7 +170,7 @@
               <span>BDS Omnes</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:20%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 20%;"></div></div>
               <span class="capacity-text">15/80 places</span>
             </div>
           </div>
@@ -179,7 +179,7 @@
         <a href="evenement-detail.html" class="event-card" data-category="culture">
           <div class="event-card-image">
             <img src="images/illustration_festival_1.jpeg" alt="Festival étudiant">
-            <div style="position:absolute;top:0.75rem;right:0.75rem;">
+            <div class="event-card-badge">
               <span class="badge badge-danger">COMPLET</span>
             </div>
           </div>
@@ -192,8 +192,8 @@
               <span>Club Cinéma</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:100%; background:var(--danger);"></div></div>
-              <span class="capacity-text" style="color:var(--danger);">50/50 — Complet</span>
+              <div class="capacity-bar"><div class="capacity-fill capacity-fill--danger" style="--fill: 100%;"></div></div>
+              <span class="capacity-text text-danger">50/50 — Complet</span>
             </div>
           </div>
         </a>
@@ -211,7 +211,7 @@
               <span>Asso Bien-être</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:30%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 30%;"></div></div>
               <span class="capacity-text">9/30 places</span>
             </div>
           </div>
@@ -230,7 +230,7 @@
               <span>BDE Omnes</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:60%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 60%;"></div></div>
               <span class="capacity-text">60/100 places</span>
             </div>
           </div>
@@ -249,7 +249,7 @@
               <span>Junior Entreprise</span>
             </div>
             <div class="event-card-footer">
-              <div class="capacity-bar"><div class="capacity-fill" style="width:70%;"></div></div>
+              <div class="capacity-bar"><div class="capacity-fill" style="--fill: 70%;"></div></div>
               <span class="capacity-text">210/300 places</span>
             </div>
           </div>
@@ -269,7 +269,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">OmnesEvent</div>
-      <p style="font-size:0.875rem; margin-top:0.5rem; color:#9CA3AF;">La plateforme événementielle des étudiants Omnes Education.</p>
+      <p class="footer-tagline">La plateforme événementielle des étudiants Omnes Education.</p>
       <div class="footer-bottom">
         <p>&copy; 2025 OmnesEvent — Projet Web Dynamique ING2</p>
       </div>

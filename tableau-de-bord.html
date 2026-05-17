@@ -10,8 +10,8 @@
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navbar-inner">
+  <nav class="menu">
+    <div class="nav-menu">
       <a href="Index.html" class="navbar-brand">OmnesEvent</a>
       <ul class="navbar-nav">
         <li><a href="Index.html">Accueil</a></li>
@@ -104,7 +104,7 @@
               <tr>
                 <td>
                   <div class="d-flex align-center gap-2">
-                    <div style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#7C3AED,#EC4899); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;"></div>
+                    <div class="event-icon event-icon--soiree"></div>
                     <div>
                       <p class="fw-semibold fs-sm">Soirée d'Intégration BDE 2025</p>
                       <p class="fs-xs text-muted">Soirée · BDE Omnes</p>
@@ -115,8 +115,8 @@
                 <td>
                   <div>
                     <span class="fw-semibold">75</span><span class="text-muted fs-sm">/100</span>
-                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
-                      <div class="capacity-fill" style="width:75%;"></div>
+                    <div class="capacity-bar capacity-bar--mini mt-1">
+                      <div class="capacity-fill" style="--fill: 75%;"></div>
                     </div>
                   </div>
                 </td>
@@ -125,14 +125,14 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt1')">Inscrits</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt1')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt1')" style="color:var(--danger);"></button>
+                    <button class="btn btn-ghost btn-sm btn-ghost--danger" onclick="deleteEvent('evt1')"></button>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
                   <div class="d-flex align-center gap-2">
-                    <div style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg,#DC2626,#F97316); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">🍕</div>
+                    <div class="event-icon event-icon--gastronomie">🍕</div>
                     <div>
                       <p class="fw-semibold fs-sm">Soirée Internationale & Gastronomie</p>
                       <p class="fs-xs text-muted">Soirée · BDE Omnes</p>
@@ -143,8 +143,8 @@
                 <td>
                   <div>
                     <span class="fw-semibold">60</span><span class="text-muted fs-sm">/100</span>
-                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
-                      <div class="capacity-fill" style="width:60%;"></div>
+                    <div class="capacity-bar capacity-bar--mini mt-1">
+                      <div class="capacity-fill" style="--fill: 60%;"></div>
                     </div>
                   </div>
                 </td>
@@ -153,14 +153,14 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt2')">Inscrits</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt2')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt2')" style="color:var(--danger);"></button>
+                    <button class="btn btn-ghost btn-sm btn-ghost--danger" onclick="deleteEvent('evt2')"></button>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
                   <div class="d-flex align-center gap-2">
-                    <div style="width:36px; height:36px; border-radius:8px; background:#F3F4F6; display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">🎬</div>
+                    <div class="event-icon event-icon--neutral">🎬</div>
                     <div>
                       <p class="fw-semibold fs-sm">Ciné-Club : Festival du Film Étudiant</p>
                       <p class="fs-xs text-muted">Culture · Club Cinéma</p>
@@ -170,9 +170,9 @@
                 <td class="fs-sm">Ven. 4 Juil. 2025</td>
                 <td>
                   <div>
-                    <span class="fw-semibold" style="color:var(--danger);">50</span><span class="text-muted fs-sm">/50</span>
-                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
-                      <div class="capacity-fill" style="width:100%; background:var(--danger);"></div>
+                    <span class="fw-semibold text-danger">50</span><span class="text-muted fs-sm">/50</span>
+                    <div class="capacity-bar capacity-bar--mini mt-1">
+                      <div class="capacity-fill capacity-fill--danger" style="--fill: 100%;"></div>
                     </div>
                   </div>
                 </td>
@@ -181,14 +181,14 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-outline btn-sm" onclick="viewParticipants('evt3')">Inscrits</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt3')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt3')" style="color:var(--danger);"></button>
+                    <button class="btn btn-ghost btn-sm btn-ghost--danger" onclick="deleteEvent('evt3')"></button>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
                   <div class="d-flex align-center gap-2">
-                    <div style="width:36px; height:36px; border-radius:8px; background:#F3F4F6; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0;">📝</div>
+                    <div class="event-icon event-icon--neutral-bordered">📝</div>
                     <div>
                       <p class="fw-semibold fs-sm">Atelier CV & LinkedIn</p>
                       <p class="fs-xs text-muted">Conférence · Junior Entreprise</p>
@@ -199,8 +199,8 @@
                 <td>
                   <div>
                     <span class="fw-semibold">0</span><span class="text-muted fs-sm">/40</span>
-                    <div class="capacity-bar mt-1" style="height:4px; width:80px;">
-                      <div class="capacity-fill" style="width:0%;"></div>
+                    <div class="capacity-bar capacity-bar--mini mt-1">
+                      <div class="capacity-fill" style="--fill: 0%;"></div>
                     </div>
                   </div>
                 </td>
@@ -209,7 +209,7 @@
                   <div class="d-flex gap-1">
                     <button class="btn btn-primary btn-sm" onclick="publishEvent('evt4')">Publier</button>
                     <button class="btn btn-ghost btn-sm" onclick="editEvent('evt4')">✏️</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteEvent('evt4')" style="color:var(--danger);"></button>
+                    <button class="btn btn-ghost btn-sm btn-ghost--danger" onclick="deleteEvent('evt4')"></button>
                   </div>
                 </td>
               </tr>
@@ -222,10 +222,10 @@
       <div class="tab-panel" id="tab-inscrits">
         <div class="card mb-3">
           <div class="card-header">
-            <div class="d-flex align-center gap-2 flex-1" style="flex-wrap:wrap; gap:0.75rem;">
-              <h3 style="flex:1;">Liste des inscrits</h3>
+            <div class="d-flex align-center gap-2 flex-1 header-filter-row">
+              <h3 class="flex-1">Liste des inscrits</h3>
               <div class="d-flex gap-1 flex-wrap">
-                <select class="form-control" id="eventFilter" style="width:auto;">
+                <select class="form-control select-compact" id="eventFilter">
                   <option value="">Tous les événements</option>
                   <option value="evt1">Soirée d'Intégration BDE 2025</option>
                   <option value="evt2">Soirée Internationale</option>
@@ -236,7 +236,7 @@
             </div>
           </div>
           <div class="card-body p-0">
-            <div class="table-container" style="border-radius:0; box-shadow:none;">
+            <div class="table-container table-container--flat">
               <table class="table">
                 <thead>
                   <tr>
@@ -268,7 +268,7 @@
                   <tr>
                     <td>
                       <div class="d-flex align-center gap-2">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#EC4899,#F97316);">ML</div>
+                        <div class="avatar avatar-sm avatar--pink-orange">ML</div>
                         <div>
                           <p class="fw-semibold fs-sm">Marie Laurent</p>
                           <p class="fs-xs text-muted">marie.laurent@omnes.fr</p>
@@ -285,7 +285,7 @@
                   <tr>
                     <td>
                       <div class="d-flex align-center gap-2">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#059669,#10B981);">AB</div>
+                        <div class="avatar avatar-sm avatar--green">AB</div>
                         <div>
                           <p class="fw-semibold fs-sm">Alex Bernard</p>
                           <p class="fs-xs text-muted">alex.bernard@omnes.fr</p>
@@ -302,7 +302,7 @@
                   <tr>
                     <td>
                       <div class="d-flex align-center gap-2">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#D97706,#F59E0B);">CR</div>
+                        <div class="avatar avatar-sm avatar--amber">CR</div>
                         <div>
                           <p class="fw-semibold fs-sm">Clara Rousseau</p>
                           <p class="fs-xs text-muted">clara.rousseau@omnes.fr</p>
@@ -329,27 +329,33 @@
           <div class="card">
             <div class="card-header"><h3>Taux de remplissage</h3></div>
             <div class="card-body">
-              <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div class="stats-fill-list">
                 <div>
                   <div class="d-flex justify-between mb-1">
                     <span class="fs-sm">Soirée Intégration BDE</span>
                     <span class="fs-sm fw-bold">75%</span>
                   </div>
-                  <div class="capacity-bar" style="height:10px;"><div class="capacity-fill" style="width:75%;"></div></div>
+                  <div class="capacity-bar capacity-bar--lg">
+                    <div class="capacity-fill" style="--fill: 75%;"></div>
+                  </div>
                 </div>
                 <div>
                   <div class="d-flex justify-between mb-1">
                     <span class="fs-sm">Soirée Internationale</span>
                     <span class="fs-sm fw-bold">60%</span>
                   </div>
-                  <div class="capacity-bar" style="height:10px;"><div class="capacity-fill" style="width:60%;"></div></div>
+                  <div class="capacity-bar capacity-bar--lg">
+                    <div class="capacity-fill" style="--fill: 60%;"></div>
+                  </div>
                 </div>
                 <div>
                   <div class="d-flex justify-between mb-1">
                     <span class="fs-sm">Ciné-Club</span>
-                    <span class="fs-sm fw-bold" style="color:var(--danger);">100%</span>
+                    <span class="fs-sm fw-bold text-danger">100%</span>
                   </div>
-                  <div class="capacity-bar" style="height:10px;"><div class="capacity-fill" style="width:100%; background:var(--danger);"></div></div>
+                  <div class="capacity-bar capacity-bar--lg">
+                    <div class="capacity-fill capacity-fill--danger" style="--fill: 100%;"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -358,10 +364,10 @@
           <div class="card">
             <div class="card-header"><h3>Inscriptions par catégorie</h3></div>
             <div class="card-body">
-              <div style="display:flex; flex-direction:column; gap:0.875rem;">
+              <div class="stats-category-list">
                 <div class="d-flex align-center justify-between">
                   <div class="d-flex align-center gap-2">
-                    <span style="width:12px; height:12px; border-radius:50%; background:linear-gradient(135deg,#7C3AED,#EC4899); display:inline-block;"></span>
+                    <span class="category-dot category-dot--soiree"></span>
                     <span class="fs-sm">Soirée</span>
                   </div>
                   <div class="d-flex align-center gap-2">
@@ -371,7 +377,7 @@
                 </div>
                 <div class="d-flex align-center justify-between">
                   <div class="d-flex align-center gap-2">
-                    <span style="width:12px; height:12px; border-radius:50%; background:#059669; display:inline-block;"></span>
+                    <span class="category-dot category-dot--sport"></span>
                     <span class="fs-sm">Sport</span>
                   </div>
                   <div class="d-flex align-center gap-2">
@@ -381,7 +387,7 @@
                 </div>
                 <div class="d-flex align-center justify-between">
                   <div class="d-flex align-center gap-2">
-                    <span style="width:12px; height:12px; border-radius:50%; background:#4338CA; display:inline-block;"></span>
+                    <span class="category-dot category-dot--culture"></span>
                     <span class="fs-sm">Culture</span>
                   </div>
                   <div class="d-flex align-center gap-2">
@@ -391,7 +397,7 @@
                 </div>
                 <div class="d-flex align-center justify-between">
                   <div class="d-flex align-center gap-2">
-                    <span style="width:12px; height:12px; border-radius:50%; background:#D97706; display:inline-block;"></span>
+                    <span class="category-dot category-dot--conference"></span>
                     <span class="fs-sm">Conférence</span>
                   </div>
                   <div class="d-flex align-center gap-2">
@@ -412,7 +418,7 @@
   <div class="modal-overlay" id="deleteModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 style="color:var(--danger);">Supprimer l'événement</h3>
+        <h3 class="modal-danger-title">Supprimer l'événement</h3>
         <button class="btn-close" onclick="document.getElementById('deleteModal').classList.remove('open')">×</button>
       </div>
       <div class="modal-body">

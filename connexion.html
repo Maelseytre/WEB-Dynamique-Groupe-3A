@@ -39,25 +39,24 @@
       <div class="form-group">
         <label class="form-label" for="password">
           Mot de passe
-          <a href="#" style="font-weight:400; color:var(--primary); font-size:0.8125rem; float:right;">Mot de passe oublié ?</a>
+          <a href="#" class="forgot-link">Mot de passe oublié ?</a>
         </label>
-        <div style="position:relative;">
+        <div class="input-wrapper">
           <input
             type="password"
             id="password"
-            class="form-control"
+            class="form-control input-with-toggle"
             placeholder="••••••••"
             autocomplete="current-password"
-            style="padding-right:3rem;"
           >
-          <button type="button" id="togglePassword" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:1.1rem;">Voir</button>
+          <button type="button" id="togglePassword" class="input-toggle-btn">Voir</button>
         </div>
         <span class="form-error" id="passwordError">Veuillez entrer votre mot de passe.</span>
       </div>
 
       <div class="form-group d-flex align-center gap-1">
-        <input type="checkbox" id="remember" style="width:auto; accent-color:var(--primary);">
-        <label for="remember" style="font-size:0.875rem; font-weight:400; cursor:pointer;">Se souvenir de moi</label>
+        <input type="checkbox" id="remember" class="checkbox-inline">
+        <label for="remember" class="label-regular">Se souvenir de moi</label>
       </div>
 
       <button type="submit" class="btn btn-primary btn-full btn-lg" id="submitBtn">
@@ -67,14 +66,14 @@
 
     <div class="divider">ou</div>
 
-    <div class="text-center" style="font-size:0.9375rem;">
+    <div class="text-center auth-link-text">
       Pas encore de compte ?
-      <a href="inscription.html" style="color:var(--primary); font-weight:600; text-decoration:none;">S'inscrire</a>
+      <a href="inscription.html" class="auth-link">S'inscrire</a>
     </div>
 
     <div class="separator"></div>
 
-    <div style="background:var(--bg); border-radius:8px; padding:0.875rem; font-size:0.8125rem;">
+    <div class="demo-accounts">
       <p class="fw-semibold mb-1">Comptes de démonstration :</p>
       <p class="text-muted"> Participant : participant@demo.fr / demo123</p>
       <p class="text-muted"> Organisateur : organisateur@demo.fr / demo123</p>

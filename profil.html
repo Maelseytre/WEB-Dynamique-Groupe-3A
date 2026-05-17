@@ -10,8 +10,8 @@
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navbar-inner">
+  <nav class="menu">
+    <div class="nav-menu">
       <a href="Index.html" class="navbar-brand">OmnesEvent</a>
       <ul class="navbar-nav">
         <li><a href="Index.html">Accueil</a></li>
@@ -38,12 +38,12 @@
   </div>
 
   <section class="section">
-    <div class="container" style="max-width:800px;">
+    <div class="container container-narrow">
 
       <!-- Profile Header Card -->
       <div class="profile-header mb-3">
         <div class="avatar avatar-xl" id="avatarDisplay">JD</div>
-        <div class="profile-info" style="flex:1;">
+        <div class="profile-info">
           <h2 id="displayName">Jean Dupont</h2>
           <p id="displayEmail">jean.dupont@omneseducation.com</p>
           <div class="d-flex gap-1 mt-1 flex-wrap">
@@ -137,7 +137,7 @@
                     <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('avatarInput').click()">
                       Changer la photo
                     </button>
-                    <input type="file" id="avatarInput" accept="image/*" style="display:none;">
+                    <input type="file" id="avatarInput" accept="image/*" class="d-none">
                     <p class="fs-xs text-muted mt-1">JPG, PNG · Max 2 Mo</p>
                   </div>
                 </div>
@@ -182,17 +182,17 @@
         <div class="card">
           <div class="card-header"><h3>Sessions actives</h3></div>
           <div class="card-body">
-            <div style="display:flex; align-items:center; gap:1rem; padding:0.75rem 0; border-bottom:1px solid var(--border);">
-              <span style="font-size:1.5rem;">💻</span>
-              <div style="flex:1;">
+            <div class="session-item session-item--border">
+              <span class="session-icon">💻</span>
+              <div class="session-info">
                 <p class="fw-semibold fs-sm">Windows — Chrome</p>
                 <p class="fs-xs text-muted">Paris, France · Session actuelle</p>
               </div>
               <span class="badge badge-success">Active</span>
             </div>
-            <div style="display:flex; align-items:center; gap:1rem; padding:0.75rem 0;">
-              <span style="font-size:1.5rem;">QR Code</span>
-              <div style="flex:1;">
+            <div class="session-item">
+              <span class="session-icon">QR Code</span>
+              <div class="session-info">
                 <p class="fw-semibold fs-sm">iPhone — Safari</p>
                 <p class="fs-xs text-muted">Paris, France · Il y a 2 jours</p>
               </div>
@@ -207,7 +207,7 @@
         <div class="card">
           <div class="card-header"><h3>Préférences de notifications</h3></div>
           <div class="card-body">
-            <div style="display:flex; flex-direction:column; gap:1.25rem;">
+            <div class="notifications-list">
 
               <div class="d-flex justify-between align-center">
                 <div>
@@ -271,7 +271,7 @@
         <div class="card mb-3">
           <div class="card-header"><h3>Informations du compte</h3></div>
           <div class="card-body">
-            <div style="display:grid; gap:0.875rem;">
+            <div class="account-info">
               <div class="d-flex justify-between align-center">
                 <span class="text-muted fs-sm">Rôle</span>
                 <span class="badge badge-primary"> Participant</span>
@@ -295,9 +295,9 @@
           </div>
         </div>
 
-    <div class="card" style="border:2px solid var(--cat-soiree-bg);">
-      <div class="card-header" style="background:var(--cat-soiree-bg);">
-            <h3 style="color:var(--danger);">Zone dangereuse</h3>
+        <div class="card card--danger-zone">
+          <div class="card-header">
+            <h3>Zone dangereuse</h3>
           </div>
           <div class="card-body">
             <p class="text-muted fs-sm mb-2">La suppression de votre compte est irréversible. Toutes vos données seront définitivement supprimées.</p>
@@ -309,21 +309,11 @@
     </div>
   </section>
 
-  <!-- Toggle Switch CSS -->
-  <style>
-    .toggle-switch { position:relative; width:44px; height:24px; flex-shrink:0; cursor:pointer; }
-    .toggle-switch input { opacity:0; width:0; height:0; }
-    .toggle-slider { position:absolute; inset:0; background:var(--border); border-radius:99px; transition:0.3s; }
-    .toggle-slider::before { content:''; position:absolute; width:18px; height:18px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; }
-    .toggle-switch input:checked + .toggle-slider { background:var(--primary); }
-    .toggle-switch input:checked + .toggle-slider::before { transform:translateX(20px); }
-  </style>
-
   <!-- Modal suppression -->
   <div class="modal-overlay" id="deleteModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 style="color:var(--danger);">Supprimer le compte</h3>
+        <h3 class="modal-danger-title">Supprimer le compte</h3>
         <button class="btn-close" onclick="document.getElementById('deleteModal').classList.remove('open')">×</button>
       </div>
       <div class="modal-body">

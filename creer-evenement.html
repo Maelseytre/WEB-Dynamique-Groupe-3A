@@ -10,8 +10,8 @@
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navbar-inner">
+  <nav class="menu">
+    <div class="nav-menu">
       <a href="Index.html" class="navbar-brand">OmnesEvent</a>
       <ul class="navbar-nav">
         <li><a href="Index.html">Accueil</a></li>
@@ -42,7 +42,7 @@
   </div>
 
   <section class="section">
-    <div class="container" style="max-width:800px;">
+    <div class="container container-narrow">
 
       <div id="alertBox" class="alert alert-danger d-none"></div>
       <div id="successBox" class="alert alert-success d-none">
@@ -54,7 +54,7 @@
         <!-- Section 1: Infos générales -->
         <div class="card mb-3">
           <div class="card-header">
-            <h3>📝 Informations générales</h3>
+            <h3> Informations générales</h3>
           </div>
           <div class="card-body">
 
@@ -178,7 +178,7 @@
           </div>
           <div class="card-body">
             <div class="upload-area" id="uploadArea" onclick="document.getElementById('afficheInput').click()">
-              <input type="file" id="afficheInput" accept="image/*" style="display:none;">
+              <input type="file" id="afficheInput" accept="image/*">
               <div class="upload-icon">📸</div>
               <p class="upload-text">Cliquer pour ajouter une affiche</p>
               <p class="upload-hint">PNG, JPG ou WEBP · Max 5 Mo · Recommandé : 1200×628px</p>
@@ -196,20 +196,20 @@
 
             <div class="form-group">
               <div class="d-flex align-center gap-2">
-                <input type="checkbox" id="listeAttente" style="width:auto; accent-color:var(--primary);" checked>
-                <label for="listeAttente" style="cursor:pointer;">
+                <input type="checkbox" id="listeAttente" class="checkbox-inline" checked>
+                <label for="listeAttente" class="label-option">
                   <span class="fw-semibold">Activer la liste d'attente</span>
-                  <span class="text-muted" style="display:block; font-size:0.8125rem;">Les participants pourront s'inscrire en liste d'attente si l'événement est complet.</span>
+                  <span class="label-option-desc">Les participants pourront s'inscrire en liste d'attente si l'événement est complet.</span>
                 </label>
               </div>
             </div>
 
             <div class="form-group mb-0">
               <div class="d-flex align-center gap-2">
-                <input type="checkbox" id="validation" style="width:auto; accent-color:var(--primary);">
-                <label for="validation" style="cursor:pointer;">
+                <input type="checkbox" id="validation" class="checkbox-inline">
+                <label for="validation" class="label-option">
                   <span class="fw-semibold">Validation manuelle des inscriptions</span>
-                  <span class="text-muted" style="display:block; font-size:0.8125rem;">Chaque inscription devra être approuvée par l'organisateur.</span>
+                  <span class="label-option-desc">Chaque inscription devra être approuvée par l'organisateur.</span>
                 </label>
               </div>
             </div>
@@ -218,7 +218,7 @@
         </div>
 
         <!-- Buttons -->
-        <div class="d-flex gap-2" style="flex-wrap:wrap; justify-content:flex-end;">
+        <div class="d-flex gap-2 form-actions">
           <button type="button" class="btn btn-ghost btn-lg" onclick="saveDraft()">
             💾 Sauvegarder le brouillon
           </button>

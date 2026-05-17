@@ -10,7 +10,7 @@
 </head>
 <body class="auth-page">
 
-  <div class="auth-card" style="max-width:500px;">
+  <div class="auth-card auth-card--wide">
     <div class="auth-logo">
       <a href="Index.html" class="brand">OmnesEvent</a>
       <p>La plateforme événementielle Omnes</p>
@@ -71,7 +71,7 @@
       </div>
 
       <!-- Association (organisateur uniquement) -->
-      <div class="form-group" id="associationGroup" style="display:none;">
+      <div class="form-group d-none" id="associationGroup">
         <label class="form-label" for="association">Association / BDE</label>
         <select id="association" class="form-control">
           <option value="">Sélectionner votre association</option>
@@ -90,15 +90,15 @@
       <!-- Password -->
       <div class="form-group">
         <label class="form-label" for="password">Mot de passe</label>
-        <div style="position:relative;">
-          <input type="password" id="password" class="form-control" placeholder="Minimum 8 caractères" style="padding-right:3rem;">
-          <button type="button" id="togglePassword" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:1.1rem;">Voir</button>
+        <div class="input-wrapper">
+          <input type="password" id="password" class="form-control input-with-toggle" placeholder="Minimum 8 caractères">
+          <button type="button" id="togglePassword" class="input-toggle-btn">Voir</button>
         </div>
         <span class="form-error" id="passwordError">Minimum 8 caractères requis.</span>
         <!-- Password strength -->
-        <div id="passwordStrength" style="margin-top:0.5rem; display:none;">
-          <div style="height:4px; border-radius:99px; background:var(--border); overflow:hidden;">
-            <div id="strengthBar" style="height:100%; border-radius:99px; width:0; transition:all 0.3s;"></div>
+        <div id="passwordStrength" class="strength-container d-none">
+          <div class="strength-bar-track">
+            <div id="strengthBar" class="strength-bar-fill"></div>
           </div>
           <p id="strengthText" class="fs-xs text-muted mt-1"></p>
         </div>
@@ -113,9 +113,9 @@
 
       <!-- CGU -->
       <div class="form-group d-flex align-start gap-1">
-        <input type="checkbox" id="cgu" style="width:auto; margin-top:3px; accent-color:var(--primary);">
-        <label for="cgu" style="font-size:0.875rem; font-weight:400; cursor:pointer; line-height:1.5;">
-          J'accepte les <a href="#" style="color:var(--primary);">Conditions Générales d'Utilisation</a> et la <a href="#" style="color:var(--primary);">Politique de confidentialité</a>.
+        <input type="checkbox" id="cgu" class="checkbox-inline checkbox-inline--offset">
+        <label for="cgu" class="label-regular label-regular--multiline">
+          J'accepte les <a href="#" class="auth-link">Conditions Générales d'Utilisation</a> et la <a href="#" class="auth-link">Politique de confidentialité</a>.
         </label>
       </div>
       <span class="form-error" id="cguError">Vous devez accepter les CGU.</span>
@@ -127,9 +127,9 @@
 
     <div class="divider">ou</div>
 
-    <div class="text-center" style="font-size:0.9375rem;">
+    <div class="text-center auth-link-text">
       Déjà un compte ?
-      <a href="connexion.html" style="color:var(--primary); font-weight:600; text-decoration:none;">Se connecter</a>
+      <a href="connexion.html" class="auth-link">Se connecter</a>
     </div>
   </div>
 
