@@ -1,105 +1,75 @@
-// ===== TOGGLE PASSWORD VISIBILITY =====
-const togglePassword = document.getElementById('togglePassword');
-const passwordInput = document.getElementById('password');
+// ===== TOGGLE VISIBILITÉ MOT DE PASSE =====
+var togglePassword = document.getElementById('togglePassword');
+var passwordInput = document.getElementById('password');
+var emailInput = document.getElementById('email');
+var loginForm = document.getElementById('loginForm');
+var alertBox = document.getElementById('alertBox');
 
-togglePassword.addEventListener('click', () => {
-  const type = passwordInput.type === 'password' ? 'text' : 'password';
-  passwordInput.type = type;
-  togglePassword.textContent = type === 'password' ? 'Voir' : 'Cacher';
-});
+if (togglePassword && passwordInput) {
+  togglePassword.addEventListener('click', function() {
+    var type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+    togglePassword.textContent = type === 'password' ? 'Voir' : 'Cacher';
+  });
+}
 
-// ===== FORM VALIDATION =====
-const loginForm = document.getElementById('loginForm');
-const emailInput = document.getElementById('email');
-const alertBox = document.getElementById('alertBox');
-const submitBtn = document.getElementById('submitBtn');
+// ===== VALIDATION DU FORMULAIRE =====
+if (loginForm) {
+  loginForm.addEventListener('submit', function(e) {
+    if (alertBox) alertBox.classList.add('d-none');
 
-const DEMO_ACCOUNTS = {
-  'participant@demo.fr': { password: 'demo123', role: 'participant', prenom: 'Demo', nom: 'Participant', redirect: 'Index.html' },
-  'organisateur@demo.fr': { password: 'demo123', role: 'organisateur', prenom: 'Demo', nom: 'Organisateur', redirect: 'tableau-de-bord.html' },
-  'admin@demo.fr': { password: 'demo123', role: 'admin', prenom: 'Demo', nom: 'Admin', redirect: 'admin.html' },
-};
+    var email = emailInput ? emailInput.value.trim() : '';
+    var password = passwordInput ? passwordInput.value : '';
+    var valid = true;
 
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  alertBox.classList.add('d-none');
+    if (!email || !isValidEmail(email)) {
+      showError('emailError');
+      if (emailInput) emailInput.classList.add('error');
+      valid = false;
+    } else {
+      hideError('emailError');
+      if (emailInput) emailInput.classList.remove('error');
+    }
 
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
+    if (!password) {
+      showError('passwordError');
+      if (passwordInput) passwordInput.classList.add('error');
+      valid = false;
+    } else {
+      hideError('passwordError');
+      if (passwordInput) passwordInput.classList.remove('error');
+    }
 
-  let valid = true;
+    if (!valid) {
+      e.preventDefault();
+    }
+  });
+}
 
-  if (!email || !isValidEmail(email)) {
-    showError('emailError');
-    emailInput.classList.add('error');
-    valid = false;
-  } else {
-    hideError('emailError');
+if (emailInput) {
+  emailInput.addEventListener('input', function() {
     emailInput.classList.remove('error');
-  }
+    hideError('emailError');
+  });
+}
 
-  if (!password) {
-    showError('passwordError');
-    passwordInput.classList.add('error');
-    valid = false;
-  } else {
-    hideError('passwordError');
+if (passwordInput) {
+  passwordInput.addEventListener('input', function() {
     passwordInput.classList.remove('error');
-  }
-
-  if (!valid) return;
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Connexion en cours...';
-
-  setTimeout(() => {
-    const account = DEMO_ACCOUNTS[email.toLowerCase()];
-
-    if (account && account.password === password) {
-      localStorage.setItem('user', JSON.stringify({ email, role: account.role, prenom: account.prenom, nom: account.nom }));
-      window.location.href = account.redirect;
-      return;
-    }
-
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const registeredUser = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-
-    if (registeredUser) {
-      const redirect = registeredUser.role === 'organisateur' ? 'tableau-de-bord.html' : 'Index.html';
-      localStorage.setItem('user', JSON.stringify({
-        email: registeredUser.email,
-        role: registeredUser.role,
-        prenom: registeredUser.prenom,
-        nom: registeredUser.nom
-      }));
-      window.location.href = redirect;
-      return;
-    }
-
-    alertBox.classList.remove('d-none');
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Se connecter';
-  }, 800);
-});
+    hideError('passwordError');
+  });
+}
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function showError(id) {
-  document.getElementById(id).classList.add('show');
+  var el = document.getElementById(id);
+  if (el) el.classList.add('show');
 }
 
 function hideError(id) {
-  document.getElementById(id).classList.remove('show');
+  var el = document.getElementById(id);
+  if (el) el.classList.remove('show');
 }
-
-emailInput.addEventListener('input', () => {
-  emailInput.classList.remove('error');
-  hideError('emailError');
-});
-
-passwordInput.addEventListener('input', () => {
-  passwordInput.classList.remove('error');
-  hideError('passwordError');
-});

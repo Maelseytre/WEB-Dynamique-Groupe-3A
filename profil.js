@@ -1,139 +1,85 @@
-// ===== NAVBAR =====
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-document.addEventListener('click', (e) => {
-  if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
-    mobileMenu.classList.remove('open');
-  }
-});
-
-// ===== CHARGEMENT DES DONNÉES UTILISATEUR =====
-requireAuth();
-
-(function loadUserData() {
-  const user = getUser();
-  if (!user) return;
-
-  const prenom = user.prenom || '';
-  const nom = user.nom || '';
-  const email = user.email || '';
-  const initiales = ((prenom[0] || '') + (nom[0] || '')).toUpperCase() || '?';
-
-  document.getElementById('displayName').textContent = `${prenom} ${nom}`.trim() || email;
-  document.getElementById('displayEmail').textContent = email;
-  document.getElementById('avatarDisplay').textContent = initiales;
-
-  const prenomInput = document.getElementById('prenom');
-  const nomInput = document.getElementById('nom');
-  const emailInput = document.getElementById('email');
-  if (prenomInput) prenomInput.value = prenom;
-  if (nomInput) nomInput.value = nom;
-  if (emailInput) emailInput.value = email;
-})();
-
 // ===== TABS =====
-const tabBtns = document.querySelectorAll('.tab-btn');
-const tabPanels = document.querySelectorAll('.tab-panel');
+var tabBtns = document.querySelectorAll('.tab-btn');
+var tabPanels = document.querySelectorAll('.tab-panel');
 
-tabBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    tabBtns.forEach(b => b.classList.remove('active'));
-    tabPanels.forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+for (var i = 0; i < tabBtns.length; i++) {
+  tabBtns[i].addEventListener('click', function() {
+    for (var j = 0; j < tabBtns.length; j++) tabBtns[j].classList.remove('active');
+    for (var j = 0; j < tabPanels.length; j++) tabPanels[j].classList.remove('active');
+    this.classList.add('active');
+    var panel = document.getElementById('tab-' + this.getAttribute('data-tab'));
+    if (panel) panel.classList.add('active');
   });
-});
-
-// ===== AVATAR PREVIEW =====
-const avatarInput = document.getElementById('avatarInput');
-avatarInput.addEventListener('change', () => {
-  const file = avatarInput.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    document.getElementById('avatarPreview').innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-    document.getElementById('avatarDisplay').innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-  };
-  reader.readAsDataURL(file);
-});
-
-// ===== PROFILE FORM =====
-const profileForm = document.getElementById('profileForm');
-const saveAlert = document.getElementById('saveAlert');
-
-profileForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const prenom = document.getElementById('prenom').value.trim();
-  const nom = document.getElementById('nom').value.trim();
-  const email = document.getElementById('email').value.trim();
-
-  let valid = true;
-  if (!prenom) { showError('prenomError'); valid = false; } else hideError('prenomError');
-  if (!nom) { showError('nomError'); valid = false; } else hideError('nomError');
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('emailError'); valid = false; } else hideError('emailError');
-
-  if (!valid) return;
-
-  document.getElementById('displayName').textContent = `${prenom} ${nom}`;
-  document.getElementById('displayEmail').textContent = email;
-  const initiales = (prenom[0] + nom[0]).toUpperCase();
-  document.getElementById('avatarDisplay').textContent = initiales;
-  document.getElementById('avatarPreview').textContent = initiales;
-
-  const user = getUser();
-  if (user) {
-    setUser({ ...user, prenom, nom, email });
-    updateNavbarAuth();
-  }
-
-  saveAlert.classList.remove('d-none');
-  setTimeout(() => saveAlert.classList.add('d-none'), 3000);
-});
-
-function resetForm() {
-  profileForm.reset();
 }
 
-// ===== PASSWORD FORM =====
-const passwordForm = document.getElementById('passwordForm');
-const passwordAlert = document.getElementById('passwordAlert');
+// ===== AFFICHAGE NOM DU FICHIER AVATAR =====
+var avatarInput = document.getElementById('avatarInput');
+if (avatarInput) {
+  avatarInput.addEventListener('change', function() {
+    var file = avatarInput.files[0];
+    if (!file) return;
+    var preview = document.getElementById('avatarPreview');
+    if (preview) preview.textContent = file.name;
+  });
+}
 
-passwordForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const current = document.getElementById('currentPassword').value;
-  const newPwd = document.getElementById('newPassword').value;
-  const confirm = document.getElementById('confirmNewPassword').value;
+// ===== FORMULAIRE PROFIL =====
+var profileForm = document.getElementById('profileForm');
 
-  let valid = true;
-  if (!current) { showError('currentPasswordError'); valid = false; } else hideError('currentPasswordError');
-  if (newPwd.length < 8) { showError('newPasswordError'); valid = false; } else hideError('newPasswordError');
-  if (newPwd !== confirm) { showError('confirmNewPasswordError'); valid = false; } else hideError('confirmNewPasswordError');
+if (profileForm) {
+  profileForm.addEventListener('submit', function(e) {
+    var prenom = document.getElementById('prenom') ? document.getElementById('prenom').value.trim() : '';
+    var nom = document.getElementById('nom') ? document.getElementById('nom').value.trim() : '';
+    var email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
+    var valid = true;
 
-  if (!valid) return;
+    if (!prenom) { showError('prenomError'); valid = false; } else { hideError('prenomError'); }
+    if (!nom) { showError('nomError'); valid = false; } else { hideError('nomError'); }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('emailError'); valid = false; } else { hideError('emailError'); }
 
-  passwordAlert.classList.remove('d-none');
-  passwordForm.reset();
-  setTimeout(() => passwordAlert.classList.add('d-none'), 3000);
-});
+    if (!valid) e.preventDefault();
+  });
+}
+
+function resetForm() {
+  var form = document.getElementById('profileForm');
+  if (form) form.reset();
+}
+
+// ===== FORMULAIRE MOT DE PASSE =====
+var passwordForm = document.getElementById('passwordForm');
+
+if (passwordForm) {
+  passwordForm.addEventListener('submit', function(e) {
+    var current = document.getElementById('currentPassword') ? document.getElementById('currentPassword').value : '';
+    var newPwd = document.getElementById('newPassword') ? document.getElementById('newPassword').value : '';
+    var confirm = document.getElementById('confirmNewPassword') ? document.getElementById('confirmNewPassword').value : '';
+    var valid = true;
+
+    if (!current) { showError('currentPasswordError'); valid = false; } else { hideError('currentPasswordError'); }
+    if (newPwd.length < 8) { showError('newPasswordError'); valid = false; } else { hideError('newPasswordError'); }
+    if (newPwd !== confirm) { showError('confirmNewPasswordError'); valid = false; } else { hideError('confirmNewPasswordError'); }
+
+    if (!valid) e.preventDefault();
+  });
+}
 
 // ===== NOTIFICATIONS =====
 function saveNotifications() {
   alert('Préférences de notifications enregistrées !');
 }
 
-// ===== DELETE ACCOUNT =====
+// ===== SUPPRESSION DE COMPTE =====
 function confirmDeleteAccount() {
-  document.getElementById('deleteModal').classList.add('open');
+  var modal = document.getElementById('deleteModal');
+  if (modal) modal.classList.add('open');
 }
 
 function deleteAccount() {
-  const confirm = document.getElementById('deleteConfirm').value;
-  if (confirm === 'SUPPRIMER') {
-    sessionStorage.clear();
-    localStorage.clear();
-    alert('Compte supprimé. Vous allez être redirigé.');
-    window.location.href = 'Index.html';
+  var confirmEl = document.getElementById('deleteConfirm');
+  var val = confirmEl ? confirmEl.value : '';
+  if (val === 'SUPPRIMER') {
+    window.location.href = 'supprimer-compte.php';
   } else {
     alert('Veuillez taper "SUPPRIMER" pour confirmer.');
   }
@@ -145,19 +91,22 @@ function revokeSession() {
   }
 }
 
-// ===== MODAL CLOSE ON OVERLAY =====
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.classList.remove('open');
+// ===== FERMER MODALS EN CLIQUANT SUR LE FOND =====
+var overlays = document.querySelectorAll('.modal-overlay');
+for (var i = 0; i < overlays.length; i++) {
+  overlays[i].addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('open');
+    }
   });
-});
+}
 
 function showError(id) {
-  const el = document.getElementById(id);
+  var el = document.getElementById(id);
   if (el) el.classList.add('show');
 }
 
 function hideError(id) {
-  const el = document.getElementById(id);
+  var el = document.getElementById(id);
   if (el) el.classList.remove('show');
 }

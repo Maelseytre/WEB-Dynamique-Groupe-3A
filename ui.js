@@ -1,28 +1,38 @@
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
+// ===== NAVBAR HAMBURGER =====
+var hamburger = document.getElementById('hamburger');
+var mobileMenu = document.getElementById('mobileMenu');
 
 if (hamburger && mobileMenu) {
-  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-  document.addEventListener('click', (event) => {
+  hamburger.addEventListener('click', function() {
+    mobileMenu.classList.toggle('open');
+  });
+
+  document.addEventListener('click', function(event) {
     if (!hamburger.contains(event.target) && !mobileMenu.contains(event.target)) {
       mobileMenu.classList.remove('open');
     }
   });
 }
 
-document.querySelectorAll('.tab-btn').forEach((button) => {
-  button.addEventListener('click', () => {
-    const tab = button.dataset.tab;
-    button.parentElement.querySelectorAll('.tab-btn').forEach((item) => item.classList.remove('active'));
+// ===== TABS =====
+document.querySelectorAll('.tab-btn').forEach(function(button) {
+  button.addEventListener('click', function() {
+    var tab = button.getAttribute('data-tab');
+    button.parentElement.querySelectorAll('.tab-btn').forEach(function(item) {
+      item.classList.remove('active');
+    });
     button.classList.add('active');
-    document.querySelectorAll('.tab-panel').forEach((panel) => panel.classList.remove('active'));
-    const panel = document.getElementById(`tab-${tab}`);
+    document.querySelectorAll('.tab-panel').forEach(function(panel) {
+      panel.classList.remove('active');
+    });
+    var panel = document.getElementById('tab-' + tab);
     if (panel) panel.classList.add('active');
   });
 });
 
-document.querySelectorAll('[data-confirm]').forEach((form) => {
-  form.addEventListener('submit', (event) => {
+// ===== CONFIRMATION AVANT SOUMISSION =====
+document.querySelectorAll('[data-confirm]').forEach(function(form) {
+  form.addEventListener('submit', function(event) {
     if (!confirm(form.dataset.confirm)) {
       event.preventDefault();
     }

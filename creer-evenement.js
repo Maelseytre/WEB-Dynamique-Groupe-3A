@@ -1,198 +1,102 @@
-// ===== NAVBAR =====
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-document.addEventListener('click', (e) => {
-  if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
-    mobileMenu.classList.remove('open');
-  }
-});
+// ===== COMPTEURS DE CARACTÈRES =====
+var titre = document.getElementById('titre');
+var titreCount = document.getElementById('titreCount');
 
-// ===== CHARACTER COUNTERS =====
-const titre = document.getElementById('titre');
-const titreCount = document.getElementById('titreCount');
-titre.addEventListener('input', () => {
-  titreCount.textContent = titre.value.length;
-});
-
-const description = document.getElementById('description');
-const descriptionCount = document.getElementById('descriptionCount');
-description.addEventListener('input', () => {
-  descriptionCount.textContent = description.value.length;
-});
-
-// ===== UPLOAD AFFICHE =====
-const afficheInput = document.getElementById('afficheInput');
-const uploadPreview = document.getElementById('uploadPreview');
-const uploadArea = document.getElementById('uploadArea');
-
-afficheInput.addEventListener('change', () => {
-  const file = afficheInput.files[0];
-  if (!file) return;
-
-  if (file.size > 5 * 1024 * 1024) {
-    alert('Le fichier est trop lourd (max 5 Mo).');
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    uploadPreview.src = e.target.result;
-    uploadPreview.style.display = 'block';
-    uploadArea.querySelector('.upload-icon').textContent = '';
-    uploadArea.querySelector('.upload-text').textContent = file.name;
-  };
-  reader.readAsDataURL(file);
-});
-
-// Drag & drop
-uploadArea.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  uploadArea.style.borderColor = 'var(--primary)';
-  uploadArea.style.background = 'var(--primary-light)';
-});
-
-uploadArea.addEventListener('dragleave', () => {
-  uploadArea.style.borderColor = '';
-  uploadArea.style.background = '';
-});
-
-uploadArea.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadArea.style.borderColor = '';
-  uploadArea.style.background = '';
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
-    afficheInput.files = e.dataTransfer.files;
-    afficheInput.dispatchEvent(new Event('change'));
-  }
-});
-
-// ===== SET DATE MIN =====
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('dateDebut').min = today;
-document.getElementById('dateFin').min = today;
-
-document.getElementById('dateDebut').addEventListener('change', () => {
-  document.getElementById('dateFin').min = document.getElementById('dateDebut').value;
-});
-
-// ===== FORM VALIDATION =====
-const createEventForm = document.getElementById('createEventForm');
-const alertBox = document.getElementById('alertBox');
-const successBox = document.getElementById('successBox');
-const submitBtn = document.getElementById('submitBtn');
-
-createEventForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  alertBox.classList.add('d-none');
-
-  const fields = {
-    titre: { el: document.getElementById('titre'), errId: 'titreError', check: (v) => v.length >= 3 },
-    categorie: { el: document.getElementById('categorie'), errId: 'categorieError', check: (v) => v !== '' },
-    association: { el: document.getElementById('association'), errId: 'associationError', check: (v) => v !== '' },
-    description: { el: document.getElementById('description'), errId: 'descriptionError', check: (v) => v.length >= 50 },
-    dateDebut: { el: document.getElementById('dateDebut'), errId: 'dateDebutError', check: (v) => v !== '' },
-    heureDebut: { el: document.getElementById('heureDebut'), errId: 'heureDebutError', check: (v) => v !== '' },
-    lieu: { el: document.getElementById('lieu'), errId: 'lieuError', check: (v) => v.length >= 3 },
-    capacite: { el: document.getElementById('capacite'), errId: 'capaciteError', check: (v) => parseInt(v) > 0 },
-  };
-
-  let valid = true;
-
-  for (const [, field] of Object.entries(fields)) {
-    if (!field.check(field.el.value.trim())) {
-      field.el.classList.add('error');
-      document.getElementById(field.errId).classList.add('show');
-      valid = false;
-    } else {
-      field.el.classList.remove('error');
-      document.getElementById(field.errId).classList.remove('show');
-    }
-  }
-
-  if (!valid) {
-    alertBox.textContent = '❌ Veuillez corriger les erreurs dans le formulaire.';
-    alertBox.classList.remove('d-none');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    return;
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Publication en cours...';
-
-  setTimeout(() => {
-    const user = getUser();
-    const categorieVal = document.getElementById('categorie').value;
-    const associationVal = document.getElementById('association').value;
-
-    const categorieLabels = { soiree: 'Soirée', sport: 'Sport', culture: 'Culture', conference: 'Conférence' };
-    const associationLabels = { bde: 'BDE Omnes', bds: 'BDS Omnes', je: 'Junior Entreprise', culture: 'Club Culturel', cinema: 'Club Cinéma', bienetre: 'Asso Bien-être' };
-
-    const imageData = uploadPreview.style.display !== 'none' && uploadPreview.src ? uploadPreview.src : null;
-
-    const newEvent = {
-      id: 'evt-' + Date.now(),
-      titre: document.getElementById('titre').value.trim(),
-      categorie: categorieVal,
-      categorieLabel: categorieLabels[categorieVal] || categorieVal,
-      association: associationVal,
-      associationLabel: associationLabels[associationVal] || associationVal,
-      description: document.getElementById('description').value.trim(),
-      dateDebut: document.getElementById('dateDebut').value,
-      heureDebut: document.getElementById('heureDebut').value,
-      dateFin: document.getElementById('dateFin').value || document.getElementById('dateDebut').value,
-      heureFin: document.getElementById('heureFin').value,
-      lieu: document.getElementById('lieu').value.trim(),
-      adresse: document.getElementById('adresse').value.trim(),
-      capacite: parseInt(document.getElementById('capacite').value),
-      prix: parseFloat(document.getElementById('prix').value) || 0,
-      image: imageData,
-      listeAttente: document.getElementById('listeAttente').checked,
-      validation: document.getElementById('validation').checked,
-      status: 'published',
-      inscrits: 0,
-      createdAt: Date.now(),
-      createdBy: user ? user.email : 'anonymous'
-    };
-
-    const events = JSON.parse(localStorage.getItem('events') || '[]');
-    events.push(newEvent);
-    localStorage.setItem('events', JSON.stringify(events));
-    localStorage.removeItem('eventDraft');
-
-    successBox.classList.remove('d-none');
-    createEventForm.reset();
-    uploadPreview.style.display = 'none';
-    uploadArea.querySelector('.upload-icon').textContent = '';
-    uploadArea.querySelector('.upload-text').textContent = 'Cliquer pour ajouter une affiche';
-    titreCount.textContent = '0';
-    descriptionCount.textContent = '0';
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Publier l'événement";
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 1000);
-});
-
-function saveDraft() {
-  const data = {
-    titre: document.getElementById('titre').value,
-    categorie: document.getElementById('categorie').value,
-    description: document.getElementById('description').value,
-  };
-  localStorage.setItem('eventDraft', JSON.stringify(data));
-  alert('Brouillon sauvegardé !');
+if (titre && titreCount) {
+  titre.addEventListener('input', function() {
+    titreCount.textContent = titre.value.length;
+  });
 }
 
-// Restore draft on load
-window.addEventListener('load', () => {
-  const draft = localStorage.getItem('eventDraft');
-  if (draft) {
-    const data = JSON.parse(draft);
-    if (data.titre) document.getElementById('titre').value = data.titre;
-    if (data.categorie) document.getElementById('categorie').value = data.categorie;
-    if (data.description) document.getElementById('description').value = data.description;
-    titreCount.textContent = (data.titre || '').length;
-    descriptionCount.textContent = (data.description || '').length;
-  }
-});
+var description = document.getElementById('description');
+var descriptionCount = document.getElementById('descriptionCount');
+
+if (description && descriptionCount) {
+  description.addEventListener('input', function() {
+    descriptionCount.textContent = description.value.length;
+  });
+}
+
+// ===== AFFICHAGE NOM DU FICHIER =====
+var afficheInput = document.getElementById('afficheInput');
+var uploadArea = document.getElementById('uploadArea');
+
+if (afficheInput && uploadArea) {
+  afficheInput.addEventListener('change', function() {
+    var file = afficheInput.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Le fichier est trop lourd (max 5 Mo).');
+      afficheInput.value = '';
+      return;
+    }
+
+    var uploadText = uploadArea.querySelector('.upload-text');
+    if (uploadText) uploadText.textContent = file.name;
+  });
+}
+
+// ===== DATE MINIMUM =====
+var today = new Date().toISOString().split('T')[0];
+var dateDebut = document.getElementById('dateDebut');
+var dateFin = document.getElementById('dateFin');
+
+if (dateDebut) {
+  dateDebut.min = today;
+  dateDebut.addEventListener('change', function() {
+    if (dateFin) dateFin.min = dateDebut.value;
+  });
+}
+if (dateFin) {
+  dateFin.min = today;
+}
+
+// ===== VALIDATION DU FORMULAIRE =====
+var createEventForm = document.getElementById('createEventForm');
+var alertBox = document.getElementById('alertBox');
+
+if (createEventForm) {
+  createEventForm.addEventListener('submit', function(e) {
+    if (alertBox) alertBox.classList.add('d-none');
+
+    var titreVal = document.getElementById('titre') ? document.getElementById('titre').value.trim() : '';
+    var categorieVal = document.getElementById('categorie') ? document.getElementById('categorie').value : '';
+    var associationVal = document.getElementById('association') ? document.getElementById('association').value : '';
+    var descriptionVal = document.getElementById('description') ? document.getElementById('description').value.trim() : '';
+    var dateDebutVal = document.getElementById('dateDebut') ? document.getElementById('dateDebut').value : '';
+    var heureDebutVal = document.getElementById('heureDebut') ? document.getElementById('heureDebut').value : '';
+    var lieuVal = document.getElementById('lieu') ? document.getElementById('lieu').value.trim() : '';
+    var capaciteVal = document.getElementById('capacite') ? document.getElementById('capacite').value : '';
+
+    var valid = true;
+
+    if (titreVal.length < 3) { showError('titreError'); valid = false; } else { hideError('titreError'); }
+    if (!categorieVal) { showError('categorieError'); valid = false; } else { hideError('categorieError'); }
+    if (!associationVal) { showError('associationError'); valid = false; } else { hideError('associationError'); }
+    if (descriptionVal.length < 50) { showError('descriptionError'); valid = false; } else { hideError('descriptionError'); }
+    if (!dateDebutVal) { showError('dateDebutError'); valid = false; } else { hideError('dateDebutError'); }
+    if (!heureDebutVal) { showError('heureDebutError'); valid = false; } else { hideError('heureDebutError'); }
+    if (lieuVal.length < 3) { showError('lieuError'); valid = false; } else { hideError('lieuError'); }
+    if (!capaciteVal || parseInt(capaciteVal) <= 0) { showError('capaciteError'); valid = false; } else { hideError('capaciteError'); }
+
+    if (!valid) {
+      if (alertBox) {
+        alertBox.textContent = 'Veuillez corriger les erreurs dans le formulaire.';
+        alertBox.classList.remove('d-none');
+      }
+      e.preventDefault();
+      window.scrollTo(0, 0);
+    }
+  });
+}
+
+function showError(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.add('show');
+}
+
+function hideError(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
