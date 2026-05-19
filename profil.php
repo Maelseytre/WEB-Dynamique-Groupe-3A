@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/bootstrap.php';
-$user = require_login();
-$errors = [];
+$utilisateur = exiger_connexion();
+$erreurs = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? 'profile';
@@ -10,48 +10,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nom = trim($_POST['nom'] ?? '');
         $email = trim($_POST['email'] ?? '');
         if ($prenom === '' || $nom === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Informations invalides.';
+            $erreurs[] = 'Informations invalides.';
         } else {
-            $stmt = db()->prepare('UPDATE users SET prenom=?, nom=?, email=?, telephone=?, promo=?, campus=?, bio=? WHERE id=?');
+            $requete = bdd()->prepare('UPDATE users SET prenom=?, nom=?, email=?, telephone=?, promo=?, campus=?, bio=? WHERE id=?');
             try {
-                $stmt->execute([$prenom, $nom, $email, trim($_POST['telephone'] ?? ''), trim($_POST['promo'] ?? ''), trim($_POST['campus'] ?? ''), trim($_POST['bio'] ?? ''), $user['id']]);
-                flash('success', 'Profil mis a jour.');
-                redirect('profil.php');
+                $requete->execute([$prenom, $nom, $email, trim($_POST['telephone'] ?? ''), trim($_POST['promo'] ?? ''), trim($_POST['campus'] ?? ''), trim($_POST['bio'] ?? ''), $utilisateur['id']]);
+                message_flash('success', 'Profil mis a jour.');
+                rediriger('profil.php');
             } catch (PDOException $e) {
-                $errors[] = 'Cet email est deja utilise.';
+                $erreurs[] = 'Cet email est deja utilise.';
             }
         }
     }
     if ($action === 'password') {
-        if (!password_verify($_POST['currentPassword'] ?? '', $user['password_hash'])) {
-            $errors[] = 'Mot de passe actuel incorrect.';
+        if (!password_verify($_POST['currentPassword'] ?? '', $utilisateur['password_hash'])) {
+            $erreurs[] = 'Mot de passe actuel incorrect.';
         } elseif (strlen($_POST['newPassword'] ?? '') < 8 || $_POST['newPassword'] !== ($_POST['confirmNewPassword'] ?? '')) {
-            $errors[] = 'Nouveau mot de passe invalide.';
+            $erreurs[] = 'Nouveau mot de passe invalide.';
         } else {
-            $stmt = db()->prepare('UPDATE users SET password_hash=? WHERE id=?');
-            $stmt->execute([password_hash($_POST['newPassword'], PASSWORD_DEFAULT), $user['id']]);
-            flash('success', 'Mot de passe mis a jour.');
-            redirect('profil.php');
+            $requete = bdd()->prepare('UPDATE users SET password_hash=? WHERE id=?');
+            $requete->execute([password_hash($_POST['newPassword'], PASSWORD_DEFAULT), $utilisateur['id']]);
+            message_flash('success', 'Mot de passe mis a jour.');
+            rediriger('profil.php');
         }
     }
 }
-$user = current_user();
+$utilisateur = utilisateur_actuel();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>OmnesEvent - Mon Profil</title><link rel="stylesheet" href="style.css"></head>
 <body>
-<?php nav('profile'); ?>
-<div class="page-header"><div class="container"><h1>Mon Profil</h1><p>Gerez vos informations personnelles et vos preferences.</p></div></div>
-<section class="section"><div class="container container-narrow">
-  <?php foreach ($errors as $error): ?><div class="alert alert-danger"><?= h($error) ?></div><?php endforeach; ?>
-  <?php if ($msg = flash('success')): ?><div class="alert alert-success"><?= h($msg) ?></div><?php endif; ?>
-  <div class="profile-header mb-3"><div class="avatar avatar-xl"><?= h(strtoupper(substr($user['prenom'], 0, 1) . substr($user['nom'], 0, 1))) ?></div><div class="profile-info"><h2><?= h($user['prenom'] . ' ' . $user['nom']) ?></h2><p><?= h($user['email']) ?></p><div class="d-flex gap-1 mt-1 flex-wrap"><span class="badge badge-primary"><?= h(ucfirst($user['role'])) ?></span><span class="badge badge-success"><?= h($user['status']) ?></span></div></div></div>
-  <div class="tabs"><button class="tab-btn active" data-tab="infos">Informations</button><button class="tab-btn" data-tab="securite">Securite</button><button class="tab-btn" data-tab="compte">Mon compte</button></div>
-  <div class="tab-panel active" id="tab-infos"><div class="card"><div class="card-header"><h3>Informations personnelles</h3></div><div class="card-body"><form method="post"><input type="hidden" name="action" value="profile"><div class="form-row form-row-2"><div class="form-group mb-0"><label class="form-label">Prenom</label><input name="prenom" class="form-control" value="<?= h($user['prenom']) ?>" required></div><div class="form-group mb-0"><label class="form-label">Nom</label><input name="nom" class="form-control" value="<?= h($user['nom']) ?>" required></div></div><div class="form-group mt-2"><label class="form-label">Adresse email</label><input type="email" name="email" class="form-control" value="<?= h($user['email']) ?>" required></div><div class="form-row form-row-2"><div class="form-group mb-0"><label class="form-label">Telephone</label><input name="telephone" class="form-control" value="<?= h($user['telephone']) ?>"></div><div class="form-group mb-0"><label class="form-label">Promotion</label><input name="promo" class="form-control" value="<?= h($user['promo']) ?>"></div></div><div class="form-group"><label class="form-label">Campus</label><input name="campus" class="form-control" value="<?= h($user['campus']) ?>"></div><div class="form-group"><label class="form-label">Bio</label><textarea name="bio" class="form-control" rows="3"><?= h($user['bio']) ?></textarea></div><button class="btn btn-primary">Enregistrer les modifications</button></form></div></div></div>
-  <div class="tab-panel" id="tab-securite"><div class="card"><div class="card-header"><h3>Changer le mot de passe</h3></div><div class="card-body"><form method="post"><input type="hidden" name="action" value="password"><div class="form-group"><label class="form-label">Mot de passe actuel</label><input type="password" name="currentPassword" class="form-control" required></div><div class="form-group"><label class="form-label">Nouveau mot de passe</label><input type="password" name="newPassword" class="form-control" required minlength="8"></div><div class="form-group"><label class="form-label">Confirmer</label><input type="password" name="confirmNewPassword" class="form-control" required minlength="8"></div><button class="btn btn-primary">Mettre a jour</button></form></div></div></div>
-  <div class="tab-panel" id="tab-compte"><div class="card"><div class="card-header"><h3>Informations du compte</h3></div><div class="card-body"><div class="account-info"><div class="d-flex justify-between align-center"><span class="text-muted fs-sm">Role</span><span class="badge badge-primary"><?= h($user['role']) ?></span></div><div class="separator mb-0 mt-0"></div><div class="d-flex justify-between align-center"><span class="text-muted fs-sm">Statut</span><span class="badge badge-success"><?= h($user['status']) ?></span></div><div class="separator mb-0 mt-0"></div><div class="d-flex justify-between align-center"><span class="text-muted fs-sm">Membre depuis</span><span class="fw-semibold fs-sm"><?= h(substr($user['created_at'], 0, 10)) ?></span></div></div></div></div></div>
+<?php afficher_navigation('profil'); ?>
+<div class="entete-page"><div class="conteneur"><h1>Mon Profil</h1><p>Gerez vos informations personnelles et vos preferences.</p></div></div>
+<section class="section"><div class="conteneur conteneur-etroit">
+  <?php foreach ($erreurs as $erreur): ?><div class="alerte alerte-danger"><?= echapper($erreur) ?></div><?php endforeach; ?>
+  <?php if ($messageFlash = message_flash('success')): ?><div class="alerte alerte-succes"><?= echapper($messageFlash) ?></div><?php endif; ?>
+  <div class="entete-profil mb-3"><div class="avatar avatar-tres-grand"><?= echapper(strtoupper(substr($utilisateur['prenom'], 0, 1) . substr($utilisateur['nom'], 0, 1))) ?></div><div class="info-profil"><h2><?= echapper($utilisateur['prenom'] . ' ' . $utilisateur['nom']) ?></h2><p><?= echapper($utilisateur['email']) ?></p><div class="flex ecart-1 mt-1 retour-ligne"><span class="pastille pastille-primaire"><?= echapper(ucfirst($utilisateur['role'])) ?></span><span class="pastille pastille-succes"><?= echapper($utilisateur['status']) ?></span></div></div></div>
+  <div class="onglets"><button class="bouton-onglet actif" data-tab="infos">Informations</button><button class="bouton-onglet" data-tab="securite">Securite</button><button class="bouton-onglet" data-tab="compte">Mon compte</button></div>
+  <div class="panneau-onglet actif" id="tab-infos"><div class="carte"><div class="carte-entete"><h3>Informations personnelles</h3></div><div class="carte-corps"><form method="post"><input type="hidden" name="action" value="profile"><div class="rangee-champ rangee-champ-2"><div class="groupe-champ mb-0"><label class="etiquette-champ">Prenom</label><input name="prenom" class="champ" value="<?= echapper($utilisateur['prenom']) ?>" required></div><div class="groupe-champ mb-0"><label class="etiquette-champ">Nom</label><input name="nom" class="champ" value="<?= echapper($utilisateur['nom']) ?>" required></div></div><div class="groupe-champ mt-2"><label class="etiquette-champ">Adresse email</label><input type="email" name="email" class="champ" value="<?= echapper($utilisateur['email']) ?>" required></div><div class="rangee-champ rangee-champ-2"><div class="groupe-champ mb-0"><label class="etiquette-champ">Telephone</label><input name="telephone" class="champ" value="<?= echapper($utilisateur['telephone']) ?>"></div><div class="groupe-champ mb-0"><label class="etiquette-champ">Promotion</label><input name="promo" class="champ" value="<?= echapper($utilisateur['promo']) ?>"></div></div><div class="groupe-champ"><label class="etiquette-champ">Campus</label><input name="campus" class="champ" value="<?= echapper($utilisateur['campus']) ?>"></div><div class="groupe-champ"><label class="etiquette-champ">Bio</label><textarea name="bio" class="champ" rows="3"><?= echapper($utilisateur['bio']) ?></textarea></div><button class="bouton bouton-primaire">Enregistrer les modifications</button></form></div></div></div>
+  <div class="panneau-onglet" id="tab-securite"><div class="carte"><div class="carte-entete"><h3>Changer le mot de passe</h3></div><div class="carte-corps"><form method="post"><input type="hidden" name="action" value="password"><div class="groupe-champ"><label class="etiquette-champ">Mot de passe actuel</label><input type="password" name="currentPassword" class="champ" required></div><div class="groupe-champ"><label class="etiquette-champ">Nouveau mot de passe</label><input type="password" name="newPassword" class="champ" required minlength="8"></div><div class="groupe-champ"><label class="etiquette-champ">Confirmer</label><input type="password" name="confirmNewPassword" class="champ" required minlength="8"></div><button class="bouton bouton-primaire">Mettre a jour</button></form></div></div></div>
+  <div class="panneau-onglet" id="tab-compte"><div class="carte"><div class="carte-entete"><h3>Informations du compte</h3></div><div class="carte-corps"><div class="info-compte"><div class="flex espacer centrer"><span class="texte-discret texte-petit">Role</span><span class="pastille pastille-primaire"><?= echapper($utilisateur['role']) ?></span></div><div class="separateur mb-0 mt-0"></div><div class="flex espacer centrer"><span class="texte-discret texte-petit">Statut</span><span class="pastille pastille-succes"><?= echapper($utilisateur['status']) ?></span></div><div class="separateur mb-0 mt-0"></div><div class="flex espacer centrer"><span class="texte-discret texte-petit">Membre depuis</span><span class="semi-gras texte-petit"><?= echapper(substr($utilisateur['created_at'], 0, 10)) ?></span></div></div></div></div></div>
 </div></section>
-<?php footer_html(); ?>
+<?php afficher_pied_de_page(); ?>
 </body>
 </html>
