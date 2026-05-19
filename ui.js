@@ -1,40 +1,40 @@
-// ===== NAVBAR HAMBURGER =====
-var hamburger = document.getElementById('hamburger');
-var mobileMenu = document.getElementById('mobileMenu');
+// ===== MENU HAMBURGER =====
+var boutonHamburger = document.getElementById('boutonHamburger');
+var menuMobile = document.getElementById('menuMobile');
 
-if (hamburger && mobileMenu) {
-  hamburger.addEventListener('click', function() {
-    mobileMenu.classList.toggle('open');
+if (boutonHamburger && menuMobile) {
+  boutonHamburger.addEventListener('click', function() {
+    menuMobile.classList.toggle('ouvert');
   });
 
-  document.addEventListener('click', function(event) {
-    if (!hamburger.contains(event.target) && !mobileMenu.contains(event.target)) {
-      mobileMenu.classList.remove('open');
+  document.addEventListener('click', function(evenement) {
+    if (!boutonHamburger.contains(evenement.target) && !menuMobile.contains(evenement.target)) {
+      menuMobile.classList.remove('ouvert');
     }
   });
 }
 
-// ===== TABS =====
-document.querySelectorAll('.tab-btn').forEach(function(button) {
-  button.addEventListener('click', function() {
-    var tab = button.getAttribute('data-tab');
-    button.parentElement.querySelectorAll('.tab-btn').forEach(function(item) {
-      item.classList.remove('active');
+// ===== ONGLETS =====
+document.querySelectorAll('.bouton-onglet').forEach(function(bouton) {
+  bouton.addEventListener('click', function() {
+    var onglet = bouton.getAttribute('data-tab');
+    bouton.parentElement.querySelectorAll('.bouton-onglet').forEach(function(element) {
+      element.classList.remove('actif');
     });
-    button.classList.add('active');
-    document.querySelectorAll('.tab-panel').forEach(function(panel) {
-      panel.classList.remove('active');
+    bouton.classList.add('actif');
+    document.querySelectorAll('.panneau-onglet').forEach(function(panneau) {
+      panneau.classList.remove('actif');
     });
-    var panel = document.getElementById('tab-' + tab);
-    if (panel) panel.classList.add('active');
+    var panneau = document.getElementById('tab-' + onglet);
+    if (panneau) panneau.classList.add('actif');
   });
 });
 
 // ===== CONFIRMATION AVANT SOUMISSION =====
-document.querySelectorAll('[data-confirm]').forEach(function(form) {
-  form.addEventListener('submit', function(event) {
-    if (!confirm(form.dataset.confirm)) {
-      event.preventDefault();
+document.querySelectorAll('[data-confirm]').forEach(function(formulaire) {
+  formulaire.addEventListener('submit', function(evenement) {
+    if (!confirm(formulaire.dataset.confirm)) {
+      evenement.preventDefault();
     }
   });
 });

@@ -1,112 +1,112 @@
-// ===== FILTER PILLS =====
-var pills = document.querySelectorAll('.pill');
-var eventCards = document.querySelectorAll('.event-card');
-var resultCount = document.getElementById('resultCount');
-var noResults = document.getElementById('noResults');
-var eventsGrid = document.getElementById('eventsGrid');
+// ===== FILTRES =====
+var filtres = document.querySelectorAll('.filtre');
+var cartesEvenements = document.querySelectorAll('.carte-evenement');
+var compteurResultats = document.getElementById('resultCount');
+var sansResultat = document.getElementById('noResults');
+var grilleEvenements = document.getElementById('eventsGrid');
 
-var currentFilter = 'all';
-var currentSearch = '';
+var filtreActif = 'all';
+var rechercheActuelle = '';
 
-for (var i = 0; i < pills.length; i++) {
-  pills[i].addEventListener('click', function() {
-    for (var j = 0; j < pills.length; j++) pills[j].classList.remove('active');
-    this.classList.add('active');
-    currentFilter = this.getAttribute('data-filter');
-    filterEvents();
+for (var i = 0; i < filtres.length; i++) {
+  filtres[i].addEventListener('click', function() {
+    for (var j = 0; j < filtres.length; j++) filtres[j].classList.remove('actif');
+    this.classList.add('actif');
+    filtreActif = this.getAttribute('data-filter');
+    filtrerEvenements();
   });
 }
 
 // ===== RECHERCHE =====
-var searchInput = document.getElementById('searchInput');
-var searchBtn = document.getElementById('searchBtn');
-var resetBtn = document.getElementById('resetSearch');
+var champRecherche = document.getElementById('searchInput');
+var boutonRecherche = document.getElementById('searchBtn');
+var boutonReinitialisation = document.getElementById('resetSearch');
 
-if (searchBtn) {
-  searchBtn.addEventListener('click', function() {
-    currentSearch = searchInput ? searchInput.value.trim().toLowerCase() : '';
-    filterEvents();
+if (boutonRecherche) {
+  boutonRecherche.addEventListener('click', function() {
+    rechercheActuelle = champRecherche ? champRecherche.value.trim().toLowerCase() : '';
+    filtrerEvenements();
   });
 }
 
-if (searchInput) {
-  searchInput.addEventListener('keydown', function(e) {
+if (champRecherche) {
+  champRecherche.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
-      currentSearch = searchInput.value.trim().toLowerCase();
-      filterEvents();
+      rechercheActuelle = champRecherche.value.trim().toLowerCase();
+      filtrerEvenements();
     }
   });
 }
 
-if (resetBtn) {
-  resetBtn.addEventListener('click', function() {
-    if (searchInput) searchInput.value = '';
-    currentSearch = '';
-    currentFilter = 'all';
-    for (var j = 0; j < pills.length; j++) pills[j].classList.remove('active');
-    var allPill = document.querySelector('[data-filter="all"]');
-    if (allPill) allPill.classList.add('active');
-    filterEvents();
+if (boutonReinitialisation) {
+  boutonReinitialisation.addEventListener('click', function() {
+    if (champRecherche) champRecherche.value = '';
+    rechercheActuelle = '';
+    filtreActif = 'all';
+    for (var j = 0; j < filtres.length; j++) filtres[j].classList.remove('actif');
+    var tousFiltre = document.querySelector('[data-filter="all"]');
+    if (tousFiltre) tousFiltre.classList.add('actif');
+    filtrerEvenements();
   });
 }
 
-function filterEvents() {
+function filtrerEvenements() {
   var visible = 0;
 
-  for (var i = 0; i < eventCards.length; i++) {
-    var card = eventCards[i];
-    var category = card.getAttribute('data-category') || '';
-    var titleEl = card.querySelector('.event-card-title');
-    var metaEl = card.querySelector('.event-card-meta');
-    var title = titleEl ? titleEl.textContent.toLowerCase() : '';
-    var meta = metaEl ? metaEl.textContent.toLowerCase() : '';
+  for (var i = 0; i < cartesEvenements.length; i++) {
+    var carte = cartesEvenements[i];
+    var categorie = carte.getAttribute('data-category') || '';
+    var elementTitre = carte.querySelector('.carte-evenement-titre');
+    var elementMeta = carte.querySelector('.carte-evenement-meta');
+    var titre = elementTitre ? elementTitre.textContent.toLowerCase() : '';
+    var meta = elementMeta ? elementMeta.textContent.toLowerCase() : '';
 
-    var matchFilter = currentFilter === 'all' || category === currentFilter;
-    var matchSearch = currentSearch === '' || title.indexOf(currentSearch) !== -1 || meta.indexOf(currentSearch) !== -1;
+    var correspondFiltre = filtreActif === 'all' || categorie === filtreActif;
+    var correspondRecherche = rechercheActuelle === '' || titre.indexOf(rechercheActuelle) !== -1 || meta.indexOf(rechercheActuelle) !== -1;
 
-    if (matchFilter && matchSearch) {
-      card.style.display = 'block';
+    if (correspondFiltre && correspondRecherche) {
+      carte.style.display = 'block';
       visible++;
     } else {
-      card.style.display = 'none';
+      carte.style.display = 'none';
     }
   }
 
-  if (resultCount) {
-    resultCount.textContent = visible + ' événement' + (visible > 1 ? 's' : '') + ' trouvé' + (visible > 1 ? 's' : '');
+  if (compteurResultats) {
+    compteurResultats.textContent = visible + ' événement' + (visible > 1 ? 's' : '') + ' trouvé' + (visible > 1 ? 's' : '');
   }
 
   if (visible === 0) {
-    if (noResults) noResults.classList.remove('d-none');
-    if (eventsGrid) eventsGrid.style.display = 'none';
+    if (sansResultat) sansResultat.classList.remove('masque');
+    if (grilleEvenements) grilleEvenements.style.display = 'none';
   } else {
-    if (noResults) noResults.classList.add('d-none');
-    if (eventsGrid) eventsGrid.style.display = 'grid';
+    if (sansResultat) sansResultat.classList.add('masque');
+    if (grilleEvenements) grilleEvenements.style.display = 'grid';
   }
 }
 
 // ===== TRI =====
-var sortSelect = document.getElementById('sortSelect');
-if (sortSelect) {
-  sortSelect.addEventListener('change', function() {
-    var cards = [];
-    var allCards = eventsGrid ? eventsGrid.querySelectorAll('.event-card') : [];
-    for (var i = 0; i < allCards.length; i++) {
-      cards.push(allCards[i]);
+var selecteurTri = document.getElementById('sortSelect');
+if (selecteurTri) {
+  selecteurTri.addEventListener('change', function() {
+    var cartes = [];
+    var toutesLesCartes = grilleEvenements ? grilleEvenements.querySelectorAll('.carte-evenement') : [];
+    for (var i = 0; i < toutesLesCartes.length; i++) {
+      cartes.push(toutesLesCartes[i]);
     }
 
-    if (sortSelect.value === 'name') {
-      cards.sort(function(a, b) {
-        var titleA = a.querySelector('.event-card-title');
-        var titleB = b.querySelector('.event-card-title');
-        var nameA = titleA ? titleA.textContent : '';
-        var nameB = titleB ? titleB.textContent : '';
-        return nameA.localeCompare(nameB);
+    if (selecteurTri.value === 'name') {
+      cartes.sort(function(a, b) {
+        var titreA = a.querySelector('.carte-evenement-titre');
+        var titreB = b.querySelector('.carte-evenement-titre');
+        var nomA = titreA ? titreA.textContent : '';
+        var nomB = titreB ? titreB.textContent : '';
+        return nomA.localeCompare(nomB);
       });
     }
 
-    for (var i = 0; i < cards.length; i++) {
-      eventsGrid.appendChild(cards[i]);
+    for (var i = 0; i < cartes.length; i++) {
+      grilleEvenements.appendChild(cartes[i]);
     }
   });
 }

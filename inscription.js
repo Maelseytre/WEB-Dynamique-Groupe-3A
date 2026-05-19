@@ -1,138 +1,138 @@
 // ===== SÉLECTEUR DE RÔLE =====
-var roleInputs = document.querySelectorAll('input[name="role"]');
-var associationGroup = document.getElementById('associationGroup');
+var inputsRole = document.querySelectorAll('input[name="role"]');
+var groupeAssociation = document.getElementById('associationGroup');
 
-for (var r = 0; r < roleInputs.length; r++) {
-  roleInputs[r].addEventListener('change', function() {
-    if (associationGroup) {
-      associationGroup.style.display = this.value === 'organisateur' ? 'block' : 'none';
+for (var r = 0; r < inputsRole.length; r++) {
+  inputsRole[r].addEventListener('change', function() {
+    if (groupeAssociation) {
+      groupeAssociation.style.display = this.value === 'organisateur' ? 'block' : 'none';
     }
   });
 }
 
 // ===== TOGGLE VISIBILITÉ MOT DE PASSE =====
-var togglePassword = document.getElementById('togglePassword');
-var passwordInput = document.getElementById('password');
+var basculerMdp = document.getElementById('togglePassword');
+var champMdp = document.getElementById('password');
 
-if (togglePassword && passwordInput) {
-  togglePassword.addEventListener('click', function() {
-    var type = passwordInput.type === 'password' ? 'text' : 'password';
-    passwordInput.type = type;
-    togglePassword.textContent = type === 'password' ? 'Voir' : 'Cacher';
+if (basculerMdp && champMdp) {
+  basculerMdp.addEventListener('click', function() {
+    var type = champMdp.type === 'password' ? 'text' : 'password';
+    champMdp.type = type;
+    basculerMdp.textContent = type === 'password' ? 'Voir' : 'Cacher';
   });
 }
 
 // ===== FORCE DU MOT DE PASSE =====
-var strengthBar = document.getElementById('strengthBar');
-var strengthText = document.getElementById('strengthText');
-var passwordStrength = document.getElementById('passwordStrength');
+var barreForce = document.getElementById('strengthBar');
+var texteForce = document.getElementById('strengthText');
+var forceMotDePasse = document.getElementById('passwordStrength');
 
-if (passwordInput && strengthBar) {
-  passwordInput.addEventListener('input', function() {
-    var val = passwordInput.value;
+if (champMdp && barreForce) {
+  champMdp.addEventListener('input', function() {
+    var valeur = champMdp.value;
 
-    if (passwordStrength) {
-      passwordStrength.style.display = val.length > 0 ? 'block' : 'none';
+    if (forceMotDePasse) {
+      forceMotDePasse.style.display = valeur.length > 0 ? 'block' : 'none';
     }
 
     var score = 0;
-    if (val.length >= 8) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
+    if (valeur.length >= 8) score++;
+    if (/[A-Z]/.test(valeur)) score++;
+    if (/[0-9]/.test(valeur)) score++;
+    if (/[^A-Za-z0-9]/.test(valeur)) score++;
 
-    var levels = [
-      { width: '25%', color: '#EF4444', label: 'Tres faible' },
-      { width: '50%', color: '#F59E0B', label: 'Faible' },
-      { width: '75%', color: '#3B82F6', label: 'Moyen' },
-      { width: '100%', color: '#10B981', label: 'Fort' }
+    var niveaux = [
+      { largeur: '25%', couleur: '#EF4444', libelle: 'Tres faible' },
+      { largeur: '50%', couleur: '#F59E0B', libelle: 'Faible' },
+      { largeur: '75%', couleur: '#3B82F6', libelle: 'Moyen' },
+      { largeur: '100%', couleur: '#10B981', libelle: 'Fort' }
     ];
 
-    var level = levels[score > 0 ? score - 1 : 0];
-    strengthBar.style.width = level.width;
-    strengthBar.style.background = level.color;
-    if (strengthText) strengthText.textContent = 'Force du mot de passe : ' + level.label;
+    var niveau = niveaux[score > 0 ? score - 1 : 0];
+    barreForce.style.width = niveau.largeur;
+    barreForce.style.background = niveau.couleur;
+    if (texteForce) texteForce.textContent = 'Force du mot de passe : ' + niveau.libelle;
   });
 }
 
 // ===== VÉRIFICATION MOT DE PASSE EN TEMPS RÉEL =====
-var confirmPasswordInput = document.getElementById('confirmPassword');
-var confirmPasswordError = document.getElementById('confirmPasswordError');
+var champConfirmation = document.getElementById('confirmPassword');
+var erreurConfirmation = document.getElementById('confirmPasswordError');
 
-if (confirmPasswordInput) {
-  confirmPasswordInput.addEventListener('input', function() {
-    var pwd = passwordInput ? passwordInput.value : '';
-    var confirm = confirmPasswordInput.value;
+if (champConfirmation) {
+  champConfirmation.addEventListener('input', function() {
+    var mdp = champMdp ? champMdp.value : '';
+    var confirmation = champConfirmation.value;
 
-    if (confirm.length === 0) {
-      if (confirmPasswordError) confirmPasswordError.classList.remove('show');
+    if (confirmation.length === 0) {
+      if (erreurConfirmation) erreurConfirmation.classList.remove('visible');
       return;
     }
 
-    if (confirmPasswordError) {
-      confirmPasswordError.classList.add('show');
-      if (pwd === confirm) {
-        confirmPasswordError.style.color = '#10B981';
-        confirmPasswordError.textContent = 'Les mots de passe correspondent.';
+    if (erreurConfirmation) {
+      erreurConfirmation.classList.add('visible');
+      if (mdp === confirmation) {
+        erreurConfirmation.style.color = '#10B981';
+        erreurConfirmation.textContent = 'Les mots de passe correspondent.';
       } else {
-        confirmPasswordError.style.color = '';
-        confirmPasswordError.textContent = 'Les mots de passe ne correspondent pas.';
+        erreurConfirmation.style.color = '';
+        erreurConfirmation.textContent = 'Les mots de passe ne correspondent pas.';
       }
     }
   });
 }
 
 // ===== VALIDATION DU FORMULAIRE =====
-var registerForm = document.getElementById('registerForm');
-var alertBox = document.getElementById('alertBox');
+var formulaireInscription = document.getElementById('registerForm');
+var boiteAlerte = document.getElementById('alertBox');
 
-if (registerForm) {
-  registerForm.addEventListener('submit', function(e) {
-    if (alertBox) alertBox.classList.add('d-none');
+if (formulaireInscription) {
+  formulaireInscription.addEventListener('submit', function(e) {
+    if (boiteAlerte) boiteAlerte.classList.add('masque');
 
     var prenom = document.getElementById('prenom') ? document.getElementById('prenom').value.trim() : '';
     var nom = document.getElementById('nom') ? document.getElementById('nom').value.trim() : '';
     var email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
-    var password = passwordInput ? passwordInput.value : '';
-    var confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
+    var motDePasse = champMdp ? champMdp.value : '';
+    var confirmationMdp = champConfirmation ? champConfirmation.value : '';
     var cguEl = document.getElementById('cgu');
     var cgu = cguEl ? cguEl.checked : false;
-    var roleChecked = document.querySelector('input[name="role"]:checked');
-    var role = roleChecked ? roleChecked.value : '';
+    var roleSelectionne = document.querySelector('input[name="role"]:checked');
+    var role = roleSelectionne ? roleSelectionne.value : '';
     var associationEl = document.getElementById('association');
     var association = associationEl ? associationEl.value : '';
 
-    var valid = true;
+    var valide = true;
 
-    if (!prenom) { showError('prenomError'); valid = false; } else { hideError('prenomError'); }
-    if (!nom) { showError('nomError'); valid = false; } else { hideError('nomError'); }
-    if (!email || !isValidEmail(email)) { showError('emailError'); valid = false; } else { hideError('emailError'); }
-    if (password.length < 8) { showError('passwordError'); valid = false; } else { hideError('passwordError'); }
-    if (password !== confirmPassword) {
-      showError('confirmPasswordError');
-      valid = false;
+    if (!prenom) { afficherErreur('prenomError'); valide = false; } else { cacherErreur('prenomError'); }
+    if (!nom) { afficherErreur('nomError'); valide = false; } else { cacherErreur('nomError'); }
+    if (!email || !estEmailValide(email)) { afficherErreur('emailError'); valide = false; } else { cacherErreur('emailError'); }
+    if (motDePasse.length < 8) { afficherErreur('passwordError'); valide = false; } else { cacherErreur('passwordError'); }
+    if (motDePasse !== confirmationMdp) {
+      afficherErreur('confirmPasswordError');
+      valide = false;
     } else {
-      hideError('confirmPasswordError');
+      cacherErreur('confirmPasswordError');
     }
-    if (role === 'organisateur' && !association) { showError('associationError'); valid = false; } else { hideError('associationError'); }
-    if (!cgu) { showError('cguError'); valid = false; } else { hideError('cguError'); }
+    if (role === 'organisateur' && !association) { afficherErreur('associationError'); valide = false; } else { cacherErreur('associationError'); }
+    if (!cgu) { afficherErreur('cguError'); valide = false; } else { cacherErreur('cguError'); }
 
-    if (!valid) {
+    if (!valide) {
       e.preventDefault();
     }
   });
 }
 
-function isValidEmail(email) {
+function estEmailValide(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function showError(id) {
+function afficherErreur(id) {
   var el = document.getElementById(id);
-  if (el) el.classList.add('show');
+  if (el) el.classList.add('visible');
 }
 
-function hideError(id) {
+function cacherErreur(id) {
   var el = document.getElementById(id);
-  if (el) el.classList.remove('show');
+  if (el) el.classList.remove('visible');
 }

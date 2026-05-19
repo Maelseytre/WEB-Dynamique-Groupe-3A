@@ -1,75 +1,75 @@
 // ===== TOGGLE VISIBILITÉ MOT DE PASSE =====
-var togglePassword = document.getElementById('togglePassword');
-var passwordInput = document.getElementById('password');
-var emailInput = document.getElementById('email');
-var loginForm = document.getElementById('loginForm');
-var alertBox = document.getElementById('alertBox');
+var basculerMdp = document.getElementById('togglePassword');
+var champMdp = document.getElementById('password');
+var champEmail = document.getElementById('email');
+var formulaireConnexion = document.getElementById('loginForm');
+var boiteAlerte = document.getElementById('alertBox');
 
-if (togglePassword && passwordInput) {
-  togglePassword.addEventListener('click', function() {
-    var type = passwordInput.type === 'password' ? 'text' : 'password';
-    passwordInput.type = type;
-    togglePassword.textContent = type === 'password' ? 'Voir' : 'Cacher';
+if (basculerMdp && champMdp) {
+  basculerMdp.addEventListener('click', function() {
+    var type = champMdp.type === 'password' ? 'text' : 'password';
+    champMdp.type = type;
+    basculerMdp.textContent = type === 'password' ? 'Voir' : 'Cacher';
   });
 }
 
 // ===== VALIDATION DU FORMULAIRE =====
-if (loginForm) {
-  loginForm.addEventListener('submit', function(e) {
-    if (alertBox) alertBox.classList.add('d-none');
+if (formulaireConnexion) {
+  formulaireConnexion.addEventListener('submit', function(e) {
+    if (boiteAlerte) boiteAlerte.classList.add('masque');
 
-    var email = emailInput ? emailInput.value.trim() : '';
-    var password = passwordInput ? passwordInput.value : '';
-    var valid = true;
+    var email = champEmail ? champEmail.value.trim() : '';
+    var motDePasse = champMdp ? champMdp.value : '';
+    var valide = true;
 
-    if (!email || !isValidEmail(email)) {
-      showError('emailError');
-      if (emailInput) emailInput.classList.add('error');
-      valid = false;
+    if (!email || !estEmailValide(email)) {
+      afficherErreur('emailError');
+      if (champEmail) champEmail.classList.add('erreur');
+      valide = false;
     } else {
-      hideError('emailError');
-      if (emailInput) emailInput.classList.remove('error');
+      cacherErreur('emailError');
+      if (champEmail) champEmail.classList.remove('erreur');
     }
 
-    if (!password) {
-      showError('passwordError');
-      if (passwordInput) passwordInput.classList.add('error');
-      valid = false;
+    if (!motDePasse) {
+      afficherErreur('passwordError');
+      if (champMdp) champMdp.classList.add('erreur');
+      valide = false;
     } else {
-      hideError('passwordError');
-      if (passwordInput) passwordInput.classList.remove('error');
+      cacherErreur('passwordError');
+      if (champMdp) champMdp.classList.remove('erreur');
     }
 
-    if (!valid) {
+    if (!valide) {
       e.preventDefault();
     }
   });
 }
 
-if (emailInput) {
-  emailInput.addEventListener('input', function() {
-    emailInput.classList.remove('error');
-    hideError('emailError');
+if (champEmail) {
+  champEmail.addEventListener('input', function() {
+    champEmail.classList.remove('erreur');
+    cacherErreur('emailError');
   });
 }
 
-if (passwordInput) {
-  passwordInput.addEventListener('input', function() {
-    passwordInput.classList.remove('error');
-    hideError('passwordError');
+if (champMdp) {
+  champMdp.addEventListener('input', function() {
+    champMdp.classList.remove('erreur');
+    cacherErreur('passwordError');
   });
 }
 
-function isValidEmail(email) {
+function estEmailValide(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function showError(id) {
+function afficherErreur(id) {
   var el = document.getElementById(id);
-  if (el) el.classList.add('show');
+  if (el) el.classList.add('visible');
 }
 
-function hideError(id) {
+function cacherErreur(id) {
   var el = document.getElementById(id);
-  if (el) el.classList.remove('show');
+  if (el) el.classList.remove('visible');
 }

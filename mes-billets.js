@@ -1,58 +1,58 @@
 // ===== MODAL BILLET =====
-var currentCancelCode = null;
+var codeAnnulation = null;
 
-function showTicketModal(code, eventName, date) {
-  var codeEl = document.getElementById('ticketCodeDisplay');
-  var nameEl = document.getElementById('ticketEventName');
-  var dateEl = document.getElementById('ticketEventDate');
-  var modal = document.getElementById('ticketModal');
-  if (codeEl) codeEl.textContent = code;
-  if (nameEl) nameEl.textContent = eventName || '';
-  if (dateEl) dateEl.textContent = date || '';
-  if (modal) modal.classList.add('open');
+function afficherModalBillet(code, nomEvenement, date) {
+  var elementCode = document.getElementById('ticketCodeDisplay');
+  var elementNom = document.getElementById('ticketEventName');
+  var elementDate = document.getElementById('ticketEventDate');
+  var modale = document.getElementById('ticketModal');
+  if (elementCode) elementCode.textContent = code;
+  if (elementNom) elementNom.textContent = nomEvenement || '';
+  if (elementDate) elementDate.textContent = date || '';
+  if (modale) modale.classList.add('ouvert');
 }
 
-function closeTicketModal() {
-  var modal = document.getElementById('ticketModal');
-  if (modal) modal.classList.remove('open');
+function fermerModalBillet() {
+  var modale = document.getElementById('ticketModal');
+  if (modale) modale.classList.remove('ouvert');
 }
 
-function downloadTicket() {
+function telechargerBillet() {
   alert('Téléchargement du billet en PDF... (fonctionnalité backend requise)');
 }
 
 // ===== ANNULATION =====
-function confirmCancel(code) {
-  currentCancelCode = code;
-  var modal = document.getElementById('cancelModal');
-  if (modal) modal.classList.add('open');
+function confirmerAnnulation(code) {
+  codeAnnulation = code;
+  var modale = document.getElementById('cancelModal');
+  if (modale) modale.classList.add('ouvert');
 }
 
-function closeCancelModal() {
-  var modal = document.getElementById('cancelModal');
-  if (modal) modal.classList.remove('open');
-  currentCancelCode = null;
+function fermerModalAnnulation() {
+  var modale = document.getElementById('cancelModal');
+  if (modale) modale.classList.remove('ouvert');
+  codeAnnulation = null;
 }
 
-function cancelReservation() {
-  if (!currentCancelCode) return;
-  closeCancelModal();
-  window.location.href = 'annuler-reservation.php?code=' + currentCancelCode;
+function annulerReservation() {
+  if (!codeAnnulation) return;
+  fermerModalAnnulation();
+  window.location.href = 'annuler-reservation.php?code=' + codeAnnulation;
 }
 
 // ===== LISTE D'ATTENTE =====
-function leaveWaitlist(id) {
+function quitterListeAttente(id) {
   if (confirm("Quitter la liste d'attente pour cet événement ?")) {
     window.location.href = 'quitter-attente.php?id=' + id;
   }
 }
 
 // ===== FERMER MODALS EN CLIQUANT SUR LE FOND =====
-var overlays = document.querySelectorAll('.modal-overlay');
-for (var i = 0; i < overlays.length; i++) {
-  overlays[i].addEventListener('click', function(e) {
+var voilesModal = document.querySelectorAll('.voile-modal');
+for (var i = 0; i < voilesModal.length; i++) {
+  voilesModal[i].addEventListener('click', function(e) {
     if (e.target === this) {
-      this.classList.remove('open');
+      this.classList.remove('ouvert');
     }
   });
 }

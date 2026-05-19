@@ -1,89 +1,89 @@
 // ===== COMPTEURS DE CARACTÈRES =====
-var titre = document.getElementById('titre');
-var titreCount = document.getElementById('titreCount');
+var champTitre = document.getElementById('titre');
+var compteurTitre = document.getElementById('titreCount');
 
-if (titre && titreCount) {
-  titre.addEventListener('input', function() {
-    titreCount.textContent = titre.value.length;
+if (champTitre && compteurTitre) {
+  champTitre.addEventListener('input', function() {
+    compteurTitre.textContent = champTitre.value.length;
   });
 }
 
-var description = document.getElementById('description');
-var descriptionCount = document.getElementById('descriptionCount');
+var champDescription = document.getElementById('description');
+var compteurDescription = document.getElementById('descriptionCount');
 
-if (description && descriptionCount) {
-  description.addEventListener('input', function() {
-    descriptionCount.textContent = description.value.length;
+if (champDescription && compteurDescription) {
+  champDescription.addEventListener('input', function() {
+    compteurDescription.textContent = champDescription.value.length;
   });
 }
 
 // ===== AFFICHAGE NOM DU FICHIER =====
-var afficheInput = document.getElementById('afficheInput');
-var uploadArea = document.getElementById('uploadArea');
+var inputAffiche = document.getElementById('afficheInput');
+var zoneDepot = document.getElementById('uploadArea');
 
-if (afficheInput && uploadArea) {
-  afficheInput.addEventListener('change', function() {
-    var file = afficheInput.files[0];
-    if (!file) return;
+if (inputAffiche && zoneDepot) {
+  inputAffiche.addEventListener('change', function() {
+    var fichier = inputAffiche.files[0];
+    if (!fichier) return;
 
-    if (file.size > 5 * 1024 * 1024) {
+    if (fichier.size > 5 * 1024 * 1024) {
       alert('Le fichier est trop lourd (max 5 Mo).');
-      afficheInput.value = '';
+      inputAffiche.value = '';
       return;
     }
 
-    var uploadText = uploadArea.querySelector('.upload-text');
-    if (uploadText) uploadText.textContent = file.name;
+    var texteDepot = zoneDepot.querySelector('.texte-depot');
+    if (texteDepot) texteDepot.textContent = fichier.name;
   });
 }
 
 // ===== DATE MINIMUM =====
-var today = new Date().toISOString().split('T')[0];
+var aujourdhui = new Date().toISOString().split('T')[0];
 var dateDebut = document.getElementById('dateDebut');
 var dateFin = document.getElementById('dateFin');
 
 if (dateDebut) {
-  dateDebut.min = today;
+  dateDebut.min = aujourdhui;
   dateDebut.addEventListener('change', function() {
     if (dateFin) dateFin.min = dateDebut.value;
   });
 }
 if (dateFin) {
-  dateFin.min = today;
+  dateFin.min = aujourdhui;
 }
 
 // ===== VALIDATION DU FORMULAIRE =====
-var createEventForm = document.getElementById('createEventForm');
-var alertBox = document.getElementById('alertBox');
+var formulaireCreation = document.getElementById('createEventForm');
+var boiteAlerte = document.getElementById('alertBox');
 
-if (createEventForm) {
-  createEventForm.addEventListener('submit', function(e) {
-    if (alertBox) alertBox.classList.add('d-none');
+if (formulaireCreation) {
+  formulaireCreation.addEventListener('submit', function(e) {
+    if (boiteAlerte) boiteAlerte.classList.add('masque');
 
-    var titreVal = document.getElementById('titre') ? document.getElementById('titre').value.trim() : '';
-    var categorieVal = document.getElementById('categorie') ? document.getElementById('categorie').value : '';
-    var associationVal = document.getElementById('association') ? document.getElementById('association').value : '';
-    var descriptionVal = document.getElementById('description') ? document.getElementById('description').value.trim() : '';
-    var dateDebutVal = document.getElementById('dateDebut') ? document.getElementById('dateDebut').value : '';
-    var heureDebutVal = document.getElementById('heureDebut') ? document.getElementById('heureDebut').value : '';
-    var lieuVal = document.getElementById('lieu') ? document.getElementById('lieu').value.trim() : '';
-    var capaciteVal = document.getElementById('capacite') ? document.getElementById('capacite').value : '';
+    var valeurTitre = document.getElementById('titre') ? document.getElementById('titre').value.trim() : '';
+    var valeurCategorie = document.getElementById('categorie') ? document.getElementById('categorie').value : '';
+    var valeurAssociation = document.getElementById('association') ? document.getElementById('association').value : '';
+    var valeurDescription = document.getElementById('description') ? document.getElementById('description').value.trim() : '';
+    var valeurDateDebut = document.getElementById('dateDebut') ? document.getElementById('dateDebut').value : '';
+    var valeurHeureDebut = document.getElementById('heureDebut') ? document.getElementById('heureDebut').value : '';
+    var valeurLieu = document.getElementById('lieu') ? document.getElementById('lieu').value.trim() : '';
+    var valeurCapacite = document.getElementById('capacite') ? document.getElementById('capacite').value : '';
 
-    var valid = true;
+    var valide = true;
 
-    if (titreVal.length < 3) { showError('titreError'); valid = false; } else { hideError('titreError'); }
-    if (!categorieVal) { showError('categorieError'); valid = false; } else { hideError('categorieError'); }
-    if (!associationVal) { showError('associationError'); valid = false; } else { hideError('associationError'); }
-    if (descriptionVal.length < 50) { showError('descriptionError'); valid = false; } else { hideError('descriptionError'); }
-    if (!dateDebutVal) { showError('dateDebutError'); valid = false; } else { hideError('dateDebutError'); }
-    if (!heureDebutVal) { showError('heureDebutError'); valid = false; } else { hideError('heureDebutError'); }
-    if (lieuVal.length < 3) { showError('lieuError'); valid = false; } else { hideError('lieuError'); }
-    if (!capaciteVal || parseInt(capaciteVal) <= 0) { showError('capaciteError'); valid = false; } else { hideError('capaciteError'); }
+    if (valeurTitre.length < 3) { afficherErreur('titreError'); valide = false; } else { cacherErreur('titreError'); }
+    if (!valeurCategorie) { afficherErreur('categorieError'); valide = false; } else { cacherErreur('categorieError'); }
+    if (!valeurAssociation) { afficherErreur('associationError'); valide = false; } else { cacherErreur('associationError'); }
+    if (valeurDescription.length < 50) { afficherErreur('descriptionError'); valide = false; } else { cacherErreur('descriptionError'); }
+    if (!valeurDateDebut) { afficherErreur('dateDebutError'); valide = false; } else { cacherErreur('dateDebutError'); }
+    if (!valeurHeureDebut) { afficherErreur('heureDebutError'); valide = false; } else { cacherErreur('heureDebutError'); }
+    if (valeurLieu.length < 3) { afficherErreur('lieuError'); valide = false; } else { cacherErreur('lieuError'); }
+    if (!valeurCapacite || parseInt(valeurCapacite) <= 0) { afficherErreur('capaciteError'); valide = false; } else { cacherErreur('capaciteError'); }
 
-    if (!valid) {
-      if (alertBox) {
-        alertBox.textContent = 'Veuillez corriger les erreurs dans le formulaire.';
-        alertBox.classList.remove('d-none');
+    if (!valide) {
+      if (boiteAlerte) {
+        boiteAlerte.textContent = 'Veuillez corriger les erreurs dans le formulaire.';
+        boiteAlerte.classList.remove('masque');
       }
       e.preventDefault();
       window.scrollTo(0, 0);
@@ -91,12 +91,12 @@ if (createEventForm) {
   });
 }
 
-function showError(id) {
+function afficherErreur(id) {
   var el = document.getElementById(id);
-  if (el) el.classList.add('show');
+  if (el) el.classList.add('visible');
 }
 
-function hideError(id) {
+function cacherErreur(id) {
   var el = document.getElementById(id);
-  if (el) el.classList.remove('show');
+  if (el) el.classList.remove('visible');
 }

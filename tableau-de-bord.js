@@ -1,77 +1,77 @@
-// ===== TABS =====
-var tabBtns = document.querySelectorAll('.tab-btn');
-var tabPanels = document.querySelectorAll('.tab-panel');
+// ===== ONGLETS =====
+var boutonsOnglets = document.querySelectorAll('.bouton-onglet');
+var panneauxOnglets = document.querySelectorAll('.panneau-onglet');
 
-for (var i = 0; i < tabBtns.length; i++) {
-  tabBtns[i].addEventListener('click', function() {
-    for (var j = 0; j < tabBtns.length; j++) tabBtns[j].classList.remove('active');
-    for (var j = 0; j < tabPanels.length; j++) tabPanels[j].classList.remove('active');
-    this.classList.add('active');
-    var panel = document.getElementById('tab-' + this.getAttribute('data-tab'));
-    if (panel) panel.classList.add('active');
+for (var i = 0; i < boutonsOnglets.length; i++) {
+  boutonsOnglets[i].addEventListener('click', function() {
+    for (var j = 0; j < boutonsOnglets.length; j++) boutonsOnglets[j].classList.remove('actif');
+    for (var j = 0; j < panneauxOnglets.length; j++) panneauxOnglets[j].classList.remove('actif');
+    this.classList.add('actif');
+    var panneau = document.getElementById('tab-' + this.getAttribute('data-tab'));
+    if (panneau) panneau.classList.add('actif');
   });
 }
 
 // ===== ACTIONS SUR LES ÉVÉNEMENTS =====
-var eventToDelete = null;
+var evenementASupprimer = null;
 
-function viewParticipants(evtId) {
-  for (var i = 0; i < tabBtns.length; i++) tabBtns[i].classList.remove('active');
-  for (var i = 0; i < tabPanels.length; i++) tabPanels[i].classList.remove('active');
-  var inscritsBtn = document.querySelector('[data-tab="inscrits"]');
-  var inscritsPanel = document.getElementById('tab-inscrits');
-  if (inscritsBtn) inscritsBtn.classList.add('active');
-  if (inscritsPanel) inscritsPanel.classList.add('active');
+function voirParticipants(idEvenement) {
+  for (var i = 0; i < boutonsOnglets.length; i++) boutonsOnglets[i].classList.remove('actif');
+  for (var i = 0; i < panneauxOnglets.length; i++) panneauxOnglets[i].classList.remove('actif');
+  var boutonInscrits = document.querySelector('[data-tab="inscrits"]');
+  var panneauInscrits = document.getElementById('tab-inscrits');
+  if (boutonInscrits) boutonInscrits.classList.add('actif');
+  if (panneauInscrits) panneauInscrits.classList.add('actif');
 }
 
-function deleteEvent(evtId) {
-  eventToDelete = evtId;
-  var modal = document.getElementById('deleteModal');
-  if (modal) modal.classList.add('open');
+function supprimerEvenement(idEvenement) {
+  evenementASupprimer = idEvenement;
+  var modale = document.getElementById('deleteModal');
+  if (modale) modale.classList.add('ouvert');
 }
 
-function confirmDelete() {
-  var modal = document.getElementById('deleteModal');
-  if (modal) modal.classList.remove('open');
-  if (eventToDelete) {
-    window.location.href = 'supprimer-evenement.php?id=' + eventToDelete;
+function confirmerSuppression() {
+  var modale = document.getElementById('deleteModal');
+  if (modale) modale.classList.remove('ouvert');
+  if (evenementASupprimer) {
+    window.location.href = 'supprimer-evenement.php?id=' + evenementASupprimer;
   }
 }
 
-function publishEvent(evtId) {
-  showToast('Événement publié avec succès !', 'success');
+function publierEvenement(idEvenement) {
+  afficherNotification('Événement publié avec succès !', 'success');
 }
 
 // ===== PARTICIPANTS =====
-function validatePresence(participantId) {
-  var btn = event.target;
-  if (btn) btn.outerHTML = '<span class="badge badge-success">Présent(e)</span>';
-  showToast('Présence validée !', 'success');
+function validerPresence(idParticipant) {
+  var bouton = event.target;
+  if (bouton) bouton.outerHTML = '<span class="pastille pastille-succes">Présent(e)</span>';
+  afficherNotification('Présence validée !', 'success');
 }
 
-function exportCSV() {
+function exporterCSV() {
   window.location.href = 'export-inscrits.php';
 }
 
 // ===== FERMER MODALS EN CLIQUANT SUR LE FOND =====
-var overlays = document.querySelectorAll('.modal-overlay');
-for (var i = 0; i < overlays.length; i++) {
-  overlays[i].addEventListener('click', function(e) {
+var voilesModal = document.querySelectorAll('.voile-modal');
+for (var i = 0; i < voilesModal.length; i++) {
+  voilesModal[i].addEventListener('click', function(e) {
     if (e.target === this) {
-      this.classList.remove('open');
+      this.classList.remove('ouvert');
     }
   });
 }
 
-// ===== TOAST =====
-function showToast(message, type) {
+// ===== NOTIFICATION TOAST =====
+function afficherNotification(message, type) {
   if (!type) type = 'success';
-  var toast = document.createElement('div');
-  toast.className = 'alert alert-' + type;
-  toast.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;box-shadow:var(--shadow-lg);min-width:280px;';
-  toast.textContent = message;
-  document.body.appendChild(toast);
+  var notification = document.createElement('div');
+  notification.className = 'alerte alerte-' + type;
+  notification.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;box-shadow:var(--ombre-grande);min-width:280px;';
+  notification.textContent = message;
+  document.body.appendChild(notification);
   setTimeout(function() {
-    if (toast.parentNode) toast.parentNode.removeChild(toast);
+    if (notification.parentNode) notification.parentNode.removeChild(notification);
   }, 3500);
 }

@@ -1,44 +1,44 @@
 <?php
 declare(strict_types=1);
 
-$sessionPath = dirname(__DIR__) . '/tmp';
-if (!is_dir($sessionPath)) {
-    mkdir($sessionPath, 0775, true);
+$cheminSession = dirname(__DIR__) . '/tmp';
+if (!is_dir($cheminSession)) {
+    mkdir($cheminSession, 0775, true);
 }
-session_save_path($sessionPath);
+session_save_path($cheminSession);
 session_start();
 
-const DB_HOST = '127.0.0.1';
-const DB_NAME = 'omnesevent';
-const DB_USER = 'root';
+const DB_HOTE = '127.0.0.1';
+const DB_NOM  = 'omnesevent';
+const DB_UTIL = 'root';
 const DB_PASS = '';
 
-function db(): PDO
+function bdd(): PDO
 {
     static $pdo = null;
     if ($pdo instanceof PDO) {
         return $pdo;
     }
 
-    $server = new PDO('mysql:host=' . DB_HOST . ';charset=utf8mb4', DB_USER, DB_PASS, [
+    $serveur = new PDO('mysql:host=' . DB_HOTE . ';charset=utf8mb4', DB_UTIL, DB_PASS, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
-    $server->exec('CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    $serveur->exec('CREATE DATABASE IF NOT EXISTS `' . DB_NOM . '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
 
-    $pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4', DB_USER, DB_PASS, [
+    $pdo = new PDO('mysql:host=' . DB_HOTE . ';dbname=' . DB_NOM . ';charset=utf8mb4', DB_UTIL, DB_PASS, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
-    init_database($pdo);
+    initialiser_base($pdo);
 
     return $pdo;
 }
 
-function init_database(PDO $pdo): void
+function initialiser_base(PDO $pdo): void
 {
-    static $done = false;
-    if ($done) {
+    static $initialise = false;
+    if ($initialise) {
         return;
     }
 
@@ -102,103 +102,103 @@ function init_database(PDO $pdo): void
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
     ");
 
-    seed_database($pdo);
-    $done = true;
+    peupler_base($pdo);
+    $initialise = true;
 }
 
-function seed_database(PDO $pdo): void
+function peupler_base(PDO $pdo): void
 {
     if ((int) $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn() > 0) {
         return;
     }
 
-    $insertUser = $pdo->prepare('
+    $insererUtilisateur = $pdo->prepare('
         INSERT INTO users (prenom, nom, email, password_hash, role, association, status, promo, campus)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ');
-    $hash = password_hash('demo123', PASSWORD_DEFAULT);
-    $insertUser->execute(['Demo', 'Participant', 'participant@demo.fr', $hash, 'participant', null, 'active', 'ING2', 'Paris Etoile']);
-    $insertUser->execute(['Demo', 'Organisateur', 'organisateur@demo.fr', $hash, 'organisateur', 'BDE Omnes', 'active', null, 'Paris Etoile']);
-    $insertUser->execute(['Demo', 'Admin', 'admin@demo.fr', $hash, 'admin', null, 'active', null, 'Paris Etoile']);
-    $insertUser->execute(['Alice', 'BDS', 'alice.bds@omnes.fr', $hash, 'organisateur', 'BDS Omnes', 'pending', null, 'Paris Etoile']);
+    $hachage = password_hash('demo123', PASSWORD_DEFAULT);
+    $insererUtilisateur->execute(['Demo', 'Participant', 'participant@demo.fr', $hachage, 'participant', null, 'active', 'ING2', 'Paris Etoile']);
+    $insererUtilisateur->execute(['Demo', 'Organisateur', 'organisateur@demo.fr', $hachage, 'organisateur', 'BDE Omnes', 'active', null, 'Paris Etoile']);
+    $insererUtilisateur->execute(['Demo', 'Admin', 'admin@demo.fr', $hachage, 'admin', null, 'active', null, 'Paris Etoile']);
+    $insererUtilisateur->execute(['Alice', 'BDS', 'alice.bds@omnes.fr', $hachage, 'organisateur', 'BDS Omnes', 'pending', null, 'Paris Etoile']);
 
-    $orgId = (int) $pdo->query("SELECT id FROM users WHERE email = 'organisateur@demo.fr'")->fetchColumn();
-    $events = [
+    $idOrganisateur = (int) $pdo->query("SELECT id FROM users WHERE email = 'organisateur@demo.fr'")->fetchColumn();
+    $evenements = [
         ['Soiree d Integration BDE 2025', 'soiree', 'BDE Omnes', 'La grande soiree d integration organisee par le BDE Omnes. DJ sets, animations, bar, photobooth et surprises pour toute la communaute Omnes.', '2026-06-20', '20:00:00', '02:00:00', 'Salle des fetes, Campus Paris', '12 Rue de Presbourg, 75008 Paris', 100, 0, 'images/illlustration_soirée_1.jpg'],
         ['Tournoi de Football Inter-Ecoles', 'sport', 'BDS Omnes', 'Tournoi amical ouvert aux etudiants Omnes avec phases de poules, finales et remise de prix.', '2026-06-21', '10:00:00', '18:00:00', 'Terrain de sport Nord', '', 60, 0, 'images/illustration_foot_1.jpg'],
         ['Visite du Musee d Orsay', 'culture', 'Club Culturel', 'Sortie culturelle encadree au Musee d Orsay avec parcours libre et temps d echange.', '2026-06-25', '14:00:00', '17:00:00', 'Musee d Orsay, Paris', '', 30, 0, 'images/illustration_musee_1.jpeg'],
         ['Conference : IA et Monde du Travail', 'conference', 'Junior Entreprise', 'Conference sur les usages de l intelligence artificielle dans les entreprises, avec questions reponses.', '2026-06-30', '18:00:00', '20:00:00', 'Amphitheatre A, Campus Lyon', '', 200, 0, 'images/illustration_conferences_1.jpg'],
     ];
-    $insertEvent = $pdo->prepare('
+    $insererEvenement = $pdo->prepare('
         INSERT INTO events (organizer_id, titre, categorie, association, description, date_debut, heure_debut, heure_fin, lieu, adresse, capacite, prix, affiche)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ');
-    foreach ($events as $event) {
-        $insertEvent->execute(array_merge([$orgId], $event));
+    foreach ($evenements as $evenement) {
+        $insererEvenement->execute(array_merge([$idOrganisateur], $evenement));
     }
 }
 
-function h(?string $value): string
+function echapper(?string $valeur): string
 {
-    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars((string) $valeur, ENT_QUOTES, 'UTF-8');
 }
 
-function redirect(string $path): never
+function rediriger(string $chemin): never
 {
-    header('Location: ' . $path);
+    header('Location: ' . $chemin);
     exit;
 }
 
-function current_user(): ?array
+function utilisateur_actuel(): ?array
 {
     if (empty($_SESSION['user_id'])) {
         return null;
     }
-    $stmt = db()->prepare('SELECT * FROM users WHERE id = ?');
-    $stmt->execute([$_SESSION['user_id']]);
-    return $stmt->fetch() ?: null;
+    $requete = bdd()->prepare('SELECT * FROM users WHERE id = ?');
+    $requete->execute([$_SESSION['user_id']]);
+    return $requete->fetch() ?: null;
 }
 
-function require_login(): array
+function exiger_connexion(): array
 {
-    $user = current_user();
-    if (!$user) {
-        redirect('connexion.php');
+    $utilisateur = utilisateur_actuel();
+    if (!$utilisateur) {
+        rediriger('connexion.php');
     }
-    return $user;
+    return $utilisateur;
 }
 
-function require_role(array $roles): array
+function exiger_role(array $roles): array
 {
-    $user = require_login();
-    if (!in_array($user['role'], $roles, true)) {
-        redirect('Index.php');
+    $utilisateur = exiger_connexion();
+    if (!in_array($utilisateur['role'], $roles, true)) {
+        rediriger('Index.php');
     }
-    return $user;
+    return $utilisateur;
 }
 
-function flash(?string $key = null, ?string $message = null): ?string
+function message_flash(?string $cle = null, ?string $contenu = null): ?string
 {
-    if ($key !== null && $message !== null) {
-        $_SESSION['flash'][$key] = $message;
+    if ($cle !== null && $contenu !== null) {
+        $_SESSION['flash'][$cle] = $contenu;
         return null;
     }
-    if ($key === null) {
+    if ($cle === null) {
         return null;
     }
-    $value = $_SESSION['flash'][$key] ?? null;
-    unset($_SESSION['flash'][$key]);
-    return $value;
+    $valeur = $_SESSION['flash'][$cle] ?? null;
+    unset($_SESSION['flash'][$cle]);
+    return $valeur;
 }
 
-function reservation_count(int $eventId, ?string $status = 'confirmed'): int
+function compter_reservations(int $idEvenement, ?string $statut = 'confirmed'): int
 {
-    $stmt = db()->prepare('SELECT COALESCE(SUM(nb_places), 0) FROM reservations WHERE event_id = ? AND status = ?');
-    $stmt->execute([$eventId, $status]);
-    return (int) $stmt->fetchColumn();
+    $requete = bdd()->prepare('SELECT COALESCE(SUM(nb_places), 0) FROM reservations WHERE event_id = ? AND status = ?');
+    $requete->execute([$idEvenement, $statut]);
+    return (int) $requete->fetchColumn();
 }
 
-function format_date_fr(string $date): string
+function formater_date(string $date): string
 {
     $dt = new DateTime($date);
     $jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
@@ -206,40 +206,40 @@ function format_date_fr(string $date): string
     return $jours[(int) $dt->format('w')] . ' ' . $dt->format('j') . ' ' . $mois[(int) $dt->format('n') - 1] . ' ' . $dt->format('Y');
 }
 
-function category_label(string $category): string
+function libelle_categorie(string $categorie): string
 {
     return [
         'soiree' => 'Soiree',
         'sport' => 'Sport',
         'culture' => 'Culture',
         'conference' => 'Conference',
-    ][$category] ?? ucfirst($category);
+    ][$categorie] ?? ucfirst($categorie);
 }
 
-function nav(string $active = ''): void
+function afficher_navigation(string $actif = ''): void
 {
-    $user = current_user();
-    $logout = $user ? '<a href="logout.php" class="btn btn-outline btn-sm">Deconnexion</a>' : '<a href="connexion.php" class="btn btn-primary btn-sm">Connexion</a>';
-    echo '<nav class="menu"><div class="nav-menu">';
-    echo '<a href="Index.php" class="navbar-brand">OmnesEvent</a><ul class="navbar-nav">';
-    echo '<li><a href="Index.php" class="' . ($active === 'home' ? 'active' : '') . '">Accueil</a></li>';
-    echo '<li><a href="mes-billets.php" class="' . ($active === 'tickets' ? 'active' : '') . '">Mes Billets</a></li>';
-    if ($user && in_array($user['role'], ['organisateur', 'admin'], true)) {
-        echo '<li><a href="creer-evenement.php" class="' . ($active === 'create' ? 'active' : '') . '">Creer un evenement</a></li>';
-        echo '<li><a href="tableau-de-bord.php" class="' . ($active === 'dashboard' ? 'active' : '') . '">Dashboard</a></li>';
+    $utilisateur = utilisateur_actuel();
+    $deconnexion = $utilisateur ? '<a href="logout.php" class="bouton bouton-contour bouton-petit">Deconnexion</a>' : '<a href="connexion.php" class="bouton bouton-primaire bouton-petit">Connexion</a>';
+    echo '<nav class="barre-nav"><div class="nav-contenu">';
+    echo '<a href="Index.php" class="nav-marque">OmnesEvent</a><ul class="nav-liens">';
+    echo '<li><a href="Index.php" class="' . ($actif === 'accueil' ? 'actif' : '') . '">Accueil</a></li>';
+    echo '<li><a href="mes-billets.php" class="' . ($actif === 'billets' ? 'actif' : '') . '">Mes Billets</a></li>';
+    if ($utilisateur && in_array($utilisateur['role'], ['organisateur', 'admin'], true)) {
+        echo '<li><a href="creer-evenement.php" class="' . ($actif === 'creer' ? 'actif' : '') . '">Creer un evenement</a></li>';
+        echo '<li><a href="tableau-de-bord.php" class="' . ($actif === 'tableau' ? 'actif' : '') . '">Tableau de bord</a></li>';
     }
-    if ($user && $user['role'] === 'admin') {
-        echo '<li><a href="admin.php" class="' . ($active === 'admin' ? 'active' : '') . '">Admin</a></li>';
+    if ($utilisateur && $utilisateur['role'] === 'admin') {
+        echo '<li><a href="admin.php" class="' . ($actif === 'admin' ? 'actif' : '') . '">Admin</a></li>';
     }
-    echo '<li><a href="profil.php" class="' . ($active === 'profile' ? 'active' : '') . '">Mon Profil</a></li>';
-    echo '<li>' . $logout . '</li></ul>';
-    echo '<img src="images/omneseducation_logo.jpeg" alt="Logo Omnes Education" class="navbar-logo">';
-    echo '<button class="hamburger" id="hamburger"><span></span><span></span><span></span></button></div></nav>';
-    echo '<div class="mobile-menu" id="mobileMenu"><a href="Index.php">Accueil</a><a href="mes-billets.php">Mes Billets</a><a href="profil.php">Mon Profil</a>' . ($user ? '<a href="logout.php">Deconnexion</a>' : '<a href="connexion.php">Connexion</a>') . '</div>';
+    echo '<li><a href="profil.php" class="' . ($actif === 'profil' ? 'actif' : '') . '">Mon Profil</a></li>';
+    echo '<li>' . $deconnexion . '</li></ul>';
+    echo '<img src="images/omneseducation_logo.jpeg" alt="Logo Omnes Education" class="nav-logo">';
+    echo '<button class="nav-hamburger" id="boutonHamburger"><span></span><span></span><span></span></button></div></nav>';
+    echo '<div class="menu-mobile" id="menuMobile"><a href="Index.php">Accueil</a><a href="mes-billets.php">Mes Billets</a><a href="profil.php">Mon Profil</a>' . ($utilisateur ? '<a href="logout.php">Deconnexion</a>' : '<a href="connexion.php">Connexion</a>') . '</div>';
 }
 
-function footer_html(): void
+function afficher_pied_de_page(): void
 {
-    echo '<footer class="footer"><div class="footer-inner"><div class="footer-brand">OmnesEvent</div><div class="footer-bottom"><p>&copy; 2026 OmnesEvent - Projet Web Dynamique ING2</p></div></div></footer>';
+    echo '<footer class="pied-page"><div class="pied-page-interieur"><div class="pied-page-marque">OmnesEvent</div><div class="pied-page-bas"><p>&copy; 2026 OmnesEvent - Projet Web Dynamique ING2</p></div></div></footer>';
     echo '<script src="ui.js"></script>';
 }

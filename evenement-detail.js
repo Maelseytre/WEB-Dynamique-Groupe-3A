@@ -1,25 +1,25 @@
 // ===== MODAL RÉSERVATION =====
-function showReservationModal() {
-  var modal = document.getElementById('reservationModal');
-  if (modal) modal.classList.add('open');
+function afficherModalReservation() {
+  var modale = document.getElementById('reservationModal');
+  if (modale) modale.classList.add('ouvert');
 }
 
-function closeModal() {
-  var modal = document.getElementById('reservationModal');
-  if (modal) modal.classList.remove('open');
+function fermerModal() {
+  var modale = document.getElementById('reservationModal');
+  if (modale) modale.classList.remove('ouvert');
 }
 
-function closeSuccessModal() {
-  var modal = document.getElementById('successModal');
-  if (modal) modal.classList.remove('open');
+function fermerModalSucces() {
+  var modale = document.getElementById('successModal');
+  if (modale) modale.classList.remove('ouvert');
 }
 
 // ===== FERMER LES MODALS EN CLIQUANT SUR LE FOND =====
-var overlays = document.querySelectorAll('.modal-overlay');
-for (var i = 0; i < overlays.length; i++) {
-  overlays[i].addEventListener('click', function(e) {
+var voilesModal = document.querySelectorAll('.voile-modal');
+for (var i = 0; i < voilesModal.length; i++) {
+  voilesModal[i].addEventListener('click', function(e) {
     if (e.target === this) {
-      this.classList.remove('open');
+      this.classList.remove('ouvert');
     }
   });
 }
