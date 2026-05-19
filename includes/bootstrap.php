@@ -149,6 +149,36 @@ function rediriger(string $chemin): never
     exit;
 }
 
+function url_absolue(string $chemin): string
+{
+    $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (($_SERVER['SERVER_PORT'] ?? '') === '443');
+    $scheme = $https ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+    if ($base === '.' || $base === '/') {
+        $base = '';
+    }
+    return $scheme . '://' . $host . $base . '/' . ltrim($chemin, '/');
+}
+
+function lien_validation_billet(string $codeBillet): string
+{
+    return url_absolue('valider-billet.php?code=' . rawurlencode($codeBillet));
+}
+
+function generer_code_billet(): string
+{
+    for ($tentative = 0; $tentative < 10; $tentative++) {
+        $code = 'OE-' . date('Y') . '-' . strtoupper(bin2hex(random_bytes(4)));
+        $requete = bdd()->prepare('SELECT COUNT(*) FROM reservations WHERE ticket_code = ?');
+        $requete->execute([$code]);
+        if ((int) $requete->fetchColumn() === 0) {
+            return $code;
+        }
+    }
+    throw new RuntimeException('Impossible de generer un code billet unique.');
+}
+
 function utilisateur_actuel(): ?array
 {
     if (empty($_SESSION['user_id'])) {
