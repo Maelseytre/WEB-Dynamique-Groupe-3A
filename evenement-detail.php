@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'reser
     }
 
     try {
-        $code = 'OE-' . date('Y') . '-' . random_int(1000, 9999);
+        $code = generer_code_billet();
         $requete = bdd()->prepare('INSERT INTO reservations (event_id, user_id, nb_places, commentaire, ticket_code, status) VALUES (?, ?, ?, ?, ?, ?)');
         $requete->execute([$idEvenement, $utilisateur['id'], $nbPlaces, trim($_POST['commentaire'] ?? ''), $code, $statut]);
         message_flash('success', $statut === 'confirmed' ? 'Reservation confirmee ! Ton billet est disponible.' : 'Evenement complet : tu es place en liste d attente.');

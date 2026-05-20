@@ -738,24 +738,37 @@ textarea.champ { resize: vertical; min-height: 100px; }
 }
 .billet-corps { flex: 1; padding: 1rem 1.125rem; }
 .billet-cote {
-  width: 70px;
+  width: 132px;
   background: linear-gradient(180deg, var(--fond-eleve), var(--fond-riche));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem 0.5rem;
+  gap: 0.5rem;
+  padding: 0.75rem;
   border-left: 1px dashed rgba(201,168,76,0.25);
   flex-shrink: 0;
 }
+.billet-cote--simple { width: 70px; }
+.billet-qr {
+  width: 92px;
+  height: 92px;
+  display: block;
+  background: #fff;
+  border-radius: 4px;
+  padding: 4px;
+}
 .billet-code {
-  writing-mode: vertical-rl;
   font-size: 0.625rem;
   font-weight: 700;
   color: var(--or);
   letter-spacing: 0;
   font-family: 'Inter', monospace;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
+.billet-cote--simple .billet-code { writing-mode: vertical-rl; }
 
 /* ===== PAGE AUTHENTIFICATION ===== */
 .page-auth {
@@ -1087,6 +1100,16 @@ textarea.champ { resize: vertical; min-height: 100px; }
     max-width: calc(100vw - 2rem);
   }
   .boite-recherche .bouton { width: 100%; }
+  .carte-billet { flex-direction: column; }
+  .billet-cote {
+    width: 100%;
+    border-left: none;
+    border-top: 1px dashed rgba(201,168,76,0.25);
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .billet-cote--simple { width: 100%; }
+  .billet-cote--simple .billet-code { writing-mode: horizontal-tb; }
   .filtres {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -1213,6 +1236,15 @@ textarea.champ { resize: vertical; min-height: 100px; }
 .carte-billet--avertissement .billet-code { color: var(--avertissement); }
 .billet-meta  { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.75rem; }
 .billet-titre { font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; }
+
+/* ===== VALIDATION QR CODE ===== */
+.conteneur-validation-billet { max-width: 720px; }
+.validation-billet-statut { margin-bottom: 1rem; }
+.validation-billet-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
 /* ===== PROFIL — SESSIONS & NOTIFICATIONS ===== */
 .info-profil       { flex: 1; }

@@ -30,7 +30,20 @@ $listeAttente = array_filter($reservations, fn($r) => $r['status'] === 'waitlist
     <div class="panneau-onglet <?= $onglet === 'upcoming' ? 'actif' : '' ?>" id="tab-<?= echapper($onglet) ?>">
       <div class="liste-billets">
         <?php foreach ($elements as $r): ?>
-          <div class="carte-billet <?= $r['status'] === 'waitlist' ? 'carte-billet--avertissement' : '' ?>"><div class="billet-corps"><div class="flex espacer centrer mb-1 retour-ligne ecart-1"><span class="carte-evenement-categorie category-<?= echapper($r['categorie']) ?>"><?= echapper(libelle_categorie($r['categorie'])) ?></span><span class="pastille <?= $r['status'] === 'waitlist' ? 'pastille-avertissement' : 'pastille-succes' ?>"><?= echapper($r['status'] === 'waitlist' ? 'Liste attente' : 'Confirme') ?></span></div><h3 class="billet-titre"><?= echapper($r['titre']) ?></h3><div class="billet-meta"><span class="texte-petit texte-discret"><?= echapper(formater_date($r['date_debut'])) ?> a <?= echapper(substr($r['heure_debut'], 0, 5)) ?></span><span class="texte-petit texte-discret"><?= echapper($r['lieu']) ?> - <?= (int) $r['nb_places'] ?> place(s)</span></div><?php if ($r['status'] !== 'cancelled' && $onglet !== 'past'): ?><form method="post" data-confirm="Annuler cette reservation ?"><input type="hidden" name="action" value="cancel"><input type="hidden" name="reservation_id" value="<?= (int) $r['id'] ?>"><button class="bouton bouton-danger bouton-petit">Annuler</button></form><?php endif; ?></div><div class="billet-cote"><div class="billet-code"><?= echapper($r['ticket_code']) ?></div></div></div>
+          <div class="carte-billet <?= $r['status'] === 'waitlist' ? 'carte-billet--avertissement' : '' ?>">
+            <div class="billet-corps">
+              <div class="flex espacer centrer mb-1 retour-ligne ecart-1"><span class="carte-evenement-categorie category-<?= echapper($r['categorie']) ?>"><?= echapper(libelle_categorie($r['categorie'])) ?></span><span class="pastille <?= $r['status'] === 'waitlist' ? 'pastille-avertissement' : 'pastille-succes' ?>"><?= echapper($r['status'] === 'waitlist' ? 'Liste attente' : 'Confirme') ?></span></div>
+              <h3 class="billet-titre"><?= echapper($r['titre']) ?></h3>
+              <div class="billet-meta"><span class="texte-petit texte-discret"><?= echapper(formater_date($r['date_debut'])) ?> a <?= echapper(substr($r['heure_debut'], 0, 5)) ?></span><span class="texte-petit texte-discret"><?= echapper($r['lieu']) ?> - <?= (int) $r['nb_places'] ?> place(s)</span></div>
+              <?php if ($r['status'] !== 'cancelled' && $onglet !== 'past'): ?><form method="post" data-confirm="Annuler cette reservation ?"><input type="hidden" name="action" value="cancel"><input type="hidden" name="reservation_id" value="<?= (int) $r['id'] ?>"><button class="bouton bouton-danger bouton-petit">Annuler</button></form><?php endif; ?>
+            </div>
+            <div class="billet-cote <?= $r['status'] === 'confirmed' ? '' : 'billet-cote--simple' ?>">
+              <?php if ($r['status'] === 'confirmed'): ?>
+                <img class="billet-qr" src="qr-code.php?code=<?= echapper(rawurlencode($r['ticket_code'])) ?>" alt="QR code du billet <?= echapper($r['ticket_code']) ?>">
+              <?php endif; ?>
+              <div class="billet-code"><?= echapper($r['ticket_code']) ?></div>
+            </div>
+          </div>
         <?php endforeach; ?>
       </div>
       <?php if (!$elements): ?><div class="onglet-vide"><p class="gras">Aucun billet</p><p class="texte-discret texte-petit mt-1">Les reservations correspondantes apparaitront ici.</p><a href="Index.php" class="bouton bouton-primaire mt-2">Explorer les evenements</a></div><?php endif; ?>
